@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float m_Gravity = 10.0f;
     [Range(0.0f, 1.0f)]
     public float m_SlideFriction = 0.3f;
-    [Range(1.0f, 2.5f)]
+    [Range(1.0f, 3.5f)]
     public float m_SlopeRayLength = 1.5f;
     [Range(0.5f, 10.0f)]
     public float m_SlopeForce = 5.0f;

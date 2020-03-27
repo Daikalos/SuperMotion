@@ -55,9 +55,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4f42a66e4d11a40902df22466fd7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 100
-  playerBody: {fileID: 1620546374612657661}
+  m_MouseSensitivity: 250
+  m_PlayerBody: {fileID: 1620546374612657661}
 --- !u!1 &1620546374612657657
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1.8
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!143 &1620546374612657660
@@ -225,3 +225,6 @@ MonoBehaviour:
   m_Speed: 9.2
   m_JumpSpeed: 2
   m_Gravity: 4
+  m_SlideFriction: 0
+  m_SlopeRayLength: 1.8
+  m_SlopeForce: 5
