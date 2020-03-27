@@ -226,5 +226,5 @@ MonoBehaviour:
   m_JumpSpeed: 2
   m_Gravity: 4
   m_SlideFriction: 0
-  m_SlopeRayLength: 1.8
-  m_SlopeForce: 5
+  m_SlopeRayLength: 1.9
+  m_SlopeForce: 9
