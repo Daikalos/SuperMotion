@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(Collider))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Attributes")]
@@ -23,82 +22,131 @@ public class PlayerMovement : MonoBehaviour
     private float m_SlopeRayLength = 1.5f;
     [SerializeField, Tooltip("At which force to push down player onto slope"), Range(0.0f, 20.0f)]
     public float m_SlopeForce = 15.0f;
+    [SerializeField, Tooltip("Jump force when pressing jump on slope higher than slopelimit"), Range(0.0f, 10.0f)]
+    public float m_SlopeJump = 3.0f;
+    [SerializeField, Tooltip("Speed of which the player gets back control of character after jumping off slope"), Range(0.0f, 10.0f)]
+    public float m_RegainControl = 0.75f;
 
     private CharacterController m_CharacterController;
-    private Collider m_Collider;
+    private GameObject 
+        m_PreviousSlope,
+        m_CurrentSlope;
     private Vector3
         m_MoveDirection,
+        m_SlideDirection,
         m_Velocity,
         m_HitNormal;
-    private bool 
+    private bool
         m_IsGrounded,
-        m_IsJumping;
+        m_CanJump;
     private float m_SlopeLimit;
 
     void Start()
     {
         m_CharacterController = GetComponent<CharacterController>();
-        m_Collider = GetComponent<Collider>();
 
         m_MoveDirection = Vector3.zero;
+        m_SlideDirection = Vector3.zero;
         m_HitNormal = Vector3.zero;
         m_Velocity = Vector3.zero;
 
         m_IsGrounded = false;
-        m_IsJumping = false;
+        m_CanJump = true;
 
         m_SlopeLimit = m_CharacterController.slopeLimit;
     }
 
     void Update()
     {
-        //Movement
-        float x = Input.GetAxis("Horizontal") * m_Speed * Time.deltaTime;
-        float z = Input.GetAxis("Vertical") * m_Speed * Time.deltaTime;
+        Movement();
+        Gravity();
+        CollisionGround();
+        CollisionEvents();
+    }
 
-        m_MoveDirection = transform.right * x + transform.forward * z;
+    private void Movement()
+    {
+        float horizInput = Input.GetAxis("Horizontal");
+        float vertInput = Input.GetAxis("Vertical");
 
+        m_MoveDirection = transform.right * horizInput + transform.forward * vertInput;
+        Vector3 moveCharacter = Vector3.ClampMagnitude(m_MoveDirection, 1.0f) * m_Speed * Time.deltaTime;
+
+        //Allow player to regain control of character when jumping off slope
+        m_Velocity.x = Mathf.Lerp(m_Velocity.x, moveCharacter.x, m_RegainControl * Time.deltaTime);
+        m_Velocity.z = Mathf.Lerp(m_Velocity.z, moveCharacter.z, m_RegainControl * Time.deltaTime);
+
+        m_CharacterController.Move(moveCharacter);
+
+        if ((horizInput != 0 || vertInput != 0) && OnSlope())
+        {
+            m_CharacterController.Move(Vector3.down * (m_CharacterController.height / 2) * m_SlopeForce * Time.deltaTime);
+        }
+
+        JumpInput();
+    }
+
+    private void JumpInput()
+    {
+        if (Input.GetButtonDown("Jump") && m_CanJump)
+        {
+            m_CharacterController.slopeLimit = 90.0f;
+            m_CanJump = false;
+
+            if (m_IsGrounded)
+            {
+                m_Velocity.y = Mathf.Sqrt(m_JumpHeight * -2.0f * m_Gravity);
+            }
+            else
+            {
+                m_Velocity = m_HitNormal * AngleToValue(m_HitNormal, m_SlideSpeed) * m_SlopeJump;
+                m_PreviousSlope = m_CurrentSlope;
+            }
+        }
+    }
+
+    private void Gravity()
+    {
+        //Gravity
+        m_Velocity.y += m_Gravity * Time.deltaTime;
+        m_CharacterController.Move(m_Velocity * Time.deltaTime);
+    }
+
+    private void CollisionGround()
+    {
         //If ground is tilted below slopelimit or not
-        m_IsGrounded = (Vector3.Angle(Vector3.up, m_HitNormal) <= m_CharacterController.slopeLimit) ? m_CharacterController.isGrounded : false;
+        m_IsGrounded = (Vector3.Angle(Vector3.up, m_HitNormal) <= m_SlopeLimit) ? m_CharacterController.isGrounded : false;
 
         if (m_CharacterController.isGrounded)
         {
             m_CharacterController.slopeLimit = m_SlopeLimit;
-            m_IsJumping = false;
-            m_Velocity.y = 0.0f;
+            m_Velocity = Vector3.zero;
 
             if (m_IsGrounded)
             {
-                if (Input.GetButtonDown("Jump") && !m_IsJumping)
-                {
-                    m_CharacterController.slopeLimit = 90.0f;
-                    m_IsJumping = true;
-                    m_Velocity.y = Mathf.Sqrt(m_JumpHeight * -2.0f * m_Gravity);
-                }
+                m_CanJump = true;
             }
             else
             {
-                //Move in direction of the normal which the player has collided with
-                m_MoveDirection.x += ((1.0f - m_HitNormal.y) * m_HitNormal.x) * (1.0f - m_SlideFriction) * AngleToValue(m_HitNormal, m_SlideSpeed) * Time.deltaTime;
-                m_MoveDirection.z += ((1.0f - m_HitNormal.y) * m_HitNormal.z) * (1.0f - m_SlideFriction) * AngleToValue(m_HitNormal, m_SlideSpeed) * Time.deltaTime;
+                //Allow player to jump once on a slope higher than slopelimit
+                if (m_PreviousSlope != m_CurrentSlope)
+                {
+                    m_CanJump = true;
+                }
+
+                //The downward direction of the slope
+                m_SlideDirection = -Vector3.Cross(Vector3.Cross(m_HitNormal, Vector3.up), m_HitNormal);
+                m_CharacterController.Move(m_SlideDirection * AngleToValue(m_HitNormal, m_SlideSpeed) * Time.deltaTime);
             }
         }
-
-        m_CharacterController.Move(m_MoveDirection);
-
-        //Gravity
-        m_Velocity.y += m_Gravity * Time.deltaTime;
-        m_CharacterController.Move(m_Velocity * Time.deltaTime);
-
-        //Move character down, prevent bouncing down slope
-        if (!m_IsJumping && Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        else
         {
-            if (hit.normal != Vector3.up)
-            {
-                m_CharacterController.Move(Vector3.down * (m_CharacterController.height / 2) * m_SlopeForce * Time.deltaTime);
-            }
+            m_CanJump = false;
         }
+    }
 
+    private void CollisionEvents()
+    {
         //Touching Ceiling
         if ((m_CharacterController.collisionFlags & CollisionFlags.Above) != 0)
         {
@@ -108,7 +156,15 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    
+
+    private bool OnSlope()
+    {
+        return 
+            m_CanJump && 
+            Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength) &&
+            hit.normal != Vector3.up;
+    }
+
     /// <summary>
     /// Returns a interval representation (0 to max) of the angle given in the assigned limit
     /// </summary>
@@ -120,6 +176,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit aHit)
     {
+        if (m_PreviousSlope != aHit.gameObject)
+        {
+            m_PreviousSlope = null;
+        }
+        m_CurrentSlope = aHit.gameObject;
         m_HitNormal = aHit.normal;
     }
 }
