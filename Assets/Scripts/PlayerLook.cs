@@ -7,15 +7,15 @@ public class PlayerLook : MonoBehaviour
 {
     [SerializeField, Range(5.0f, 350.0f)]
     private float m_MouseSensitivity = 100f;
-    [SerializeField]
-    private Transform m_PlayerBody;
 
+    private Transform m_PlayerBody;
     private float m_XRotation; // Rotation along x-axis
     
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
+        m_PlayerBody = transform.parent.GetComponent<Transform>();
         m_XRotation = 0.0f;
     }
 

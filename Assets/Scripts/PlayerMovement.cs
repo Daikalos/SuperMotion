@@ -14,39 +14,35 @@ public class PlayerMovement : MonoBehaviour
     private float m_Gravity = -40.0f;
 
     [Header("Slope Attributes")]
-    [SerializeField, Tooltip("Friction when sliding down slopes"), Range(0.0f, 1.0f)]
-    private float m_SlideFriction = 0.3f;
     [SerializeField, Tooltip("Speed when sliding down slopes"), Range(0.0f, 40.0f)]
-    private float m_SlideSpeed = 35.0f;
+    private float m_SlideSpeed = 15.0f;
     [SerializeField, Tooltip("How far to look down from bottom of player"), Range(0.0f, 5.0f)]
     private float m_SlopeRayLength = 1.5f;
     [SerializeField, Tooltip("At which force to push down player onto slope"), Range(0.0f, 20.0f)]
     public float m_SlopeForce = 15.0f;
-    [SerializeField, Tooltip("Jump force when pressing jump on slope higher than slopelimit"), Range(0.0f, 10.0f)]
-    public float m_SlopeJump = 3.0f;
-    [SerializeField, Tooltip("Speed of which the player gets back control of character after jumping off slope"), Range(0.0f, 10.0f)]
-    public float m_RegainControl = 0.75f;
+    [SerializeField, Tooltip("Jump force when pressing jump on a slope higher than slopelimit"), Range(0.0f, 80.0f)]
+    public float m_SlopeJump = 40.0f;
+    [SerializeField, Tooltip("Speed of which the player gets back control of character after jumping off a slope"), Range(0.0f, 10.0f)]
+    public float m_AirResistance = 1.2f;
 
-    private CharacterController m_CharacterController;
+    private CharacterController 
+        m_CharacterController;
     private GameObject 
         m_PreviousSlope,
         m_CurrentSlope;
     private Vector3
-        m_MoveDirection,
-        m_SlideDirection,
         m_Velocity,
         m_HitNormal;
     private bool
         m_IsGrounded,
         m_CanJump;
-    private float m_SlopeLimit;
+    private float
+        m_SlopeLimit;
 
     void Start()
     {
         m_CharacterController = GetComponent<CharacterController>();
 
-        m_MoveDirection = Vector3.zero;
-        m_SlideDirection = Vector3.zero;
         m_HitNormal = Vector3.zero;
         m_Velocity = Vector3.zero;
 
@@ -59,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Movement();
-        Gravity();
         CollisionGround();
         CollisionEvents();
     }
@@ -69,21 +64,28 @@ public class PlayerMovement : MonoBehaviour
         float horizInput = Input.GetAxis("Horizontal");
         float vertInput = Input.GetAxis("Vertical");
 
-        m_MoveDirection = transform.right * horizInput + transform.forward * vertInput;
-        Vector3 moveCharacter = Vector3.ClampMagnitude(m_MoveDirection, 1.0f) * m_Speed * Time.deltaTime;
+        JumpInput();
 
-        //Allow player to regain control of character when jumping off slope
-        m_Velocity.x = Mathf.Lerp(m_Velocity.x, moveCharacter.x, m_RegainControl * Time.deltaTime);
-        m_Velocity.z = Mathf.Lerp(m_Velocity.z, moveCharacter.z, m_RegainControl * Time.deltaTime);
+        Vector3 moveDirection = transform.right * horizInput + transform.forward * vertInput;
+        Vector3 moveCharacter = Vector3.ClampMagnitude(moveDirection, 1.0f) * m_Speed * Time.deltaTime;
 
+        if (m_Velocity.x != 0 && m_Velocity.z != 0)
+        {
+            //Allow player to regain control of character when jumping off slope
+            m_Velocity.x = Mathf.Lerp(m_Velocity.x, moveCharacter.x, m_AirResistance * Time.deltaTime);
+            m_Velocity.z = Mathf.Lerp(m_Velocity.z, moveCharacter.z, m_AirResistance * Time.deltaTime);
+        }
+        
         m_CharacterController.Move(moveCharacter);
+
+        m_Velocity.y += m_Gravity * Time.deltaTime;
+        m_CharacterController.Move(m_Velocity * Time.deltaTime);
 
         if ((horizInput != 0 || vertInput != 0) && OnSlope())
         {
+            //Push character down to create smooth movement when walking down slopes
             m_CharacterController.Move(Vector3.down * (m_CharacterController.height / 2) * m_SlopeForce * Time.deltaTime);
         }
-
-        JumpInput();
     }
 
     private void JumpInput()
@@ -99,17 +101,11 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                m_Velocity = m_HitNormal * AngleToValue(m_HitNormal, m_SlideSpeed) * m_SlopeJump;
+                //Jump in the direction of the slope normal
+                m_Velocity = m_HitNormal * AngleToValue(m_HitNormal, m_SlopeJump);
                 m_PreviousSlope = m_CurrentSlope;
             }
         }
-    }
-
-    private void Gravity()
-    {
-        //Gravity
-        m_Velocity.y += m_Gravity * Time.deltaTime;
-        m_CharacterController.Move(m_Velocity * Time.deltaTime);
     }
 
     private void CollisionGround()
@@ -135,8 +131,8 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 //The downward direction of the slope
-                m_SlideDirection = -Vector3.Cross(Vector3.Cross(m_HitNormal, Vector3.up), m_HitNormal);
-                m_CharacterController.Move(m_SlideDirection * AngleToValue(m_HitNormal, m_SlideSpeed) * Time.deltaTime);
+                Vector3 slideDirection = -Vector3.Cross(Vector3.Cross(m_HitNormal, Vector3.up), m_HitNormal);
+                m_CharacterController.Move(slideDirection * AngleToValue(m_HitNormal, m_SlideSpeed) * Time.deltaTime);
             }
         }
         else
@@ -174,13 +170,24 @@ public class PlayerMovement : MonoBehaviour
         return ((Vector3.Angle(Vector3.up, anAngle) / 90.0f) * aMax);
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit aHit)
+    private void OnControllerColliderHit(ControllerColliderHit objectHit)
     {
-        if (m_PreviousSlope != aHit.gameObject)
+        m_CurrentSlope = objectHit.gameObject;
+        m_HitNormal = objectHit.normal;
+
+        //Reset previous each time a new object is collided with
+        if (m_PreviousSlope != objectHit.gameObject)
         {
             m_PreviousSlope = null;
         }
-        m_CurrentSlope = aHit.gameObject;
-        m_HitNormal = aHit.normal;
+
+        //Bug fix, fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
+        if (!m_CanJump && Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        {
+            if (hit.normal != Vector3.up)
+            {
+                m_CharacterController.slopeLimit = m_SlopeLimit;
+            }
+        }
     }
 }
