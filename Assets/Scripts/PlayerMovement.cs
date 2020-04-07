@@ -30,8 +30,7 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("At which force to push down player onto slope"), Range(0.5f, 15.0f)]
     public float m_SlopeForce = 9.0f;
 
-    bool highJumpActive; // ---------------- Tinea
-    bool highJumpUsed;
+
 
     void Start()
     {
@@ -63,11 +62,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (Input.GetButtonDown("Jump"))
                 {
-                    if (highJumpActive && !highJumpUsed) // ---------------- Tinea
-                    {
-                        m_JumpSpeed = 4.0f;// ----------------------------------------------------------- ändra till normal_jumpspeed * 2 eller något
-                        highJumpUsed = true;
-                    }
+
 
                     m_Velocity = m_JumpSpeed;
                 }
@@ -79,14 +74,6 @@ public class PlayerMovement : MonoBehaviour
                 m_MoveDirection.z += (1.0f - m_HitNormal.y) * m_HitNormal.z * (1.0f - m_SlideFriction);
             }
 
-            if (highJumpUsed)// ---------------- Tinea
-            {
-                m_JumpSpeed = 2.0f; // ----------------------------------------------------------- ändra till normal_jumpspeed eller något
-
-                highJumpUsed = false;
-                highJumpActive = false;
-
-            }// t.o.m.
         }
 
         
@@ -116,18 +103,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // ---------------- Tinea
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if (!highJumpActive)
-            {
-                highJumpActive = true;
-            }
-            else
-            {
-                highJumpActive = false;
-            }   // t.o.m.         
-        }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
