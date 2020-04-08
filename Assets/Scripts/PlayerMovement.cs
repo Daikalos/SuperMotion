@@ -52,11 +52,14 @@ public class PlayerMovement : MonoBehaviour
         m_SlopeLimit = m_CharacterController.slopeLimit;
     }
 
+
     void Update()
     {
         Movement();
         CollisionGround();
         CollisionEvents();
+        StartCoroutine(SpeedBoost());
+        
     }
 
     private void Movement()
@@ -87,6 +90,23 @@ public class PlayerMovement : MonoBehaviour
             m_CharacterController.Move(Vector3.down * (m_CharacterController.height / 2) * m_SlopeForce * Time.deltaTime);
         }
     }
+    IEnumerator SpeedBoost()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && m_IsGrounded)
+        {
+            m_Speed = 20f;
+
+            yield return new WaitForSeconds(5);
+            m_Speed = 10f;
+        }       
+    }
+    //private void SpeedBoost()
+    //{
+    //    if (Input.GetKey(KeyCode.LeftShift))
+    //    {
+    //        m_Speed = 20f;
+    //    }
+    //}
 
     private void JumpInput()
     {
