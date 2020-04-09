@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
-    //private PlayerSpeed m_PlayerSpeed;
     //private PlayerDash m_PlayerDash;
     //private PlayerJump m_PlayerJump;
     private PlayerStrength m_PlayerStrength;
+    private SpeedAbility m_SpeedAbility;
 
     private UpdateAbility m_UpdateAbility;
 
     public virtual void Start()
     {
-        //m_PlayerSpeed = new PlayerSpeed(gameObject);
         //m_PlayerDash = new PlayerDash(gameObject);
         //m_PlayerJump = new PlayerJump(gameObject);
         m_PlayerStrength = new PlayerStrength(gameObject);
+        m_SpeedAbility = new SpeedAbility(gameObject);
 
         //Standard at start
         m_UpdateAbility = m_PlayerStrength.Update;
@@ -31,9 +31,9 @@ public class PlayerAbilities : MonoBehaviour
 
     private void KeyInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKey(KeyCode.Alpha1))
         {
-            //m_UpdateAbility = m_PlayerSpeed.Update;
+            m_UpdateAbility = m_SpeedAbility.Update;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
