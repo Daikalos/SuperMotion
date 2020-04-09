@@ -19,11 +19,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Tooltip("How far to look down from bottom of player"), Range(0.0f, 5.0f)]
     private float m_SlopeRayLength = 1.5f;
     [SerializeField, Tooltip("At which force to push down player onto slope"), Range(0.0f, 20.0f)]
-    public float m_SlopeForce = 15.0f;
+    private float m_SlopeForce = 15.0f;
     [SerializeField, Tooltip("Jump force when pressing jump on a slope higher than slopelimit"), Range(0.0f, 80.0f)]
-    public float m_SlopeJump = 40.0f;
+    private float m_SlopeJump = 40.0f;
     [SerializeField, Tooltip("Speed of which the player gets back control of character after jumping off a slope"), Range(0.0f, 10.0f)]
-    public float m_AirResistance = 1.2f;
+    private float m_AirResistance = 1.2f;
 
     private CharacterController 
         m_CharacterController;
@@ -38,6 +38,12 @@ public class PlayerMovement : MonoBehaviour
         m_CanJump;
     private float
         m_SlopeLimit;
+
+    public float Speed { get => m_Speed; set => m_Speed = value; }
+    public float JumpHeight {  get => m_JumpHeight; set => m_JumpHeight = value; }
+    public float Gravity { get => m_Gravity; set => m_Gravity = value; }
+
+    public float SlopeJump { get => m_SlopeJump; set => m_SlopeJump = value; }
 
     void Start()
     {
@@ -125,10 +131,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 //Allow player to jump once on a slope higher than slopelimit
-                if (m_PreviousSlope != m_CurrentSlope)
-                {
-                    m_CanJump = true;
-                }
+                if (m_PreviousSlope != m_CurrentSlope) { m_CanJump = true;  }
 
                 //The downward direction of the slope
                 Vector3 slideDirection = -Vector3.Cross(Vector3.Cross(m_HitNormal, Vector3.up), m_HitNormal);
@@ -184,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
         //Bug fix, fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
         if (!m_CanJump && Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
-            if (hit.normal != Vector3.up)
+            if (Vector3.Angle(Vector3.up, hit.normal) > m_SlopeLimit)
             {
                 m_CharacterController.slopeLimit = m_SlopeLimit;
             }
