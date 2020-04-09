@@ -43,6 +43,9 @@ public class PlayerMovement : MonoBehaviour
     public float JumpHeight {  get => m_JumpHeight; set => m_JumpHeight = value; }
     public float Gravity { get => m_Gravity; set => m_Gravity = value; }
 
+    public float NormalSpeed { get; set; }
+    public float NormalJumpHeight { get; set; }
+
     public float SlopeJump { get => m_SlopeJump; set => m_SlopeJump = value; }
 
     void Start()
@@ -56,6 +59,9 @@ public class PlayerMovement : MonoBehaviour
         m_CanJump = true;
 
         m_SlopeLimit = m_CharacterController.slopeLimit;
+
+        NormalSpeed = Speed;
+        NormalJumpHeight = JumpHeight;
     }
 
     void Update()
@@ -104,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
             if (m_IsGrounded)
             {
                 m_Velocity.y = Mathf.Sqrt(m_JumpHeight * -2.0f * m_Gravity);
+                Debug.Log("jumpheight: " + m_JumpHeight);
             }
             else
             {

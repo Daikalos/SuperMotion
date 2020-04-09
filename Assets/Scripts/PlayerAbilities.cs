@@ -6,20 +6,24 @@ public class PlayerAbilities : MonoBehaviour
 {
     //private PlayerSpeed m_PlayerSpeed;
     //private PlayerDash m_PlayerDash;
-    //private PlayerJump m_PlayerJump;
+    private PlayerJump m_PlayerJump;
     private PlayerStrength m_PlayerStrength;
 
     private UpdateAbility m_UpdateAbility;
+
+    private PlayerMovement m_PlayerMovement;
 
     public virtual void Start()
     {
         //m_PlayerSpeed = new PlayerSpeed(gameObject);
         //m_PlayerDash = new PlayerDash(gameObject);
-        //m_PlayerJump = new PlayerJump(gameObject);
+        m_PlayerJump = new PlayerJump(gameObject);
         m_PlayerStrength = new PlayerStrength(gameObject);
 
         //Standard at start
         m_UpdateAbility = m_PlayerStrength.Update;
+
+        m_PlayerMovement = GetComponent<PlayerMovement>();
     }
 
     void Update()
@@ -41,12 +45,24 @@ public class PlayerAbilities : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            //m_UpdateAbility = m_PlayerJump.Update;
+            SetAbility(m_PlayerJump.Update);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            m_UpdateAbility = m_PlayerStrength.Update;
+            SetAbility(m_PlayerStrength.Update);
         }
+    }
+
+    private void ResetValues()
+    {
+        m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight; 
+        m_PlayerMovement.Speed = m_PlayerMovement.NormalSpeed;
+    }
+
+    private void SetAbility(UpdateAbility updateAbility)
+    {
+        ResetValues();
+        m_UpdateAbility = updateAbility;
     }
 
     private delegate void UpdateAbility();
