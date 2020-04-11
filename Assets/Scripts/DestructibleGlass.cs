@@ -5,11 +5,11 @@ using UnityEngine;
 public class DestructibleGlass : MonoBehaviour
 {
     [SerializeField, Tooltip("Force the glass shatters from impact point"), Range(0.0f, 800.0f)]
-    private float m_ShatterForce = 300.0f;
+    private float m_ShatterForce = 150.0f;
 
     public GameObject m_DestroyedVersion;
 
-    public void Shatter(Vector3 hitDirection, RaycastHit rayHit)
+    public void Shatter(Collider playerCollider, Vector3 hitDirection, RaycastHit rayHit)
     {
         GameObject newObject = Instantiate(m_DestroyedVersion, transform.position, transform.rotation) as GameObject;
         newObject.transform.localScale = transform.localScale;
@@ -18,12 +18,17 @@ public class DestructibleGlass : MonoBehaviour
         {
             Rigidbody childRigidBody = newObject.transform.GetChild(i).GetComponent<Rigidbody>();
 
+            //Apply a force to each glass shard relative to direction and impact point
+            float forceDistance = (1.0f / (childRigidBody.transform.position - rayHit.point).magnitude);
             childRigidBody.AddForce(
-                (hitDirection * m_ShatterForce) + 
-                (childRigidBody.transform.position - rayHit.point) * (1.0f / (childRigidBody.transform.position - rayHit.point).magnitude) * m_ShatterForce);
+                (hitDirection * forceDistance * m_ShatterForce) + 
+                (childRigidBody.transform.position - rayHit.point) * forceDistance * m_ShatterForce);
 
-            Destroy(newObject.transform.GetChild(i).GetComponent<Rigidbody>(), 4.0f);
-            Destroy(newObject.transform.GetChild(i).GetComponent<Collider>(), 4.0f);
+            Physics.IgnoreCollision(childRigidBody.GetComponent<Collider>(), playerCollider);
+
+            //Fixes performance and jitter
+            Destroy(childRigidBody.GetComponent<Rigidbody>(), 10.0f);
+            Destroy(childRigidBody.GetComponent<Collider>(), 10.0f);
         }
 
         Destroy(gameObject);

@@ -5,11 +5,13 @@ using UnityEngine;
 public class PlayerStrength
 {
     private readonly PlayerMovement m_PlayerMovement;
+    private readonly Collider m_PlayerCollider;
     private readonly Transform m_CameraTransform;
 
     public PlayerStrength(GameObject playerObject)
     {
         m_PlayerMovement = playerObject.GetComponent<PlayerMovement>();
+        m_PlayerCollider = playerObject.GetComponent<Collider>();
         m_CameraTransform = playerObject.GetComponentInChildren<Camera>().transform;
     }
 
@@ -24,7 +26,7 @@ public class PlayerStrength
             {
                 if (objectHit.collider.tag == "Glass")
                 {
-                    objectHit.collider.GetComponent<DestructibleGlass>().Shatter(m_CameraTransform.forward, objectHit);
+                    objectHit.collider.GetComponent<DestructibleGlass>().Shatter(m_PlayerCollider, m_CameraTransform.forward, objectHit);
                 }
             }
         }
