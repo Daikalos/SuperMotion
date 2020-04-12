@@ -5,6 +5,9 @@ using UnityEngine;
 public class SpeedAbility
 {
     private readonly PlayerMovement m_PlayerMovement;
+    private bool isBoosting = false;
+    private float boostSpeed = 20f;
+    private float normalSpeed = 10f;
 
     public SpeedAbility(GameObject playerObject)
     {
@@ -14,10 +17,15 @@ public class SpeedAbility
     // Update is called once per frame
     public void Update()
     {
-        m_PlayerMovement.Speed = 20f;
-        //if (Input.GetKey(KeyCode.LeftShift))
-        //{
-        //    m_PlayerMovement.Speed = 10f;
-        //}         
+        if (Input.GetKeyDown(KeyCode.Alpha1) && isBoosting == false)
+        {
+            m_PlayerMovement.Speed = boostSpeed;
+            isBoosting = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha1) && isBoosting == true)
+        {
+            m_PlayerMovement.Speed = normalSpeed;
+            isBoosting = false;
+        }
     }
 }
