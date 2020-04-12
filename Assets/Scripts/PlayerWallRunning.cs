@@ -10,6 +10,8 @@ public class PlayerWallRunning : MonoBehaviour
     private float m_RunningHeight = 2.5f;
     [SerializeField, Tooltip("Speed to decrease player fall velocity when wall running"), Range(-80.0f, 0.0f)]
     private float m_Gravity = -15.0f;
+    [SerializeField, Tooltip("Jump force when pressing jump while wall running"), Range(0.0f, 30.0f)]
+    private float m_WallJump = 10.0f;
 
     private CharacterController 
         m_CharacterController;
@@ -24,7 +26,8 @@ public class PlayerWallRunning : MonoBehaviour
     private float
         m_WallCheckLength;
     private bool
-        m_WallFound;
+        m_WallFound,
+        m_CanJump;
 
     void Start()
     {
@@ -34,6 +37,7 @@ public class PlayerWallRunning : MonoBehaviour
         m_LastPos = transform.position;
         m_WallCheckLength = 15.0f;
         m_WallFound = true;
+        m_CanJump = true;
     }
 
     void Update()
@@ -57,38 +61,16 @@ public class PlayerWallRunning : MonoBehaviour
             }
 
             WallRun();
+            JumpInput();
         }
         else
         {
             CheckForWall();
 
             m_PlayerMovement.enabled = true;
+
             m_LastPos = transform.position;
-        }
-    }
-
-    private void WallCollision()
-    {
-        m_WallHit = new RaycastHit();
-        float wallDistance = Mathf.Infinity;
-
-        //Cast rays in multiple directions using the player's look direction as reference
-        for (int i = -2; i <= 2; i++)
-        {
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(60.0f * i, Vector3.up) * transform.forward * (m_CharacterController.radius + m_RayLength));
-
-            if (Physics.Raycast(transform.position, Quaternion.AngleAxis(60.0f * i, Vector3.up) * transform.forward, out RaycastHit objectHit, m_CharacterController.radius + m_RayLength))
-            {
-                //If wall is perpendicular to the ground and player is moving alongside the wall
-                if (Vector3.Dot(objectHit.normal, Vector3.up) == 0 && Vector3.Dot(m_PlayerVelocity, transform.forward) > 0)
-                {
-                    if (objectHit.distance < wallDistance)
-                    {
-                        wallDistance = objectHit.distance;
-                        m_WallHit = objectHit;
-                    }
-                }
-            }
+            m_CanJump = true;
         }
     }
 
@@ -102,6 +84,43 @@ public class PlayerWallRunning : MonoBehaviour
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
         m_CharacterController.Move(m_Velocity * Time.deltaTime);
+    }
+
+    private void JumpInput()
+    {
+        if (Input.GetButtonDown("Jump") && m_CanJump)
+        {
+            m_PlayerMovement.Velocity = 
+                m_WallHit.normal * m_WallJump + 
+                Vector3.up * Mathf.Sqrt(m_PlayerMovement.JumpHeight * -2.0f * m_PlayerMovement.Gravity);
+
+            m_CanJump = false;
+        }
+    }
+
+    private void WallCollision()
+    {
+        m_WallHit = new RaycastHit();
+        float wallDistance = Mathf.Infinity;
+
+        //Cast rays in multiple directions using the player's look direction as reference
+        for (int i = -2; i <= 2; i++)
+        {
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(65.0f * i, Vector3.up) * transform.forward * (m_CharacterController.radius + m_RayLength));
+
+            if (Physics.Raycast(transform.position, Quaternion.AngleAxis(65.0f * i, Vector3.up) * transform.forward, out RaycastHit objectHit, m_CharacterController.radius + m_RayLength))
+            {
+                //If wall is perpendicular to the ground and player is moving alongside the wall
+                if (Vector3.Dot(objectHit.normal, Vector3.up) == 0 && Vector3.Dot(m_PlayerVelocity, transform.forward) > 0)
+                {
+                    if (objectHit.distance < wallDistance)
+                    {
+                        wallDistance = objectHit.distance;
+                        m_WallHit = objectHit;
+                    }
+                }
+            }
+        }
     }
 
     private void CheckForWall()
@@ -126,6 +145,7 @@ public class PlayerWallRunning : MonoBehaviour
         return
             m_WallHit.collider != null &&
             m_WallFound &&
+            m_CanJump &&
             !m_CharacterController.isGrounded &&
             !m_PlayerMovement.CanJump &&
             m_PlayerMovement.Velocity.y >= 0.0f;
