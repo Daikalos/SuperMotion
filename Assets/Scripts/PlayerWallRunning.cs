@@ -74,7 +74,7 @@ public class PlayerWallRunning : MonoBehaviour
     {
         //Find what direction to move; 1 = left, -1 = right
         Vector3 direction = Vector3.Cross(transform.forward, m_WallHit.normal);
-        float moveDirection = (Vector3.Dot(direction, Vector3.up) > 0.0f) ? 1 : -1;
+        int moveDirection = (Vector3.Dot(direction, Vector3.up) > 0.0f) ? 1 : -1;
         
         m_CharacterController.Move(Vector3.Cross(m_WallHit.normal, Vector3.up) * moveDirection * m_PlayerMovement.Speed * Time.deltaTime);
 
