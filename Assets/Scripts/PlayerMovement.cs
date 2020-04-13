@@ -123,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
                 m_Velocity = m_HitNormal * AngleToValue(m_HitNormal, m_SlopeJump);
                 m_PreviousSlope = m_CurrentSlope;
             }
+            AudioManager.instance.Play("Jump");
         }
     }
 

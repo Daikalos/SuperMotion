@@ -22,11 +22,14 @@ public class PlayerStrength
     {
         if (Input.GetMouseButtonDown(0))
         {
+            AudioManager.instance.Play("Fist");
+
             if (Physics.Raycast(m_CameraTransform.position, m_CameraTransform.forward, out RaycastHit objectHit, 5.0f))
             {
                 if (objectHit.collider.tag == "Glass")
                 {
                     objectHit.collider.GetComponent<DestructibleGlass>().Shatter(m_PlayerCollider, m_CameraTransform.forward, objectHit);
+                    AudioManager.instance.Play("BrokenGlass");
                 }
             }
         }
