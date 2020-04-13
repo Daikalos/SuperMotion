@@ -53,10 +53,6 @@ public class PlayerWallRunning : MonoBehaviour
                 m_PlayerMovement.enabled = false;
                 m_PlayerMovement.Velocity = Vector3.zero;
 
-                //Push player towards the wall
-                Plane wallPlane = new Plane(m_WallHit.normal, m_WallHit.point);
-                m_CharacterController.Move(-m_WallHit.normal * (wallPlane.GetDistanceToPoint(transform.position) - m_CharacterController.radius));
-
                 m_Velocity.y = Mathf.Sqrt(m_RunningHeight * -2.0f * m_Gravity);
             }
 
@@ -77,8 +73,8 @@ public class PlayerWallRunning : MonoBehaviour
     private void WallRun()
     {
         //Find what direction to move; 1 = left, -1 = right
-        Vector3 relativePoint = transform.InverseTransformPoint(m_WallHit.point);
-        int moveDirection = (relativePoint.x < 0.0f) ? 1 : -1;
+        Vector3 direction = Vector3.Cross(transform.forward, m_WallHit.normal);
+        float moveDirection = (Vector3.Dot(direction, Vector3.up) > 0.0f) ? 1 : -1;
         
         m_CharacterController.Move(Vector3.Cross(m_WallHit.normal, Vector3.up) * moveDirection * m_PlayerMovement.Speed * Time.deltaTime);
 
