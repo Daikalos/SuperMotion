@@ -64,11 +64,12 @@ public class PlayerMovement : MonoBehaviour
         NormalJumpHeight = JumpHeight;
     }
 
+
     void Update()
     {
         Movement();
         CollisionGround();
-        CollisionEvents();
+        CollisionEvents();        
     }
 
     private void Movement()
