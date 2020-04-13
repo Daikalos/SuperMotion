@@ -37,7 +37,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Alpha1))
         {
-            m_UpdateAbility = m_SpeedAbility.Update;
+            SetAbility(m_SpeedAbility.Update);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
