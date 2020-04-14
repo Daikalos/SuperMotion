@@ -28,7 +28,7 @@ public class PlayerWallRunning : MonoBehaviour
         m_PlayerLook;
     private Vector3
         m_Velocity,
-        m_PlayerVelocity,
+        m_MoveSpeed,
         m_LastPos;
     private RaycastHit 
         m_WallHit;
@@ -54,7 +54,8 @@ public class PlayerWallRunning : MonoBehaviour
 
     void Update()
     {
-        m_PlayerVelocity = transform.position - m_LastPos;
+        m_MoveSpeed = transform.position - m_LastPos;
+        m_LastPos = transform.position;
 
         WallCollision();
 
@@ -83,7 +84,6 @@ public class PlayerWallRunning : MonoBehaviour
 
             m_PlayerLook.ZRotation = Mathf.SmoothStep(m_PlayerLook.ZRotation, 0.0f, m_CameraSmoothSpeed);
 
-            m_LastPos = transform.position;
             m_CanJump = true;
         }
     }
@@ -126,13 +126,11 @@ public class PlayerWallRunning : MonoBehaviour
         //Cast rays in multiple directions using the player's look direction as reference
         for (int i = -2; i <= 2; i++)
         {
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(65.0f * i, Vector3.up) * transform.forward * (m_CharacterController.radius + m_RayLength));
-
             if (Physics.Raycast(transform.position, Quaternion.AngleAxis(65.0f * i, Vector3.up) * transform.forward, out RaycastHit objectHit, m_CharacterController.radius + m_RayLength))
             {
                 Debug.Log(objectHit.normal);
                 //If wall is perpendicular to the ground and player is moving alongside the wall
-                if (Vector3.Dot(objectHit.normal, Vector3.up) == 0 && Vector3.Dot(m_PlayerVelocity, transform.forward) > 0)
+                if (Vector3.Dot(objectHit.normal, Vector3.up) == 0 && Vector3.Dot(m_MoveSpeed, transform.forward) > 0)
                 {
                     if (objectHit.collider.tag == "Runnable Wall" && objectHit.distance < wallDistance)
                     {

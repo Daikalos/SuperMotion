@@ -13,7 +13,7 @@ public class PlayerAbilities : MonoBehaviour
 
     private PlayerMovement m_PlayerMovement;
 
-    public virtual void Start()
+    public void Start()
     {
         //m_PlayerDash = new PlayerDash(gameObject);
         m_PlayerJump = new PlayerJump(gameObject);
