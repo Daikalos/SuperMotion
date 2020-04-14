@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerWallRunning : MonoBehaviour
 {
+    [Header("Wall Running Attributes")]
     [SerializeField, Tooltip("How far to look for a wall"), Range(0.0f, 2.0f)]
     private float m_RayLength = 0.05f;
     [SerializeField, Tooltip("Running max point"), Range(0.0f, 20.0f)]
@@ -13,10 +14,18 @@ public class PlayerWallRunning : MonoBehaviour
     [SerializeField, Tooltip("Jump force when pressing jump while wall running"), Range(0.0f, 30.0f)]
     private float m_WallJump = 10.0f;
 
+    [Header("Camera Attributes")]
+    [SerializeField, Tooltip("Speed of which the camera moves towards the tilt value"), Range(0.0f, 3.0f)]
+    private float m_CameraSmoothSpeed = 0.15f;
+    [SerializeField, Tooltip("Angle in degrees camera rotates when wall running"), Range(0.0f, 180.0f)]
+    private float m_CameraTilt = 25.0f;
+
     private CharacterController 
         m_CharacterController;
     private PlayerMovement 
         m_PlayerMovement;
+    private PlayerLook
+        m_PlayerLook;
     private Vector3
         m_Velocity,
         m_PlayerVelocity,
@@ -33,9 +42,12 @@ public class PlayerWallRunning : MonoBehaviour
     {
         m_CharacterController = GetComponent<CharacterController>();
         m_PlayerMovement = GetComponent<PlayerMovement>();
+        m_PlayerLook = GetComponentInChildren<PlayerLook>();
 
         m_LastPos = transform.position;
         m_WallCheckLength = 15.0f;
+        m_CameraSmoothSpeed = 0.20f;
+        m_CameraTilt = 25.0f;
         m_WallFound = true;
         m_CanJump = true;
     }
@@ -65,6 +77,8 @@ public class PlayerWallRunning : MonoBehaviour
 
             m_PlayerMovement.enabled = true;
 
+            m_PlayerLook.ZRotation = Mathf.SmoothStep(m_PlayerLook.ZRotation, 0.0f, m_CameraSmoothSpeed);
+
             m_LastPos = transform.position;
             m_CanJump = true;
         }
@@ -80,6 +94,8 @@ public class PlayerWallRunning : MonoBehaviour
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
         m_CharacterController.Move(m_Velocity * Time.deltaTime);
+
+        m_PlayerLook.ZRotation = Mathf.SmoothStep(m_PlayerLook.ZRotation, m_CameraTilt * -moveDirection, m_CameraSmoothSpeed);
     }
 
     private void JumpInput()
