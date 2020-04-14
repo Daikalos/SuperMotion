@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = transform.right * horizInput + transform.forward * vertInput;
         Vector3 moveCharacter = Vector3.ClampMagnitude(moveDirection, 1.0f) * m_Speed * Time.deltaTime;
 
-        if (m_Velocity.x != 0 && m_Velocity.z != 0)
+        if (m_Velocity.x != 0 || m_Velocity.z != 0)
         {
             //Allow player to regain control of character when jumping off slope
             m_Velocity.x = Mathf.Lerp(m_Velocity.x, moveCharacter.x, m_AirResistance * Time.deltaTime);
