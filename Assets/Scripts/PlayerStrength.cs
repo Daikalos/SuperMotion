@@ -31,6 +31,7 @@ public class PlayerStrength
                     objectHit.collider.GetComponent<DestructibleGlass>().Shatter(m_PlayerCollider, m_CameraTransform.forward, objectHit);
                     AudioManager.instance.Play("BrokenGlass");
                 }
+                AudioManager.instance.Play("Hit");
             }
         }
     }

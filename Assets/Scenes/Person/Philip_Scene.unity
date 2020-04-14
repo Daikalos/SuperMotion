@@ -5248,6 +5248,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: Hit
+    clip: {fileID: 8300000, guid: b43d102aac6b145468dcaa94a5cccae1, type: 3}
+    volume: 0.699
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &380092087
 Transform:
   m_ObjectHideFlags: 0
