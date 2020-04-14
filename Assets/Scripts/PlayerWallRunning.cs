@@ -65,6 +65,10 @@ public class PlayerWallRunning : MonoBehaviour
                 m_PlayerMovement.enabled = false;
                 m_PlayerMovement.Velocity = Vector3.zero;
 
+                //Push player towards the wall
+                Plane wallPlane = new Plane(m_WallHit.normal, m_WallHit.point);
+                m_CharacterController.Move(-m_WallHit.normal * (wallPlane.GetDistanceToPoint(transform.position) - m_CharacterController.radius));
+
                 m_Velocity.y = Mathf.Sqrt(m_RunningHeight * -2.0f * m_Gravity);
             }
 
@@ -102,11 +106,15 @@ public class PlayerWallRunning : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && m_CanJump)
         {
-            m_PlayerMovement.Velocity = 
-                m_WallHit.normal * m_WallJump + 
-                Vector3.up * Mathf.Sqrt(m_PlayerMovement.JumpHeight * -2.0f * m_PlayerMovement.Gravity);
+            //Player must face away from wall to jump
+            if (Vector3.Angle(-m_WallHit.normal, transform.forward) > 90.0f)
+            {
+                m_PlayerMovement.Velocity =
+                    m_WallHit.normal * m_WallJump +
+                    Vector3.up * Mathf.Sqrt(m_PlayerMovement.JumpHeight * -2.0f * m_PlayerMovement.Gravity);
 
-            m_CanJump = false;
+                m_CanJump = false;
+            }
         }
     }
 
