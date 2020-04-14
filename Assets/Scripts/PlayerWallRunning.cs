@@ -126,8 +126,6 @@ public class PlayerWallRunning : MonoBehaviour
         //Cast rays in multiple directions using the player's look direction as reference
         for (int i = -2; i <= 2; i++)
         {
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(65.0f * i, Vector3.up) * transform.forward * (m_CharacterController.radius + m_RayLength));
-
             if (Physics.Raycast(transform.position, Quaternion.AngleAxis(65.0f * i, Vector3.up) * transform.forward, out RaycastHit objectHit, m_CharacterController.radius + m_RayLength))
             {
                 //If wall is perpendicular to the ground and player is moving alongside the wall

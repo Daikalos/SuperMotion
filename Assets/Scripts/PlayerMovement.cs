@@ -143,10 +143,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void CameraEffects()
     {
-        m_PlayerLook.FieldOfView = (m_CharacterController.isGrounded && m_MoveSpeed.magnitude > 0.0f && m_Speed != NormalSpeed) ? 
+        //Speed Ability Effect
+        m_PlayerLook.FieldOfView = (m_MoveSpeed.magnitude > 0.0f && m_Speed != NormalSpeed) ? 
             Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV + 
             Mathf.Clamp((m_MoveSpeed.magnitude / (m_Speed * Time.deltaTime)), 0.0f, 1.0f / (m_Speed * Time.deltaTime)) * m_SpeedFOV, m_SpeedSmoothTime) : 
-            Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV, m_SpeedSmoothTime * 0.5f);
+            Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV, m_SpeedSmoothTime * 1.5f);
     }
 
     private void CollisionGround()
