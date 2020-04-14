@@ -133,7 +133,7 @@ public class PlayerWallRunning : MonoBehaviour
                 //If wall is perpendicular to the ground and player is moving alongside the wall
                 if (Vector3.Dot(objectHit.normal, Vector3.up) == 0 && Vector3.Dot(m_PlayerVelocity, transform.forward) > 0)
                 {
-                    if (objectHit.distance < wallDistance)
+                    if (objectHit.collider.tag == "Runnable Wall" && objectHit.distance < wallDistance)
                     {
                         wallDistance = objectHit.distance;
                         m_WallHit = objectHit;
