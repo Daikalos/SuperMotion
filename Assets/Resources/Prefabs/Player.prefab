@@ -244,3 +244,5 @@ MonoBehaviour:
   m_RunningHeight: 2
   m_Gravity: -5
   m_WallJump: 10
+  m_CameraSmoothSpeed: 0.15
+  m_CameraTilt: 25

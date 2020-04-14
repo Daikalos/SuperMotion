@@ -9,7 +9,13 @@ public class PlayerLook : MonoBehaviour
     private float m_MouseSensitivity = 100f;
 
     private Transform m_PlayerBody;
-    private float m_XRotation; // Rotation along x-axis
+    private float 
+        m_XRotation,
+        m_YRotation,
+        m_ZRotation;
+
+    public float YRotation { get => m_YRotation; set => m_ZRotation = value; }
+    public float ZRotation { get => m_ZRotation; set => m_ZRotation = value; }
     
     private void Start()
     {
@@ -27,7 +33,7 @@ public class PlayerLook : MonoBehaviour
         m_XRotation -= mouseY;
         m_XRotation = Mathf.Clamp(m_XRotation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(m_XRotation, 0f, 0f);
+        transform.localRotation = Quaternion.Euler(m_XRotation, m_YRotation, m_ZRotation);
         m_PlayerBody.Rotate(Vector3.up * mouseX);
     }
 }
