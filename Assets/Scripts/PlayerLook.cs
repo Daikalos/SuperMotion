@@ -9,20 +9,30 @@ public class PlayerLook : MonoBehaviour
     private float m_MouseSensitivity = 100f;
 
     private Transform m_PlayerBody;
-    private float 
+    private Camera m_Camera;
+    private float
         m_XRotation,
         m_YRotation,
-        m_ZRotation;
+        m_ZRotation,
+        m_FieldOfView;
 
     public float YRotation { get => m_YRotation; set => m_ZRotation = value; }
     public float ZRotation { get => m_ZRotation; set => m_ZRotation = value; }
+    public float FieldOfView { get => m_FieldOfView; set => m_FieldOfView = value; }
+
+    public float NormalFOV { get; private set; }
     
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
         m_PlayerBody = transform.parent.GetComponent<Transform>();
+        m_Camera = GetComponent<Camera>();
+
         m_XRotation = 0.0f;
+        m_FieldOfView = m_Camera.fieldOfView;
+
+        NormalFOV = m_Camera.fieldOfView;
     }
 
     private void Update()
@@ -35,5 +45,7 @@ public class PlayerLook : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(m_XRotation, m_YRotation, m_ZRotation);
         m_PlayerBody.Rotate(Vector3.up * mouseX);
+
+        m_Camera.fieldOfView = m_FieldOfView;
     }
 }
