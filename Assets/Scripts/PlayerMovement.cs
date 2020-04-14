@@ -29,7 +29,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Tooltip("FOV when player is using the speed ability"), Range(0.0f, 30.0f)]
     private float m_SpeedFOV = 10.0f;
     [SerializeField, Tooltip("Speed the camera adjusts the FOV"), Range(0.0f, 1.0f)]
-    private float m_SpeedSmoothTime = 0.10f;
+    private float m_SpeedSmoothFOV = 0.10f;
+    [SerializeField, Tooltip("Speed the camera adjusts the FOV to normal"), Range(0.0f, 1.0f)]
+    private float m_SpeedResetFOV = 0.20f;
 
     private CharacterController 
         m_CharacterController;
@@ -144,10 +146,10 @@ public class PlayerMovement : MonoBehaviour
     private void CameraEffects()
     {
         //Speed Ability Effect
-        m_PlayerLook.FieldOfView = (m_MoveSpeed.magnitude > 0.0f && m_Speed != NormalSpeed) ? 
+        m_PlayerLook.FieldOfView = ((m_MoveSpeed.x != 0.0f || m_MoveSpeed.z != 0.0f) && m_Speed != NormalSpeed) ? 
             Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV + 
-            Mathf.Clamp((m_MoveSpeed.magnitude / (m_Speed * Time.deltaTime)), 0.0f, 1.0f / (m_Speed * Time.deltaTime)) * m_SpeedFOV, m_SpeedSmoothTime) : 
-            Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV, m_SpeedSmoothTime * 1.5f);
+            Mathf.Clamp((m_MoveSpeed.magnitude / (m_Speed * Time.deltaTime)), 0.0f, 1.0f / (m_Speed * Time.deltaTime)) * m_SpeedFOV, m_SpeedSmoothFOV) : 
+            Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV, m_SpeedResetFOV);
     }
 
     private void CollisionGround()
