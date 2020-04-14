@@ -35,10 +35,10 @@ public class PlayerAbilities : MonoBehaviour
 
     private void KeyInput()
     {
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SetAbility(m_SpeedAbility.Update);
-            AudioManager.instance.Play("Speed");
+            AudioManager.instance.Play("AbilitySelect");
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
