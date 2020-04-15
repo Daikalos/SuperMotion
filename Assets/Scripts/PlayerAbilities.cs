@@ -29,7 +29,7 @@ public class PlayerAbilities : MonoBehaviour
     void Update()
     {
         KeyInput();
-        
+
         m_UpdateAbility();
     }
 
@@ -38,7 +38,6 @@ public class PlayerAbilities : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SetAbility(m_SpeedAbility.Update);
-            AudioManager.instance.Play("AbilitySelect");
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -59,7 +58,7 @@ public class PlayerAbilities : MonoBehaviour
 
     private void ResetValues()
     {
-        m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight; 
+        m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight;
         m_PlayerMovement.Speed = m_PlayerMovement.NormalSpeed;
     }
 

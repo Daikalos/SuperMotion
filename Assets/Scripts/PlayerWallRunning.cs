@@ -128,6 +128,7 @@ public class PlayerWallRunning : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, Quaternion.AngleAxis(65.0f * i, Vector3.up) * transform.forward, out RaycastHit objectHit, m_CharacterController.radius + m_RayLength))
             {
+                Debug.Log(objectHit.normal);
                 //If wall is perpendicular to the ground and player is moving alongside the wall
                 if (Vector3.Dot(objectHit.normal, Vector3.up) == 0 && Vector3.Dot(m_MoveSpeed, transform.forward) > 0)
                 {
