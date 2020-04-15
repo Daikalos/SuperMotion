@@ -13,6 +13,8 @@ public class PlayerAbilities : MonoBehaviour
 
     private PlayerMovement m_PlayerMovement;
 
+    public GameObject speedText, dashText, jumpText, strengthText, previousText;
+
     public void Start()
     {
         m_PlayerDash = new PlayerDash(gameObject);
@@ -22,6 +24,7 @@ public class PlayerAbilities : MonoBehaviour
 
         //Standard at start
         m_UpdateAbility = m_PlayerStrength.Update;
+        previousText = strengthText;
 
         m_PlayerMovement = GetComponent<PlayerMovement>();
     }
@@ -38,18 +41,22 @@ public class PlayerAbilities : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha1))
         {
             m_UpdateAbility = m_SpeedAbility.Update;
+            ActivateAbilityText(speedText);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SetAbility(m_PlayerDash.Update);
+            ActivateAbilityText(dashText);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SetAbility(m_PlayerJump.Update);
+            ActivateAbilityText(jumpText);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             SetAbility(m_PlayerStrength.Update);
+            ActivateAbilityText(strengthText);
         }
     }
 
@@ -63,6 +70,13 @@ public class PlayerAbilities : MonoBehaviour
     {
         ResetValues();
         m_UpdateAbility = updateAbility;
+    }
+
+    private void ActivateAbilityText(GameObject text)
+    {
+        previousText.gameObject.SetActive(false);
+        text.gameObject.SetActive(true);
+        previousText = text;
     }
 
     private delegate void UpdateAbility();

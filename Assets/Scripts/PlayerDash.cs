@@ -15,7 +15,6 @@ public class PlayerDash
         dashSpeed = 20f;
     }
 
-    // Update is called once per frame
     public void Update()
     {
         float horizInput = Input.GetAxis("Horizontal");
