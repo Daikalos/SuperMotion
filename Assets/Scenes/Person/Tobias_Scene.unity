@@ -530,11 +530,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1620546374612657651, guid: ec5f61250bd483e46b73c9c8cba16ffb,
-        type: 3}
-      propertyPath: m_SpeedFOV
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 1620546374612657657, guid: ec5f61250bd483e46b73c9c8cba16ffb,
         type: 3}
       propertyPath: m_Name
