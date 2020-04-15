@@ -13,7 +13,8 @@ public class PlayerAbilities : MonoBehaviour
 
     private PlayerMovement m_PlayerMovement;
 
-    public GameObject speedText, dashText, jumpText, strengthText, previousText;
+    public GameObject speedText, dashText, jumpText, strengthText;
+    private GameObject previousText;
 
     public void Start()
     {

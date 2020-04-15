@@ -12,7 +12,7 @@ public class PlayerDash
     {
         m_CharacterController = playerObject.GetComponent<CharacterController>();
         m_PlayerMovement = playerObject.GetComponent<PlayerMovement>();
-        dashSpeed = 20f;
+        dashSpeed = 15f;
     }
 
     public void Update()
