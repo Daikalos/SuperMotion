@@ -7,7 +7,7 @@ public class PlayerAbilities : MonoBehaviour
     private PlayerDash m_PlayerDash;
     private PlayerJump m_PlayerJump;
     private PlayerStrength m_PlayerStrength;
-    private SpeedAbility m_SpeedAbility;
+    private PlayerSpeed m_PlayerSpeed;
 
     private UpdateAbility m_UpdateAbility;
 
@@ -21,7 +21,7 @@ public class PlayerAbilities : MonoBehaviour
         m_PlayerDash = new PlayerDash(gameObject);
         m_PlayerJump = new PlayerJump(gameObject);
         m_PlayerStrength = new PlayerStrength(gameObject);
-        m_SpeedAbility = new SpeedAbility(gameObject);
+        m_PlayerSpeed = new PlayerSpeed(gameObject);
 
         //Standard at start
         m_UpdateAbility = m_PlayerStrength.Update;
@@ -41,7 +41,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SetAbility(m_SpeedAbility.Update);
+            SetAbility(m_PlayerSpeed.Update);
             AudioManager.instance.Play("AbilitySelect");
             ActivateAbilityText(speedText);
         }

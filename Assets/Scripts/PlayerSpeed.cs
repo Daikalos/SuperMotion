@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedAbility
+public class PlayerSpeed
 {
     private readonly PlayerMovement m_PlayerMovement;
     private float boostSpeed = 20f;
 
-    public SpeedAbility(GameObject playerObject)
+    public PlayerSpeed(GameObject playerObject)
     {
         m_PlayerMovement = playerObject.GetComponent<PlayerMovement>();
     }

@@ -138,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpInput()
     {
-        if (Input.GetButtonDown("Jump") && m_CanJump)
+        if (Input.GetButtonDown("Jump") && m_CanJump && m_CharacterController.isGrounded)
         {
             m_CharacterController.slopeLimit = 90.0f;
             m_CanJump = false;
@@ -146,7 +146,6 @@ public class PlayerMovement : MonoBehaviour
             if (m_IsGrounded)
             {
                 m_Velocity.y = Mathf.Sqrt(m_JumpHeight * -2.0f * m_Gravity);
-                Debug.Log("jumpheight: " + m_JumpHeight);
             }
             else
             {
