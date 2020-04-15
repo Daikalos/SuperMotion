@@ -43,6 +43,7 @@ public class PlayerAbilities : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             //m_UpdateAbility = m_PlayerDash.Update;
+            AudioManager.instance.Play("AbilitySelect");
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
