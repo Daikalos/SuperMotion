@@ -217,7 +217,12 @@ MonoBehaviour:
   m_SlopeJump: 40
   m_AirResistance: 0.5
   m_SpeedFOV: 10
-  m_SpeedSmoothTime: 0.1
+  m_SpeedSmoothFOV: 0.1
+  m_SpeedResetFOV: 0.2
+  m_JumpShakeBounds: -25
+  m_JumpShakeDuration: 0.15
+  m_JumpShakeAmount: 0.08
+  m_JumpShakeLimit: 0.3
 --- !u!114 &1440318633
 MonoBehaviour:
   m_ObjectHideFlags: 0

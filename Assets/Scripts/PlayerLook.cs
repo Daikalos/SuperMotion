@@ -8,15 +8,21 @@ public class PlayerLook : MonoBehaviour
     [SerializeField, Range(5.0f, 350.0f)]
     private float m_MouseSensitivity = 100f;
 
-    private Transform m_PlayerBody;
-    private Camera m_Camera;
+    private Transform
+        m_PlayerBody,
+        m_CameraTransform;
+    private Camera 
+        m_Camera;
     private float
         m_XRotation,
         m_YRotation,
         m_ZRotation,
         m_FieldOfView;
 
-    public float YRotation { get => m_YRotation; set => m_ZRotation = value; }
+    public Transform CameraTransform { get => m_CameraTransform; set => m_CameraTransform = value; }
+
+    public Vector3 OriginalPosition { get; private set; }
+
     public float ZRotation { get => m_ZRotation; set => m_ZRotation = value; }
     public float FieldOfView { get => m_FieldOfView; set => m_FieldOfView = value; }
 
@@ -25,11 +31,17 @@ public class PlayerLook : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-
+        
         m_PlayerBody = transform.parent.GetComponent<Transform>();
         m_Camera = GetComponent<Camera>();
 
+        m_CameraTransform = m_Camera.transform;
+
+        OriginalPosition = m_Camera.transform.localPosition;
+
         m_XRotation = 0.0f;
+        m_YRotation = 0.0f;
+        m_ZRotation = 0.0f;
         m_FieldOfView = m_Camera.fieldOfView;
 
         NormalFOV = m_Camera.fieldOfView;

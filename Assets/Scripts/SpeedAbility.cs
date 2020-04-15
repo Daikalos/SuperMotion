@@ -6,7 +6,6 @@ public class SpeedAbility
 {
     private readonly PlayerMovement m_PlayerMovement;
     private float boostSpeed = 20f;
-    private float normalSpeed = 10f;
 
     public SpeedAbility(GameObject playerObject)
     {
