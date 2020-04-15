@@ -35,21 +35,25 @@ public class PlayerAbilities : MonoBehaviour
 
     private void KeyInput()
     {
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            m_UpdateAbility = m_SpeedAbility.Update;
+            SetAbility(m_SpeedAbility.Update);
+            AudioManager.instance.Play("AbilitySelect");
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             //m_UpdateAbility = m_PlayerDash.Update;
+            AudioManager.instance.Play("AbilitySelect");
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SetAbility(m_PlayerJump.Update);
+            AudioManager.instance.Play("AbilitySelect");
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             SetAbility(m_PlayerStrength.Update);
+            AudioManager.instance.Play("AbilitySelect");
         }
     }
 

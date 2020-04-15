@@ -33,11 +33,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Tooltip("Speed the camera adjusts the FOV to normal"), Range(0.0f, 1.0f)]
     private float m_SpeedResetFOV = 0.20f;
 
-    private CharacterController 
+    private CharacterController
         m_CharacterController;
     private PlayerLook
         m_PlayerLook;
-    private GameObject 
+    private GameObject
         m_PreviousSlope,
         m_CurrentSlope;
     private Vector3
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         Movement();
         CameraEffects();
         CollisionGround();
-        CollisionEvents();     
+        CollisionEvents();
     }
 
     private void Movement()
@@ -109,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
             m_Velocity.x = Mathf.Lerp(m_Velocity.x, moveCharacter.x, m_AirResistance * Time.deltaTime);
             m_Velocity.z = Mathf.Lerp(m_Velocity.z, moveCharacter.z, m_AirResistance * Time.deltaTime);
         }
-        
+
         m_CharacterController.Move(moveCharacter);
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
@@ -140,15 +140,16 @@ public class PlayerMovement : MonoBehaviour
                 m_Velocity = m_HitNormal * AngleToValue(m_HitNormal, m_SlopeJump);
                 m_PreviousSlope = m_CurrentSlope;
             }
+            AudioManager.instance.Play("Step");
         }
     }
 
     private void CameraEffects()
     {
         //Speed Ability Effect
-        m_PlayerLook.FieldOfView = ((m_MoveSpeed.x != 0.0f || m_MoveSpeed.z != 0.0f) && m_Speed != NormalSpeed) ? 
-            Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV + 
-            Mathf.Clamp((m_MoveSpeed.magnitude / (m_Speed * Time.deltaTime)), 0.0f, 1.0f / (m_Speed * Time.deltaTime)) * m_SpeedFOV, m_SpeedSmoothFOV) : 
+        m_PlayerLook.FieldOfView = ((m_MoveSpeed.x != 0.0f || m_MoveSpeed.z != 0.0f) && m_Speed != NormalSpeed) ?
+            Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV +
+            Mathf.Clamp((m_MoveSpeed.magnitude / (m_Speed * Time.deltaTime)), 0.0f, 1.0f / (m_Speed * Time.deltaTime)) * m_SpeedFOV, m_SpeedSmoothFOV) :
             Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV, m_SpeedResetFOV);
     }
 
@@ -196,8 +197,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnSlope()
     {
-        return 
-            m_CanJump && 
+        return
+            m_CanJump &&
             Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength) &&
             hit.normal != Vector3.up;
     }
