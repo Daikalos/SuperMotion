@@ -32,6 +32,14 @@ public class PlayerMovement : MonoBehaviour
     private float m_SpeedSmoothFOV = 0.10f;
     [SerializeField, Tooltip("Speed the camera adjusts the FOV to normal"), Range(0.0f, 1.0f)]
     private float m_SpeedResetFOV = 0.20f;
+    [SerializeField, Tooltip("The boundary for downward velocity after shaking becomes visible"), Range(-30.0f, 0.0f)]
+    private float m_JumpShakeBounds = -20.0f;
+    [SerializeField, Tooltip("How long the camera should shake"), Range(0.0f, 2.0f)]
+    private float m_JumpShakeDuration = 0.15f;
+    [SerializeField, Tooltip("Amplitude of the shake"), Range(0.0f, 2.0f)]
+    private float m_JumpShakeAmount = 0.08f;
+    [SerializeField, Tooltip("The amplitude limit of the shake"), Range(0.0f, 2.0f)]
+    private float m_JumpShakeLimit = 0.20f;
 
     private CharacterController
         m_CharacterController;
@@ -47,19 +55,22 @@ public class PlayerMovement : MonoBehaviour
         m_LastPos;
     private bool
         m_IsGrounded,
-        m_CanJump;
+        m_CanJump,
+        m_IsCameraShaking;
     private float
-        m_SlopeLimit;
+        m_SlopeLimit,
+        m_JumpShakeTimer,
+        m_JumpShakeAmplitude;
 
     public Vector3 Velocity { get => m_Velocity; set => m_Velocity = value; }
 
+    public bool CanJump { get => m_CanJump; set => m_CanJump = value; }
+
     public float Speed { get => m_Speed; set => m_Speed = value; }
-    public float JumpHeight {  get => m_JumpHeight; set => m_JumpHeight = value; }
+    public float JumpHeight { get => m_JumpHeight; set => m_JumpHeight = value; }
     public float Gravity { get => m_Gravity; set => m_Gravity = value; }
 
     public float SlopeJump { get => m_SlopeJump; set => m_SlopeJump = value; }
-
-    public bool CanJump { get => m_CanJump; set => m_CanJump = value; }
 
     public float NormalSpeed { get; set; }
     public float NormalJumpHeight { get; set; }
@@ -75,8 +86,11 @@ public class PlayerMovement : MonoBehaviour
 
         m_IsGrounded = false;
         m_CanJump = true;
+        m_IsCameraShaking = false;
 
         m_SlopeLimit = m_CharacterController.slopeLimit;
+        m_JumpShakeTimer = 0.0f;
+        m_JumpShakeAmplitude = 0.0f;
 
         NormalSpeed = Speed;
         NormalJumpHeight = JumpHeight;
@@ -151,6 +165,30 @@ public class PlayerMovement : MonoBehaviour
             Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV +
             Mathf.Clamp((m_MoveSpeed.magnitude / (m_Speed * Time.deltaTime)), 0.0f, 1.0f / (m_Speed * Time.deltaTime)) * m_SpeedFOV, m_SpeedSmoothFOV) :
             Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV, m_SpeedResetFOV);
+
+        //Jump Ability Effect
+        if (m_CharacterController.isGrounded && m_JumpHeight != NormalJumpHeight)
+        {
+            if (!m_IsCameraShaking && m_Velocity.y < m_JumpShakeBounds)
+            {
+                m_IsCameraShaking = true;
+                m_JumpShakeTimer = m_JumpShakeDuration;
+
+                m_JumpShakeAmplitude = Mathf.Clamp((m_Velocity.y / m_JumpShakeBounds) * m_JumpShakeAmount, m_JumpShakeAmount, m_JumpShakeLimit);
+            }
+
+            if (m_IsCameraShaking && m_JumpShakeTimer > 0.0f)
+            {
+                m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition + Random.insideUnitSphere * m_JumpShakeAmplitude;
+                m_JumpShakeTimer -= Time.deltaTime;
+            }
+            else
+            {
+                m_IsCameraShaking = false;
+                m_JumpShakeTimer = 0.0f;
+                m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition;
+            }
+        }
     }
 
     private void CollisionGround()
