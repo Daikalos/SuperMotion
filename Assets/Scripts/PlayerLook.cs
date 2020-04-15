@@ -31,6 +31,7 @@ public class PlayerLook : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         
         m_PlayerBody = transform.parent.GetComponent<Transform>();
         m_Camera = GetComponent<Camera>();
