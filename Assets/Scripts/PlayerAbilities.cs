@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
-    //private PlayerDash m_PlayerDash;
+    private PlayerDash m_PlayerDash;
     private PlayerJump m_PlayerJump;
     private PlayerStrength m_PlayerStrength;
     private SpeedAbility m_SpeedAbility;
@@ -13,15 +13,19 @@ public class PlayerAbilities : MonoBehaviour
 
     private PlayerMovement m_PlayerMovement;
 
+    public GameObject speedText, dashText, jumpText, strengthText;
+    private GameObject previousText;
+
     public void Start()
     {
-        //m_PlayerDash = new PlayerDash(gameObject);
+        m_PlayerDash = new PlayerDash(gameObject);
         m_PlayerJump = new PlayerJump(gameObject);
         m_PlayerStrength = new PlayerStrength(gameObject);
         m_SpeedAbility = new SpeedAbility(gameObject);
 
         //Standard at start
         m_UpdateAbility = m_PlayerStrength.Update;
+        previousText = strengthText;
 
         m_PlayerMovement = GetComponent<PlayerMovement>();
     }
@@ -66,6 +70,13 @@ public class PlayerAbilities : MonoBehaviour
     {
         ResetValues();
         m_UpdateAbility = updateAbility;
+    }
+
+    private void ActivateAbilityText(GameObject text)
+    {
+        previousText.gameObject.SetActive(false);
+        text.gameObject.SetActive(true);
+        previousText = text;
     }
 
     private delegate void UpdateAbility();
