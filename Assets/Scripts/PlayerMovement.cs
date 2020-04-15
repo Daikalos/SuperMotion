@@ -167,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
             Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV, m_SpeedResetFOV);
 
         //Jump Ability Effect
-        if (m_CharacterController.isGrounded && m_JumpHeight != NormalJumpHeight)
+        if (m_CharacterController.isGrounded)
         {
             if (!m_IsCameraShaking && m_Velocity.y < m_JumpShakeBounds)
             {
@@ -176,18 +176,18 @@ public class PlayerMovement : MonoBehaviour
 
                 m_JumpShakeAmplitude = Mathf.Clamp((m_Velocity.y / m_JumpShakeBounds) * m_JumpShakeAmount, m_JumpShakeAmount, m_JumpShakeLimit);
             }
+        }
 
-            if (m_IsCameraShaking && m_JumpShakeTimer > 0.0f)
-            {
-                m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition + Random.insideUnitSphere * m_JumpShakeAmplitude;
-                m_JumpShakeTimer -= Time.deltaTime;
-            }
-            else
-            {
-                m_IsCameraShaking = false;
-                m_JumpShakeTimer = 0.0f;
-                m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition;
-            }
+        if (m_IsCameraShaking && m_JumpShakeTimer > 0.0f)
+        {
+            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition + Random.insideUnitSphere * m_JumpShakeAmplitude;
+            m_JumpShakeTimer -= Time.deltaTime;
+        }
+        else
+        {
+            m_IsCameraShaking = false;
+            m_JumpShakeTimer = 0.0f;
+            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition;
         }
     }
 
