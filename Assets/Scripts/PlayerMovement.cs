@@ -106,14 +106,6 @@ public class PlayerMovement : MonoBehaviour
         CameraEffects();
         CollisionGround();
         CollisionEvents();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            SceneManager.LoadScene("Main_Menu");
-        }
     }
 
     private void Movement()
@@ -123,20 +115,13 @@ public class PlayerMovement : MonoBehaviour
 
         JumpInput();
 
-        Vector3 moveDirection = transform.right * horizInput + transform.forward * vertInput;
-        Vector3 moveCharacter = Vector3.ClampMagnitude(moveDirection, 1.0f) * m_Speed * Time.deltaTime;
+        Vector3 moveDirection = Vector3.ClampMagnitude(transform.right * horizInput + transform.forward * vertInput, 1.0f) * m_Speed;
 
-        if (m_Velocity.x != 0 || m_Velocity.z != 0)
-        {
-            //Allow player to regain control of character when jumping off slope
-            m_Velocity.x = Mathf.Lerp(m_Velocity.x, moveCharacter.x, m_AirResistance * Time.deltaTime);
-            m_Velocity.z = Mathf.Lerp(m_Velocity.z, moveCharacter.z, m_AirResistance * Time.deltaTime);
-        }
-
-        m_CharacterController.Move(moveCharacter);
+        m_Velocity.x = (m_Velocity.x != 0) ? Mathf.Lerp(m_Velocity.x, moveDirection.x, m_AirResistance * Time.deltaTime) : 0.0f;
+        m_Velocity.z = (m_Velocity.z != 0) ? Mathf.Lerp(m_Velocity.z, moveDirection.z, m_AirResistance * Time.deltaTime) : 0.0f;
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
-        m_CharacterController.Move(m_Velocity * Time.deltaTime);
+        m_CharacterController.Move((moveDirection + m_Velocity) * Time.deltaTime);
 
         if ((horizInput != 0 || vertInput != 0) && OnSlope())
         {
@@ -147,22 +132,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpInput()
     {
-        if (Input.GetButtonDown("Jump") && m_CanJump && m_CharacterController.isGrounded)
+        if (m_CharacterController.isGrounded || m_CanJump)
         {
-            m_CharacterController.slopeLimit = 90.0f;
-            m_CanJump = false;
+            if (Input.GetButtonDown("Jump"))
+            {
+                m_CharacterController.slopeLimit = 90.0f;
+                m_CanJump = false;
 
-            if (m_IsGrounded)
-            {
-                m_Velocity.y = Mathf.Sqrt(m_JumpHeight * -2.0f * m_Gravity);
+                if (m_IsGrounded)
+                {
+                    m_Velocity.y = Mathf.Sqrt(m_JumpHeight * -2.0f * m_Gravity);
+                }
+                else
+                {
+                    //Jump in the direction of the slope normal
+                    m_Velocity = m_HitNormal * AngleToValue(m_HitNormal, m_SlopeJump);
+                    m_PreviousSlope = m_CurrentSlope;
+                }
+                AudioManager.instance.Play("Step");
             }
-            else
-            {
-                //Jump in the direction of the slope normal
-                m_Velocity = m_HitNormal * AngleToValue(m_HitNormal, m_SlopeJump);
-                m_PreviousSlope = m_CurrentSlope;
-            }
-            AudioManager.instance.Play("Step");
         }
     }
 
@@ -216,7 +204,13 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 //Allow player to jump once on a slope higher than slopelimit
-                if (m_PreviousSlope != m_CurrentSlope) { m_CanJump = true; }
+                if (m_PreviousSlope != m_CurrentSlope)
+                {
+                    if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+                    {
+                        m_CanJump = true;
+                    }
+                }
 
                 //The downward direction of the slope
                 Vector3 slideDirection = -Vector3.Cross(Vector3.Cross(m_HitNormal, Vector3.up), m_HitNormal);
@@ -263,8 +257,7 @@ public class PlayerMovement : MonoBehaviour
         m_CurrentSlope = objectHit.gameObject;
         m_HitNormal = objectHit.normal;
 
-        //Reset previous each time a new object is collided with
-        if (m_PreviousSlope != objectHit.gameObject)
+        if (m_PreviousSlope != objectHit.gameObject && m_IsGrounded)
         {
             m_PreviousSlope = null;
         }
