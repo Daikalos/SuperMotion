@@ -115,13 +115,18 @@ public class PlayerMovement : MonoBehaviour
 
         JumpInput();
 
-        Vector3 moveDirection = Vector3.ClampMagnitude(transform.right * horizInput + transform.forward * vertInput, 1.0f) * m_Speed;
+        Vector3 moveCharacter = Vector3.ClampMagnitude(transform.right * horizInput + transform.forward * vertInput, 1.0f) * m_Speed;
 
-        m_Velocity.x = (m_Velocity.x != 0) ? Mathf.Lerp(m_Velocity.x, moveDirection.x, m_AirResistance * Time.deltaTime) : 0.0f;
-        m_Velocity.z = (m_Velocity.z != 0) ? Mathf.Lerp(m_Velocity.z, moveDirection.z, m_AirResistance * Time.deltaTime) : 0.0f;
+        m_Velocity.x = (m_Velocity.x != 0) ? Mathf.Lerp(m_Velocity.x, 0.0f, m_AirResistance * Time.deltaTime) : 0.0f;
+        m_Velocity.z = (m_Velocity.z != 0) ? Mathf.Lerp(m_Velocity.z, 0.0f, m_AirResistance * Time.deltaTime) : 0.0f;
+
+        //m_Velocity.x = ((m_Velocity.x != 0 || m_Velocity.z != 0) && moveCharacter.x != 0) ? Mathf.Lerp(m_Velocity.x, moveCharacter.x, 5.0f * Time.deltaTime) : m_Velocity.x;
+        //m_Velocity.z = ((m_Velocity.x != 0 || m_Velocity.z != 0) && moveCharacter.z != 0) ? Mathf.Lerp(m_Velocity.z, moveCharacter.z, 5.0f * Time.deltaTime) : m_Velocity.z;
+
+        //moveCharacter *= ((m_Velocity.x != 0 || m_Velocity.z != 0) ? 0.0f : 1.0f);
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
-        m_CharacterController.Move((moveDirection + m_Velocity) * Time.deltaTime);
+        m_CharacterController.Move((moveCharacter + m_Velocity) * Time.deltaTime);
 
         if ((horizInput != 0 || vertInput != 0) && OnSlope())
         {
@@ -195,7 +200,9 @@ public class PlayerMovement : MonoBehaviour
         if (m_CharacterController.isGrounded)
         {
             m_CharacterController.slopeLimit = m_SlopeLimit;
+
             m_Velocity = Vector3.zero;
+            m_Velocity.y = m_Gravity * Time.deltaTime;
 
             if (m_IsGrounded)
             {
