@@ -838,6 +838,11 @@ PrefabInstance:
       propertyPath: m_SlopeRayLength
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1620546374612657651, guid: ec5f61250bd483e46b73c9c8cba16ffb,
+        type: 3}
+      propertyPath: m_SlopeJump
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 1620546374612657657, guid: ec5f61250bd483e46b73c9c8cba16ffb,
         type: 3}
       propertyPath: m_Name
@@ -981,12 +986,12 @@ PrefabInstance:
     - target: {fileID: 6118969440173245875, guid: ec5f61250bd483e46b73c9c8cba16ffb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 23.099976
+      value: 23.099854
       objectReference: {fileID: 0}
     - target: {fileID: 6118969440173245875, guid: ec5f61250bd483e46b73c9c8cba16ffb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -18.100006
+      value: -18.099976
       objectReference: {fileID: 0}
     - target: {fileID: 6118969440173245875, guid: ec5f61250bd483e46b73c9c8cba16ffb,
         type: 3}
@@ -1294,7 +1299,7 @@ Transform:
   m_GameObject: {fileID: 1251352310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 11.8, y: 5.8, z: 11}
+  m_LocalScale: {x: 20, y: 1, z: 20}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1

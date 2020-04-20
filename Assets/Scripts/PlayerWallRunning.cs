@@ -74,7 +74,7 @@ public class PlayerWallRunning : MonoBehaviour
             }
 
             WallRun();
-            JumpInput();
+            WallJump();
         }
         else
         {
@@ -102,7 +102,7 @@ public class PlayerWallRunning : MonoBehaviour
         m_PlayerLook.ZRotation = Mathf.SmoothStep(m_PlayerLook.ZRotation, m_CameraTilt * -moveDirection, m_CameraSmoothSpeed);
     }
 
-    private void JumpInput()
+    private void WallJump()
     {
         if (Input.GetButtonDown("Jump") && m_CanJump)
         {

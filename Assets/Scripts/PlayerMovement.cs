@@ -23,8 +23,8 @@ public class PlayerMovement : MonoBehaviour
     private float m_SlopeForce = 15.0f;
     [SerializeField, Tooltip("Jump force when pressing jump on a slope higher than slopelimit"), Range(0.0f, 80.0f)]
     private float m_SlopeJump = 40.0f;
-    [SerializeField, Tooltip("Speed of which the player gets back control of character after jumping off a slope"), Range(0.0f, 10.0f)]
-    private float m_AirResistance = 1.2f;
+    [SerializeField, Tooltip("Speed of which the player regains control of character after walljump/slopejump"), Range(0.0f, 4.0f)]
+    private float m_RegainControl = 1.1f;
 
     [Header("Camera Attributes")]
     [SerializeField, Tooltip("FOV when player is using the speed ability"), Range(0.0f, 30.0f)]
@@ -115,18 +115,18 @@ public class PlayerMovement : MonoBehaviour
 
         JumpInput();
 
-        Vector3 moveCharacter = Vector3.ClampMagnitude(transform.right * horizInput + transform.forward * vertInput, 1.0f) * m_Speed;
+        Vector3 moveDirection = Vector3.ClampMagnitude(transform.right * horizInput + transform.forward * vertInput, 1.0f) * m_Speed;
 
-        m_Velocity.x = (m_Velocity.x != 0) ? Mathf.Lerp(m_Velocity.x, 0.0f, m_AirResistance * Time.deltaTime) : 0.0f;
-        m_Velocity.z = (m_Velocity.z != 0) ? Mathf.Lerp(m_Velocity.z, 0.0f, m_AirResistance * Time.deltaTime) : 0.0f;
-
-        //m_Velocity.x = ((m_Velocity.x != 0 || m_Velocity.z != 0) && moveCharacter.x != 0) ? Mathf.Lerp(m_Velocity.x, moveCharacter.x, 5.0f * Time.deltaTime) : m_Velocity.x;
-        //m_Velocity.z = ((m_Velocity.x != 0 || m_Velocity.z != 0) && moveCharacter.z != 0) ? Mathf.Lerp(m_Velocity.z, moveCharacter.z, 5.0f * Time.deltaTime) : m_Velocity.z;
-
-        //moveCharacter *= ((m_Velocity.x != 0 || m_Velocity.z != 0) ? 0.0f : 1.0f);
+        //Air Movement after walljump/slopejump, allow player to regain control
+        m_Velocity.x = ((m_Velocity.x != 0 || m_Velocity.z != 0) && (OppositeSigns(m_Velocity.x, moveDirection.x) || Mathf.Abs(m_Velocity.x) < Mathf.Abs(moveDirection.x)) && moveDirection.x != 0) ? 
+            Mathf.Lerp(m_Velocity.x, moveDirection.x, m_RegainControl * Time.deltaTime) : m_Velocity.x;
+        m_Velocity.z = ((m_Velocity.x != 0 || m_Velocity.z != 0) && (OppositeSigns(m_Velocity.z, moveDirection.z) || Mathf.Abs(m_Velocity.z) < Mathf.Abs(moveDirection.z)) && moveDirection.z != 0) ? 
+            Mathf.Lerp(m_Velocity.z, moveDirection.z, m_RegainControl * Time.deltaTime) : m_Velocity.z;
+        
+        moveDirection *= ((m_Velocity.x != 0 || m_Velocity.z != 0) ? 0.0f : 1.0f);
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
-        m_CharacterController.Move((moveCharacter + m_Velocity) * Time.deltaTime);
+        m_CharacterController.Move((moveDirection + m_Velocity) * Time.deltaTime);
 
         if ((horizInput != 0 || vertInput != 0) && OnSlope())
         {
@@ -257,6 +257,11 @@ public class PlayerMovement : MonoBehaviour
     {
         //The more tilted the angle, the higher the return value
         return ((Vector3.Angle(Vector3.up, anAngle) / 90.0f) * aMax);
+    }
+
+    private bool OppositeSigns(float x, float y)
+    {
+        return Mathf.Sign(x) != Mathf.Sign(y);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit objectHit)
