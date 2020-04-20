@@ -42,26 +42,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Tooltip("The amplitude limit of the shake"), Range(0.0f, 2.0f)]
     private float m_JumpShakeLimit = 0.20f;
 
-    private CharacterController
-        m_CharacterController;
-    private PlayerLook
-        m_PlayerLook;
-    private GameObject
-        m_PreviousSlope,
-        m_CurrentSlope;
-    private Vector3
-        m_Velocity,
-        m_HitNormal,
-        m_MoveSpeed,
-        m_LastPos;
-    private bool
-        m_IsGrounded,
-        m_CanJump,
-        m_IsCameraShaking;
-    private float
-        m_SlopeLimit,
-        m_JumpShakeTimer,
-        m_JumpShakeAmplitude;
+    private CharacterController m_CharacterController;
+    private PlayerLook m_PlayerLook;
+    private GameObject m_PreviousSlope;
+    private GameObject m_CurrentSlope;
+
+    private Vector3 m_Velocity;
+    private Vector3 m_HitNormal;
+    private Vector3 m_MoveSpeed;
+    private Vector3 m_LastPos;
+
+    private bool m_IsGrounded;
+    private bool m_CanJump;
+    private bool m_IsCameraShaking;
+    private float m_SlopeLimit;
+    private float m_JumpShakeTimer;
+    private float m_JumpShakeAmplitude;
 
     public Vector3 Velocity { get => m_Velocity; set => m_Velocity = value; }
 
@@ -70,19 +66,20 @@ public class PlayerMovement : MonoBehaviour
     public float Speed { get => m_Speed; set => m_Speed = value; }
     public float JumpHeight { get => m_JumpHeight; set => m_JumpHeight = value; }
     public float Gravity { get => m_Gravity; set => m_Gravity = value; }
-
     public float SlopeJump { get => m_SlopeJump; set => m_SlopeJump = value; }
 
-    public float NormalSpeed { get; set; }
-    public float NormalJumpHeight { get; set; }
+    public float NormalSpeed { get; private set; }
+    public float NormalJumpHeight { get; private set; }
+    public float NormalSlopeJump { get; private set; }
 
     void Start()
     {
         m_CharacterController = GetComponent<CharacterController>();
         m_PlayerLook = GetComponentInChildren<PlayerLook>();
 
-        m_HitNormal = Vector3.zero;
         m_Velocity = Vector3.zero;
+        m_HitNormal = Vector3.zero;
+        m_MoveSpeed = Vector3.zero;
         m_LastPos = transform.position;
 
         m_IsGrounded = false;
@@ -93,8 +90,9 @@ public class PlayerMovement : MonoBehaviour
         m_JumpShakeTimer = 0.0f;
         m_JumpShakeAmplitude = 0.0f;
 
-        NormalSpeed = Speed;
-        NormalJumpHeight = JumpHeight;
+        NormalSpeed = m_Speed;
+        NormalJumpHeight = m_JumpHeight;
+        NormalSlopeJump = m_SlopeJump;
     }
 
     void Update()
@@ -123,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
         m_Velocity.z = ((m_Velocity.x != 0 || m_Velocity.z != 0) && (OppositeSigns(m_Velocity.z, moveDirection.z) || Mathf.Abs(m_Velocity.z) < Mathf.Abs(moveDirection.z)) && moveDirection.z != 0) ? 
             Mathf.Lerp(m_Velocity.z, moveDirection.z, m_RegainControl * Time.deltaTime) : m_Velocity.z;
         
+        //Turn off movement after walljump/slopejump
         moveDirection *= ((m_Velocity.x != 0 || m_Velocity.z != 0) ? 0.0f : 1.0f);
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
@@ -215,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
                     {
-                        m_CanJump = true;
+                        m_CanJump = m_CharacterController.isGrounded;
                     }
                 }
 

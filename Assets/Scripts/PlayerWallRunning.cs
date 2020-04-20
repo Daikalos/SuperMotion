@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerWallRunning : MonoBehaviour
 {
     [Header("Wall Running Attributes")]
@@ -20,23 +21,18 @@ public class PlayerWallRunning : MonoBehaviour
     [SerializeField, Tooltip("Angle in degrees camera rotates when wall running"), Range(0.0f, 180.0f)]
     private float m_CameraTilt = 25.0f;
 
-    private CharacterController 
-        m_CharacterController;
-    private PlayerMovement 
-        m_PlayerMovement;
-    private PlayerLook
-        m_PlayerLook;
-    private Vector3
-        m_Velocity,
-        m_MoveSpeed,
-        m_LastPos;
-    private RaycastHit 
-        m_WallHit;
-    private float
-        m_WallCheckLength;
-    private bool
-        m_WallFound,
-        m_CanJump;
+    private CharacterController m_CharacterController;
+    private PlayerMovement m_PlayerMovement;
+    private PlayerLook m_PlayerLook;
+
+    private RaycastHit m_WallHit;
+    private Vector3 m_Velocity;
+    private Vector3 m_MoveSpeed;
+    private Vector3 m_LastPos;
+
+    private bool m_WallFound;
+    private bool m_CanJump;
+    private float m_WallCheckDistance;
 
     void Start()
     {
@@ -44,12 +40,14 @@ public class PlayerWallRunning : MonoBehaviour
         m_PlayerMovement = GetComponent<PlayerMovement>();
         m_PlayerLook = GetComponentInChildren<PlayerLook>();
 
+        m_Velocity = Vector3.zero;
+        m_MoveSpeed = Vector3.zero;
         m_LastPos = transform.position;
-        m_WallCheckLength = 15.0f;
-        m_CameraSmoothSpeed = 0.20f;
-        m_CameraTilt = 25.0f;
+
         m_WallFound = true;
         m_CanJump = true;
+
+        m_WallCheckDistance = 15.0f;
     }
 
     void Update()
@@ -99,6 +97,7 @@ public class PlayerWallRunning : MonoBehaviour
         m_Velocity.y += m_Gravity * Time.deltaTime;
         m_CharacterController.Move(m_Velocity * Time.deltaTime);
 
+        //Tilt camera when wall running
         m_PlayerLook.ZRotation = Mathf.SmoothStep(m_PlayerLook.ZRotation, m_CameraTilt * -moveDirection, m_CameraSmoothSpeed);
     }
 
@@ -146,7 +145,7 @@ public class PlayerWallRunning : MonoBehaviour
         m_WallFound = false;
 
         //Player has to be looking at wall to be able to wall run
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit objectHit, m_CharacterController.radius + m_WallCheckLength))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit objectHit, m_CharacterController.radius + m_WallCheckDistance))
         {
             if (Vector3.Dot(objectHit.normal, Vector3.up) == 0)
             {

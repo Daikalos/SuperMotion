@@ -6,7 +6,8 @@ public class DestructibleGlass : MonoBehaviour
 {
     [SerializeField, Tooltip("Force the glass shatters from impact point"), Range(0.0f, 800.0f)]
     private float m_ShatterForce = 150.0f;
-
+    
+    [Tooltip("Object to switch to when destroyed")]
     public GameObject m_DestroyedVersion;
 
     public void Shatter(Collider playerCollider, Vector3 hitDirection, RaycastHit rayHit)

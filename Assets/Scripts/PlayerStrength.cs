@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class PlayerStrength
 {
-    private readonly PlayerMovement m_PlayerMovement;
     private readonly Collider m_PlayerCollider;
     private readonly Transform m_CameraTransform;
 
     public PlayerStrength(GameObject playerObject)
     {
-        m_PlayerMovement = playerObject.GetComponent<PlayerMovement>();
         m_PlayerCollider = playerObject.GetComponent<Collider>();
         m_CameraTransform = playerObject.GetComponentInChildren<Camera>().transform;
     }
