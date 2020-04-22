@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 m_LastPos;
 
     private bool m_IsGrounded;
-    private bool m_CanJump;
+    private bool m_CanSlopeJump;
     private bool m_IsCameraShaking;
     private float m_SlopeLimit;
     private float m_JumpShakeTimer;
@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 Velocity { get => m_Velocity; set => m_Velocity = value; }
 
-    public bool CanJump { get => m_CanJump; set => m_CanJump = value; }
+    public bool CanSlopeJump { get => m_CanSlopeJump; set => m_CanSlopeJump = value; }
 
     public float Speed { get => m_Speed; set => m_Speed = value; }
     public float JumpHeight { get => m_JumpHeight; set => m_JumpHeight = value; }
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         m_LastPos = transform.position;
 
         m_IsGrounded = false;
-        m_CanJump = true;
+        m_CanSlopeJump = true;
         m_IsCameraShaking = false;
 
         m_SlopeLimit = m_CharacterController.slopeLimit;
@@ -136,12 +136,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpInput()
     {
-        if (m_CharacterController.isGrounded || m_CanJump)
+        if (m_CharacterController.isGrounded || m_CanSlopeJump)
         {
             if (Input.GetButtonDown("Jump"))
             {
                 m_CharacterController.slopeLimit = 90.0f;
-                m_CanJump = false;
+                m_CanSlopeJump = false;
 
                 if (m_IsGrounded)
                 {
@@ -203,29 +203,12 @@ public class PlayerMovement : MonoBehaviour
             m_Velocity = Vector3.zero;
             m_Velocity.y = m_Gravity * Time.deltaTime;
 
-            if (m_IsGrounded)
+            if (!m_IsGrounded)
             {
-                m_CanJump = true;
-            }
-            else
-            {
-                //Allow player to jump once on a slope higher than slopelimit
-                if (m_PreviousSlope != m_CurrentSlope)
-                {
-                    if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
-                    {
-                        m_CanJump = m_CharacterController.isGrounded;
-                    }
-                }
-
                 //The downward direction of the slope
                 Vector3 slideDirection = -Vector3.Cross(Vector3.Cross(m_HitNormal, Vector3.up), m_HitNormal);
                 m_CharacterController.Move(slideDirection * AngleToValue(m_HitNormal, m_SlideSpeed) * Time.deltaTime);
             }
-        }
-        else
-        {
-            m_CanJump = false;
         }
     }
 
@@ -244,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
     private bool OnSlope()
     {
         return
-            m_CanJump &&
+            m_IsGrounded &&
             Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength) &&
             hit.normal != Vector3.up;
     }
@@ -274,11 +257,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Bug fix, fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
-        if (!m_CanJump && Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
             if (Vector3.Angle(Vector3.up, hit.normal) > m_SlopeLimit)
             {
                 m_CharacterController.slopeLimit = m_SlopeLimit;
+
+                //Allow player to jump once on a slope higher than slopelimit
+                if (m_PreviousSlope != m_CurrentSlope)
+                {
+                    m_CanSlopeJump = true;
+                }
+            }
+            else
+            {
+                m_CanSlopeJump = false;
             }
         }
     }

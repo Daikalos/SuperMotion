@@ -164,7 +164,6 @@ public class PlayerWallRunning : MonoBehaviour
             m_WallFound &&
             m_CanJump &&
             !m_CharacterController.isGrounded &&
-            !m_PlayerMovement.CanJump &&
             m_PlayerMovement.Velocity.y >= 0.0f;
     }
 }
