@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -105,6 +106,14 @@ public class PlayerMovement : MonoBehaviour
         CameraEffects();
         CollisionGround();
         CollisionEvents();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            SceneManager.LoadScene("Main_Menu");
+        }
     }
 
     private void Movement()
@@ -138,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpInput()
     {
-        if (Input.GetButtonDown("Jump") && m_CanJump)
+        if (Input.GetButtonDown("Jump") && m_CanJump && m_CharacterController.isGrounded)
         {
             m_CharacterController.slopeLimit = 90.0f;
             m_CanJump = false;
@@ -146,7 +155,6 @@ public class PlayerMovement : MonoBehaviour
             if (m_IsGrounded)
             {
                 m_Velocity.y = Mathf.Sqrt(m_JumpHeight * -2.0f * m_Gravity);
-                Debug.Log("jumpheight: " + m_JumpHeight);
             }
             else
             {
