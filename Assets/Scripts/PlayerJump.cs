@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerJump
+public class PlayerJump : PlayerAbility
 {
     private readonly PlayerMovement m_PlayerMovement;
 
@@ -12,8 +12,13 @@ public class PlayerJump
     }
 
     // Update is called once per frame
-    public void Update()
+    public override void Start()
     {
         m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight * 2;
+    }
+
+    public override void Exit()
+    {
+        m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight;
     }
 }

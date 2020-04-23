@@ -15,12 +15,6 @@ public class PlayerWallRunning : MonoBehaviour
     [SerializeField, Tooltip("Jump force when pressing jump while wall running"), Range(0.0f, 30.0f)]
     private float m_WallJump = 10.0f;
 
-    [Header("Camera Attributes")]
-    [SerializeField, Tooltip("Speed of which the camera moves towards the tilt value"), Range(0.0f, 3.0f)]
-    private float m_CameraSmoothSpeed = 0.15f;
-    [SerializeField, Tooltip("Angle in degrees camera rotates when wall running"), Range(0.0f, 180.0f)]
-    private float m_CameraTilt = 25.0f;
-
     private CharacterController m_CharacterController;
     private PlayerMovement m_PlayerMovement;
     private PlayerLook m_PlayerLook;
@@ -31,8 +25,10 @@ public class PlayerWallRunning : MonoBehaviour
     private Vector3 m_LastPos;
 
     private bool m_WallFound;
-    private bool m_CanJump;
+    private bool m_CanWallJump;
     private float m_WallCheckDistance;
+
+    public int MoveDirection { get; private set; }
 
     void Start()
     {
@@ -45,7 +41,7 @@ public class PlayerWallRunning : MonoBehaviour
         m_LastPos = transform.position;
 
         m_WallFound = true;
-        m_CanJump = true;
+        m_CanWallJump = true;
 
         m_WallCheckDistance = 15.0f;
     }
@@ -79,10 +75,7 @@ public class PlayerWallRunning : MonoBehaviour
             CheckForWall();
 
             m_PlayerMovement.enabled = true;
-
-            m_PlayerLook.ZRotation = Mathf.SmoothStep(m_PlayerLook.ZRotation, 0.0f, m_CameraSmoothSpeed);
-
-            m_CanJump = true;
+            m_CanWallJump = true;
         }
     }
 
@@ -90,20 +83,17 @@ public class PlayerWallRunning : MonoBehaviour
     {
         //Find what direction to move; 1 = left, -1 = right
         Vector3 direction = Vector3.Cross(transform.forward, m_WallHit.normal);
-        int moveDirection = (Vector3.Dot(direction, Vector3.up) > 0.0f) ? 1 : -1;
+        MoveDirection = (Vector3.Dot(direction, Vector3.up) > 0.0f) ? 1 : -1;
         
-        m_CharacterController.Move(Vector3.Cross(m_WallHit.normal, Vector3.up) * moveDirection * m_PlayerMovement.Speed * Time.deltaTime);
+        m_CharacterController.Move(Vector3.Cross(m_WallHit.normal, Vector3.up) * MoveDirection * m_PlayerMovement.Speed * Time.deltaTime);
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
         m_CharacterController.Move(m_Velocity * Time.deltaTime);
-
-        //Tilt camera when wall running
-        m_PlayerLook.ZRotation = Mathf.SmoothStep(m_PlayerLook.ZRotation, m_CameraTilt * -moveDirection, m_CameraSmoothSpeed);
     }
 
     private void WallJump()
     {
-        if (Input.GetButtonDown("Jump") && m_CanJump)
+        if (Input.GetButtonDown("Jump") && m_CanWallJump)
         {
             //Player must face away from wall to jump
             if (Vector3.Angle(-m_WallHit.normal, transform.forward) > 90.0f)
@@ -112,7 +102,7 @@ public class PlayerWallRunning : MonoBehaviour
                     m_WallHit.normal * m_WallJump +
                     Vector3.up * Mathf.Sqrt(m_PlayerMovement.JumpHeight * -2.0f * m_PlayerMovement.Gravity);
 
-                m_CanJump = false;
+                m_CanWallJump = false;
             }
         }
     }
@@ -130,7 +120,7 @@ public class PlayerWallRunning : MonoBehaviour
                 //If wall is perpendicular to the ground and player is moving alongside the wall
                 if (Vector3.Dot(objectHit.normal, Vector3.up) == 0 && Vector3.Dot(m_MoveSpeed, transform.forward) > 0)
                 {
-                    if (objectHit.collider.tag == "Runnable Wall" && objectHit.distance < wallDistance)
+                    if (objectHit.distance < wallDistance)
                     {
                         wallDistance = objectHit.distance;
                         m_WallHit = objectHit;
@@ -157,12 +147,13 @@ public class PlayerWallRunning : MonoBehaviour
         }
     }
 
-    private bool CanWallRun()
+    public bool CanWallRun()
     {
         return
-            m_WallHit.collider != null &&
+            m_WallHit.collider != null && 
+            m_WallHit.collider.tag == "Runnable Wall" &&
             m_WallFound &&
-            m_CanJump &&
+            m_CanWallJump &&
             !m_CharacterController.isGrounded &&
             m_PlayerMovement.Velocity.y >= 0.0f;
     }
