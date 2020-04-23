@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private float m_Speed = 10.0f;
     [SerializeField, Tooltip("Jump height when pressing jump"), Range(0.0f, 30.0f)]
     private float m_JumpHeight = 4.3f;
+    [SerializeField, Tooltip(""), Range(0.0f, 5.0f)]
+    private float m_HighJumpFactor = 2.0f;
     [SerializeField, Tooltip("Speed to decrease player velocity when in air"), Range(-60.0f, 0.0f)]
     private float m_Gravity = -40.0f;
 
@@ -65,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float Speed { get => m_Speed; set => m_Speed = value; }
     public float JumpHeight { get => m_JumpHeight; set => m_JumpHeight = value; }
+    public float HighJumpFactor { get => m_HighJumpFactor; set => m_HighJumpFactor = value; }
     public float Gravity { get => m_Gravity; set => m_Gravity = value; }
     public float SlopeJump { get => m_SlopeJump; set => m_SlopeJump = value; }
 

@@ -11,9 +11,8 @@ public class PlayerJump
         m_PlayerMovement = playerObject.GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     public void Update()
     {
-        m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight * 2;
+        m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight * m_PlayerMovement.HighJumpFactor;
     }
 }
