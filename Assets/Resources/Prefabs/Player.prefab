@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 1620546374612657651}
   - component: {fileID: 1440318633}
   - component: {fileID: 2021225177}
+  - component: {fileID: 648125302}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -527,13 +528,10 @@ MonoBehaviour:
   m_SlopeForce: 15
   m_SlopeJump: 40
   m_RegainControl: 1.1
-  m_SpeedFOV: 10
-  m_SpeedSmoothFOV: 0.1
-  m_SpeedResetFOV: 0.2
-  m_JumpShakeBounds: -30
-  m_JumpShakeDuration: 0.15
-  m_JumpShakeAmount: 0.08
-  m_JumpShakeLimit: 0.3
+  m_BoostSpeed: 1.5
+  m_DashSpeed: 50
+  m_DashTime: 0.2
+  m_PunchDistance: 5
 --- !u!114 &1440318633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,10 +544,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96793ce417675424fade35cf68c979d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedText: {fileID: 1134874279094914723}
-  dashText: {fileID: 5707833688325394185}
-  jumpText: {fileID: 858412799211586862}
-  strengthText: {fileID: 6534918045465089158}
+  m_SpeedText: {fileID: 1134874279094914723}
+  m_DashText: {fileID: 5707833688325394185}
+  m_JumpText: {fileID: 858412799211586862}
+  m_StrengthText: {fileID: 6534918045465089158}
 --- !u!114 &2021225177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,7 +564,26 @@ MonoBehaviour:
   m_RunningHeight: 2
   m_Gravity: -5
   m_WallJump: 10
-  m_CameraSmoothSpeed: 0.15
+--- !u!114 &648125302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620546374612657657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b11f97cd238b704bb80e4fa57597010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SpeedFOV: 10
+  m_SpeedSmoothFOV: 0.1
+  m_SpeedResetFOV: 0.2
+  m_CameraShakeBounds: -20
+  m_CameraShakeDuration: 0.15
+  m_CameraShakeAmount: 0.08
+  m_CameraShakeLimit: 0.2
+  m_CameraTiltSpeed: 0.15
   m_CameraTilt: 25
 --- !u!1 &1731701156597357448
 GameObject:

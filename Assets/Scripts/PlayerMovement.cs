@@ -28,38 +28,27 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Tooltip("Speed of which the player regains control of character after walljump/slopejump"), Range(0.0f, 4.0f)]
     private float m_RegainControl = 1.1f;
 
-    [Header("Camera Attributes")]
-    [SerializeField, Tooltip("FOV when player is using the speed ability"), Range(0.0f, 30.0f)]
-    private float m_SpeedFOV = 10.0f;
-    [SerializeField, Tooltip("Speed the camera adjusts the FOV"), Range(0.0f, 1.0f)]
-    private float m_SpeedSmoothFOV = 0.10f;
-    [SerializeField, Tooltip("Speed the camera adjusts the FOV to normal"), Range(0.0f, 1.0f)]
-    private float m_SpeedResetFOV = 0.20f;
-    [SerializeField, Tooltip("The boundary for downward velocity after shaking becomes visible"), Range(-30.0f, 0.0f)]
-    private float m_JumpShakeBounds = -20.0f;
-    [SerializeField, Tooltip("How long the camera should shake"), Range(0.0f, 2.0f)]
-    private float m_JumpShakeDuration = 0.15f;
-    [SerializeField, Tooltip("Amplitude of the shake"), Range(0.0f, 2.0f)]
-    private float m_JumpShakeAmount = 0.08f;
-    [SerializeField, Tooltip("The amplitude limit of the shake"), Range(0.0f, 2.0f)]
-    private float m_JumpShakeLimit = 0.20f;
+    [Header("Abilities Attributes")]
+    [SerializeField, Tooltip("Speed when using speed ability, stacks multiplicatively"), Range(0.0f, 5.0f)]
+    private float m_BoostSpeed = 17.5f;
+    [SerializeField, Tooltip("Speed when using dash ability"), Range(0.0f, 100.0f)]
+    private float m_DashSpeed = 50.0f;
+    [SerializeField, Tooltip("For how long the dash is active"), Range(0.0f, 10.0f)]
+    private float m_DashTime = 0.20f;
+    [SerializeField, Tooltip("Distance the player can hit objects when using strength ability"), Range(0.0f, 8.0f)]
+    private float m_PunchDistance = 5.0f;
 
     private CharacterController m_CharacterController;
-    private PlayerLook m_PlayerLook;
     private GameObject m_PreviousSlope;
     private GameObject m_CurrentSlope;
 
     private Vector3 m_Velocity;
     private Vector3 m_HitNormal;
-    private Vector3 m_MoveSpeed;
-    private Vector3 m_LastPos;
 
     private bool m_IsGrounded;
+    private bool m_CanJump;
     private bool m_CanSlopeJump;
-    private bool m_IsCameraShaking;
     private float m_SlopeLimit;
-    private float m_JumpShakeTimer;
-    private float m_JumpShakeAmplitude;
 
     public Vector3 Velocity { get => m_Velocity; set => m_Velocity = value; }
 
@@ -71,6 +60,11 @@ public class PlayerMovement : MonoBehaviour
     public float Gravity { get => m_Gravity; set => m_Gravity = value; }
     public float SlopeJump { get => m_SlopeJump; set => m_SlopeJump = value; }
 
+    public float BoostSpeed { get => m_BoostSpeed; }
+    public float DashSpeed { get => m_DashSpeed; }
+    public float DashTime { get => m_DashTime; }
+    public float PunchDistance { get => m_PunchDistance; }
+
     public float NormalSpeed { get; private set; }
     public float NormalJumpHeight { get; private set; }
     public float NormalSlopeJump { get; private set; }
@@ -78,20 +72,15 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         m_CharacterController = GetComponent<CharacterController>();
-        m_PlayerLook = GetComponentInChildren<PlayerLook>();
 
         m_Velocity = Vector3.zero;
         m_HitNormal = Vector3.zero;
-        m_MoveSpeed = Vector3.zero;
-        m_LastPos = transform.position;
 
         m_IsGrounded = false;
+        m_CanJump = true;
         m_CanSlopeJump = true;
-        m_IsCameraShaking = false;
 
         m_SlopeLimit = m_CharacterController.slopeLimit;
-        m_JumpShakeTimer = 0.0f;
-        m_JumpShakeAmplitude = 0.0f;
 
         NormalSpeed = m_Speed;
         NormalJumpHeight = m_JumpHeight;
@@ -100,11 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        m_MoveSpeed = transform.position - m_LastPos;
-        m_LastPos = transform.position;
-
         Movement();
-        CameraEffects();
         CollisionGround();
         CollisionEvents();
     }
@@ -139,12 +124,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpInput()
     {
-        if (m_CharacterController.isGrounded || m_CanSlopeJump)
+        if ((m_CharacterController.isGrounded && m_CanJump) || m_CanSlopeJump)
         {
             if (Input.GetButtonDown("Jump"))
             {
                 m_CharacterController.slopeLimit = 90.0f;
                 m_CanSlopeJump = false;
+                m_CanJump = false;
 
                 if (m_IsGrounded)
                 {
@@ -161,39 +147,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void CameraEffects()
-    {
-        //Speed Ability Effect
-        m_PlayerLook.FieldOfView = ((m_MoveSpeed.x != 0.0f || m_MoveSpeed.z != 0.0f) && m_Speed != NormalSpeed) ?
-            Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV +
-            Mathf.Clamp((m_MoveSpeed.magnitude / (m_Speed * Time.deltaTime)), 0.0f, 1.0f / (m_Speed * Time.deltaTime)) * m_SpeedFOV, m_SpeedSmoothFOV) :
-            Mathf.SmoothStep(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV, m_SpeedResetFOV);
-
-        //Jump Ability Effect
-        if (m_CharacterController.isGrounded)
-        {
-            if (!m_IsCameraShaking && m_Velocity.y < m_JumpShakeBounds)
-            {
-                m_IsCameraShaking = true;
-                m_JumpShakeTimer = m_JumpShakeDuration;
-
-                m_JumpShakeAmplitude = Mathf.Clamp((m_Velocity.y / m_JumpShakeBounds) * m_JumpShakeAmount, m_JumpShakeAmount, m_JumpShakeLimit);
-            }
-        }
-
-        if (m_IsCameraShaking && m_JumpShakeTimer > 0.0f)
-        {
-            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition + Random.insideUnitSphere * m_JumpShakeAmplitude;
-            m_JumpShakeTimer -= Time.deltaTime;
-        }
-        else
-        {
-            m_IsCameraShaking = false;
-            m_JumpShakeTimer = 0.0f;
-            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition;
-        }
-    }
-
     private void CollisionGround()
     {
         //If ground is tilted below slopelimit or not
@@ -202,11 +155,16 @@ public class PlayerMovement : MonoBehaviour
         if (m_CharacterController.isGrounded)
         {
             m_CharacterController.slopeLimit = m_SlopeLimit;
+            m_CanJump = m_IsGrounded;
 
             m_Velocity = Vector3.zero;
             m_Velocity.y = m_Gravity * Time.deltaTime;
 
-            if (!m_IsGrounded)
+            if (m_IsGrounded)
+            {
+                m_CanJump = true;
+            }
+            else
             {
                 //The downward direction of the slope
                 Vector3 slideDirection = -Vector3.Cross(Vector3.Cross(m_HitNormal, Vector3.up), m_HitNormal);
@@ -230,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
     private bool OnSlope()
     {
         return
-            m_IsGrounded &&
+            m_CanJump &&
             Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength) &&
             hit.normal != Vector3.up;
     }
@@ -238,10 +196,10 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// Returns a interval representation (0 to max) of the angle given in the assigned limit
     /// </summary>
-    private float AngleToValue(Vector3 anAngle, float aMax)
+    private float AngleToValue(Vector3 angle, float max)
     {
         //The more tilted the angle, the higher the return value
-        return ((Vector3.Angle(Vector3.up, anAngle) / 90.0f) * aMax);
+        return ((Vector3.Angle(Vector3.up, angle) / 90.0f) * max);
     }
 
     private bool OppositeSigns(float x, float y)
@@ -251,7 +209,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit objectHit)
     {
-        m_CurrentSlope = objectHit.gameObject;
         m_HitNormal = objectHit.normal;
 
         if (m_PreviousSlope != objectHit.gameObject && m_IsGrounded)
@@ -260,21 +217,25 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Bug fix, fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
-        if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        if (Physics.SphereCast(transform.position, m_CharacterController.radius - m_CharacterController.skinWidth, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
-            if (Vector3.Angle(Vector3.up, hit.normal) > m_SlopeLimit)
+            if (hit.collider == objectHit.collider)
             {
-                m_CharacterController.slopeLimit = m_SlopeLimit;
-
-                //Allow player to jump once on a slope higher than slopelimit
-                if (m_PreviousSlope != m_CurrentSlope)
+                m_CurrentSlope = objectHit.gameObject;
+                if (Vector3.Angle(Vector3.up, hit.normal) > m_SlopeLimit)
                 {
-                    m_CanSlopeJump = true;
+                    m_CharacterController.slopeLimit = m_SlopeLimit;
+
+                    //Allow player to jump once on a slope higher than slopelimit
+                    if (m_PreviousSlope != m_CurrentSlope)
+                    {
+                        m_CanSlopeJump = true;
+                    }
                 }
-            }
-            else
-            {
-                m_CanSlopeJump = false;
+                else
+                {
+                    m_CanSlopeJump = false;
+                }
             }
         }
     }
