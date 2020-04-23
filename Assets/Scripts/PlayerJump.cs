@@ -11,7 +11,6 @@ public class PlayerJump : PlayerAbility
         m_PlayerMovement = playerObject.GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     public override void Start()
     {
         m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight * m_PlayerMovement.HighJumpFactor;

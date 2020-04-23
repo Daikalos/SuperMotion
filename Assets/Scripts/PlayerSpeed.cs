@@ -11,7 +11,6 @@ public class PlayerSpeed : PlayerAbility
         m_PlayerMovement = playerObject.GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     public override void Start()
     {
         m_PlayerMovement.Speed = m_PlayerMovement.NormalSpeed * m_PlayerMovement.BoostSpeed;

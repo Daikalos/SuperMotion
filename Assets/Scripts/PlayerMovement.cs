@@ -11,8 +11,6 @@ public class PlayerMovement : MonoBehaviour
     private float m_Speed = 10.0f;
     [SerializeField, Tooltip("Jump height when pressing jump"), Range(0.0f, 30.0f)]
     private float m_JumpHeight = 4.3f;
-    [SerializeField, Tooltip(""), Range(0.0f, 5.0f)]
-    private float m_HighJumpFactor = 2.0f;
     [SerializeField, Tooltip("Speed to decrease player velocity when in air"), Range(-60.0f, 0.0f)]
     private float m_Gravity = -40.0f;
 
@@ -29,12 +27,14 @@ public class PlayerMovement : MonoBehaviour
     private float m_RegainControl = 1.1f;
 
     [Header("Abilities Attributes")]
-    [SerializeField, Tooltip("Speed when using speed ability, stacks multiplicatively"), Range(0.0f, 5.0f)]
-    private float m_BoostSpeed = 17.5f;
+    [SerializeField, Tooltip("Speed when using speed ability"), Range(0.0f, 5.0f)]
+    private float m_BoostSpeedFactor = 1.5f;
     [SerializeField, Tooltip("Speed when using dash ability"), Range(0.0f, 100.0f)]
     private float m_DashSpeed = 50.0f;
     [SerializeField, Tooltip("For how long the dash is active"), Range(0.0f, 10.0f)]
     private float m_DashTime = 0.20f;
+    [SerializeField, Tooltip("Height when using jump ability"), Range(0.0f, 5.0f)]
+    private float m_HighJumpFactor = 2.0f;
     [SerializeField, Tooltip("Distance the player can hit objects when using strength ability"), Range(0.0f, 8.0f)]
     private float m_PunchDistance = 5.0f;
 
@@ -56,13 +56,13 @@ public class PlayerMovement : MonoBehaviour
 
     public float Speed { get => m_Speed; set => m_Speed = value; }
     public float JumpHeight { get => m_JumpHeight; set => m_JumpHeight = value; }
-    public float HighJumpFactor { get => m_HighJumpFactor; set => m_HighJumpFactor = value; }
     public float Gravity { get => m_Gravity; set => m_Gravity = value; }
     public float SlopeJump { get => m_SlopeJump; set => m_SlopeJump = value; }
 
-    public float BoostSpeed { get => m_BoostSpeed; }
+    public float BoostSpeed { get => m_BoostSpeedFactor; }
     public float DashSpeed { get => m_DashSpeed; }
     public float DashTime { get => m_DashTime; }
+    public float HighJumpFactor { get => m_HighJumpFactor; }
     public float PunchDistance { get => m_PunchDistance; }
 
     public float NormalSpeed { get; private set; }

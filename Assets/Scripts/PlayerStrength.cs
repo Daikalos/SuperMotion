@@ -15,9 +15,6 @@ public class PlayerStrength : PlayerAbility
         m_CameraTransform = playerObject.GetComponentInChildren<PlayerLook>().CameraTransform;
     }
 
-    /// <summary>
-    /// Main update method for ability, called each frame
-    /// </summary>
     public override void Update()
     {
         if (Input.GetMouseButtonDown(0))
