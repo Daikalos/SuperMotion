@@ -3850,11 +3850,11 @@ MonoBehaviour:
   m_JumpHeight: 4.3
   m_Gravity: -40
   m_SlideSpeed: 15
-  m_SlopeRayLength: 1.5
+  m_SlopeRayLength: 2
   m_SlopeForce: 15
   m_SlopeJump: 40
   m_RegainControl: 1.1
-  m_BoostSpeedFactor: 1.5
+  m_BoostSpeedFactor: 2
   m_DashSpeed: 50
   m_DashTime: 0.2
   m_HighJumpFactor: 2
@@ -4416,7 +4416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2750845178733997570
 RectTransform:
   m_ObjectHideFlags: 0
