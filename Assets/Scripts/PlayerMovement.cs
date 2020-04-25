@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Abilities Attributes")]
     [SerializeField, Tooltip("Speed when using speed ability"), Range(0.0f, 5.0f)]
-    private float m_BoostSpeedFactor = 1.5f;
+    private float m_BoostSpeedFactor = 2.0f;
     [SerializeField, Tooltip("Speed when using dash ability"), Range(0.0f, 100.0f)]
     private float m_DashSpeed = 50.0f;
     [SerializeField, Tooltip("For how long the dash is active"), Range(0.0f, 10.0f)]
@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     public float Gravity { get => m_Gravity; set => m_Gravity = value; }
     public float SlopeJump { get => m_SlopeJump; set => m_SlopeJump = value; }
 
-    public float BoostSpeed { get => m_BoostSpeedFactor; }
+    public float BoostSpeedFactor { get => m_BoostSpeedFactor; }
     public float DashSpeed { get => m_DashSpeed; }
     public float DashTime { get => m_DashTime; }
     public float HighJumpFactor { get => m_HighJumpFactor; }

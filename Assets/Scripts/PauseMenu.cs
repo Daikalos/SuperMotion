@@ -26,10 +26,10 @@ public class PauseMenu : MonoBehaviour
         m_PauseMenu = transform.Find("PauseOptions").gameObject;
         m_ControlsMenu = transform.Find("ControlsMenu").gameObject;
 
-        m_ResumeButton.onClick.AddListener(ResumeButton);
-        m_ControlsButton.onClick.AddListener(ControlsButton);
-        m_MainMenuButton.onClick.AddListener(MainMenuButton);
-        m_BackButton.onClick.AddListener(BackButton);
+        m_ResumeButton.onClick.AddListener(ResumeGame);
+        m_ControlsButton.onClick.AddListener(OpenControls);
+        m_MainMenuButton.onClick.AddListener(OpenMainMenu);
+        m_BackButton.onClick.AddListener(Back);
 
         IsPaused = false;
 
@@ -45,11 +45,11 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            ResumeButton();
+            ResumeGame();
         }
     }
 
-    public void ResumeButton()
+    public void ResumeGame()
     {
         IsPaused = !IsPaused;
         Time.timeScale = 1.0f - Time.timeScale;
@@ -57,26 +57,24 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = IsPaused ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = IsPaused;
 
-        Debug.Log(m_HUD.activeSelf);
-
         m_HUD.SetActive(!IsPaused);
         m_PauseMenu.SetActive(IsPaused);
         m_ControlsMenu.SetActive(false);
     }
 
-    public void ControlsButton()
+    public void OpenControls()
     {
         m_PauseMenu.SetActive(false);
         m_ControlsMenu.SetActive(true);
     }
 
-    public void BackButton()
+    public void Back()
     {
         m_PauseMenu.SetActive(true);
         m_ControlsMenu.SetActive(false);
     }
 
-    public void MainMenuButton()
+    public void OpenMainMenu()
     {
         SceneManager.LoadScene("Main_Menu");
     }
