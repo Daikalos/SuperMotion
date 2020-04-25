@@ -244,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Physics.SphereCast(transform.position, m_CharacterController.radius - m_CharacterController.skinWidth, Vector3.down, out RaycastHit sphereHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit sphereHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
             if (rayHit.collider == null && m_IsGrounded)
             {
