@@ -12,10 +12,10 @@ public class PlayerAbilities : MonoBehaviour
 
     [SerializeField]
     private GameObject
-        m_SpeedText,
-        m_DashText,
-        m_JumpText, 
-        m_StrengthText;
+        m_SpeedText = null,
+        m_DashText = null,
+        m_JumpText = null, 
+        m_StrengthText = null;
     private GameObject m_PreviousText;
 
     public void Start()

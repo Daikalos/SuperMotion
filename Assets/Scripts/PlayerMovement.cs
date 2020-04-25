@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject m_CurrentSlope;
 
     private Vector3 m_Velocity;
-    private Vector3 m_HitNormal;
+    private Vector3 m_SlopeNormal;
 
     private bool m_IsGrounded;
     private bool m_CanJump;
@@ -74,11 +74,11 @@ public class PlayerMovement : MonoBehaviour
         m_CharacterController = GetComponent<CharacterController>();
 
         m_Velocity = Vector3.zero;
-        m_HitNormal = Vector3.zero;
+        m_SlopeNormal = Vector3.zero;
 
         m_IsGrounded = false;
         m_CanJump = true;
-        m_CanSlopeJump = true;
+        m_CanSlopeJump = true; 
 
         m_SlopeLimit = m_CharacterController.slopeLimit;
 
@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     //Jump in the direction of the slope normal
-                    m_Velocity = m_HitNormal * AngleToValue(m_HitNormal, m_SlopeJump);
+                    m_Velocity = m_SlopeNormal * AngleToValue(m_SlopeNormal, m_SlopeJump);
                     m_PreviousSlope = m_CurrentSlope;
                 }
                 AudioManager.instance.Play("Step");
@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
     private void CollisionGround()
     {
         //If ground is tilted below slopelimit or not
-        m_IsGrounded = (Vector3.Angle(Vector3.up, m_HitNormal) <= m_SlopeLimit) ? m_CharacterController.isGrounded : false;
+        m_IsGrounded = (Vector3.Angle(Vector3.up, m_SlopeNormal) <= m_SlopeLimit) ? m_CharacterController.isGrounded : false;
 
         if (m_CharacterController.isGrounded)
         {
@@ -160,15 +160,11 @@ public class PlayerMovement : MonoBehaviour
             m_Velocity = Vector3.zero;
             m_Velocity.y = m_Gravity * Time.deltaTime;
 
-            if (m_IsGrounded)
-            {
-                m_CanJump = true;
-            }
-            else
+            if (!m_IsGrounded)
             {
                 //The downward direction of the slope
-                Vector3 slideDirection = -Vector3.Cross(Vector3.Cross(m_HitNormal, Vector3.up), m_HitNormal);
-                m_CharacterController.Move(slideDirection * AngleToValue(m_HitNormal, m_SlideSpeed) * Time.deltaTime);
+                Vector3 slideDirection = -Vector3.Cross(Vector3.Cross(m_SlopeNormal, Vector3.up), m_SlopeNormal);
+                m_CharacterController.Move(slideDirection * AngleToValue(m_SlopeNormal, m_SlideSpeed) * Time.deltaTime);
             }
         }
     }
@@ -189,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
     {
         return
             m_CanJump &&
-            Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength) &&
+            Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength) &&
             hit.normal != Vector3.up;
     }
 
@@ -209,23 +205,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit objectHit)
     {
-        m_HitNormal = objectHit.normal;
-
         if (m_PreviousSlope != objectHit.gameObject && m_IsGrounded)
         {
             m_PreviousSlope = null;
         }
 
-        //Bug fix, fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
-        if (Physics.SphereCast(transform.position, m_CharacterController.radius - m_CharacterController.skinWidth, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit rayHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
-            if (hit.collider == objectHit.collider)
+            if (rayHit.collider == objectHit.collider)
             {
-                m_CurrentSlope = objectHit.gameObject;
-                if (Vector3.Angle(Vector3.up, hit.normal) > m_SlopeLimit)
+                if (Vector3.Angle(Vector3.up, rayHit.normal) > m_SlopeLimit)
                 {
-                    m_CharacterController.slopeLimit = m_SlopeLimit;
-
                     //Allow player to jump once on a slope higher than slopelimit
                     if (m_PreviousSlope != m_CurrentSlope)
                     {
@@ -236,6 +226,30 @@ public class PlayerMovement : MonoBehaviour
                 {
                     m_CanSlopeJump = false;
                 }
+            }
+        }
+
+        if (Physics.SphereCast(transform.position, m_CharacterController.radius - m_CharacterController.skinWidth, Vector3.down, out RaycastHit slopeHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        {
+            if (slopeHit.collider == objectHit.collider)
+            {
+                m_CurrentSlope = objectHit.gameObject;
+                m_SlopeNormal = objectHit.normal;
+            }
+
+            if (slopeHit.collider == objectHit.collider && m_Velocity.y > 0.0f)
+            {
+                //Fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
+                m_CharacterController.slopeLimit = m_SlopeLimit;
+            }
+        }
+
+        if (Physics.SphereCast(transform.position, m_CharacterController.radius - m_CharacterController.skinWidth, Vector3.down, out RaycastHit sphereHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        {
+            if (rayHit.collider == null && m_IsGrounded)
+            {
+                //Player slides off object when standing on edge
+                m_CharacterController.Move(sphereHit.normal * Time.deltaTime);
             }
         }
     }

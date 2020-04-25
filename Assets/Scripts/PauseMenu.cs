@@ -9,10 +9,10 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
     private Button 
-        m_ResumeButton,
-        m_ControlsButton,
-        m_MainMenuButton,
-        m_BackButton;
+        m_ResumeButton = null,
+        m_ControlsButton = null,
+        m_MainMenuButton = null,
+        m_BackButton = null;
 
     private GameObject m_HUD;
     private GameObject m_PauseMenu;
