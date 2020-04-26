@@ -6,7 +6,8 @@ public class DestructibleGlass : MonoBehaviour
 {
     [SerializeField, Tooltip("Force the glass shatters from impact point"), Range(0.0f, 800.0f)]
     private float m_ShatterForce = 150.0f;
-
+    
+    [Tooltip("Object to switch to when destroyed")]
     public GameObject m_DestroyedVersion;
 
     public void Shatter(Collider playerCollider, Vector3 hitDirection, RaycastHit rayHit)
@@ -17,6 +18,7 @@ public class DestructibleGlass : MonoBehaviour
         for (int i = 0; i < newObject.transform.childCount; i++)
         {
             Rigidbody childRigidBody = newObject.transform.GetChild(i).GetComponent<Rigidbody>();
+            Collider childCollider = newObject.transform.GetChild(i).GetComponent<Collider>();
 
             //Apply a force to each glass shard relative to direction and impact point
             float forceDistance = (1.0f / (childRigidBody.transform.position - rayHit.point).magnitude);
@@ -24,11 +26,11 @@ public class DestructibleGlass : MonoBehaviour
                 (hitDirection * forceDistance * m_ShatterForce) + 
                 (childRigidBody.transform.position - rayHit.point) * forceDistance * m_ShatterForce);
 
-            Physics.IgnoreCollision(childRigidBody.GetComponent<Collider>(), playerCollider);
+            Physics.IgnoreCollision(childCollider, playerCollider);
 
             //Fixes performance and jitter
-            Destroy(childRigidBody.GetComponent<Rigidbody>(), 10.0f);
-            Destroy(childRigidBody.GetComponent<Collider>(), 10.0f);
+            Destroy(childRigidBody, 10.0f);
+            Destroy(childCollider, 10.0f);
         }
 
         Destroy(gameObject);

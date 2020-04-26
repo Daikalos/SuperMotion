@@ -4,85 +4,96 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
-    private PlayerDash m_PlayerDash;
-    private PlayerJump m_PlayerJump;
-    private PlayerStrength m_PlayerStrength;
-    private PlayerSpeed m_PlayerSpeed;
+    private Dictionary<string, PlayerAbility> m_PlayerAbilites;
 
+    private StartAbility m_StartAbility;
+    private ExitAbility m_ExitAbility;
     private UpdateAbility m_UpdateAbility;
 
-    private PlayerMovement m_PlayerMovement;
-
-    public GameObject speedText, dashText, jumpText, strengthText;
-    private GameObject previousText;
+    [SerializeField]
+    private GameObject
+        m_SpeedText = null,
+        m_DashText = null,
+        m_JumpText = null, 
+        m_StrengthText = null;
+    private GameObject m_PreviousText;
 
     public void Start()
     {
-        m_PlayerDash = new PlayerDash(gameObject);
-        m_PlayerJump = new PlayerJump(gameObject);
-        m_PlayerStrength = new PlayerStrength(gameObject);
-        m_PlayerSpeed = new PlayerSpeed(gameObject);
+        m_PlayerAbilites = new Dictionary<string, PlayerAbility>();
+
+        m_PlayerAbilites.Add("Speed", new PlayerSpeed(gameObject));
+        m_PlayerAbilites.Add("Dash", new PlayerDash(gameObject));
+        m_PlayerAbilites.Add("Jump", new PlayerJump(gameObject));
+        m_PlayerAbilites.Add("Strength", new PlayerStrength(gameObject));
 
         //Standard at start
-        m_UpdateAbility = m_PlayerStrength.Update;
-        previousText = strengthText;
-
-        m_PlayerMovement = GetComponent<PlayerMovement>();
+        m_StartAbility = m_PlayerAbilites["Strength"].Start;
+        m_ExitAbility = m_PlayerAbilites["Strength"].Exit;
+        m_UpdateAbility = m_PlayerAbilites["Strength"].Update;
+        m_PreviousText = m_StrengthText;
     }
 
     void Update()
     {
         KeyInput();
 
-        m_UpdateAbility();
+        if (!PauseMenu.IsPaused) { m_UpdateAbility(); }
+
+        foreach (PlayerAbility ability in m_PlayerAbilites.Values)
+        {
+            ability.ConstantUpdate();
+        }
     }
 
     private void KeyInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (!PauseMenu.IsPaused)
         {
-            SetAbility(m_PlayerSpeed.Update);
-            AudioManager.instance.Play("AbilitySelect");
-            ActivateAbilityText(speedText);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetAbility(m_PlayerDash.Update);
-            AudioManager.instance.Play("AbilitySelect");
-            ActivateAbilityText(dashText);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetAbility(m_PlayerJump.Update);
-            AudioManager.instance.Play("AbilitySelect");
-            ActivateAbilityText(jumpText);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SetAbility(m_PlayerStrength.Update);
-            AudioManager.instance.Play("AbilitySelect");
-            ActivateAbilityText(strengthText);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetAbility("Speed");
+                ActivateAbilityText(m_SpeedText);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetAbility("Dash");
+                ActivateAbilityText(m_DashText);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SetAbility("Jump");
+                ActivateAbilityText(m_JumpText);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SetAbility("Strength");
+                ActivateAbilityText(m_StrengthText);
+            }
         }
     }
 
-    private void ResetValues()
+    private void SetAbility(string abilityName)
     {
-        m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight;
-        m_PlayerMovement.Speed = m_PlayerMovement.NormalSpeed;
-    }
+        m_ExitAbility();
 
-    private void SetAbility(UpdateAbility updateAbility)
-    {
-        ResetValues();
-        m_UpdateAbility = updateAbility;
+        m_StartAbility = m_PlayerAbilites[abilityName].Start;
+        m_ExitAbility = m_PlayerAbilites[abilityName].Exit;
+        m_UpdateAbility = m_PlayerAbilites[abilityName].Update;
+
+        m_StartAbility();
+
+        AudioManager.instance.Play("AbilitySelect");
     }
 
     private void ActivateAbilityText(GameObject text)
     {
-        previousText.gameObject.SetActive(false);
+        m_PreviousText.gameObject.SetActive(false);
         text.gameObject.SetActive(true);
-        previousText = text;
+        m_PreviousText = text;
     }
 
+    private delegate void StartAbility();
+    private delegate void ExitAbility();
     private delegate void UpdateAbility();
 }
