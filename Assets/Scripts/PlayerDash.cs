@@ -25,7 +25,6 @@ public class PlayerDash
         if (Input.GetMouseButtonDown(1))
         {
             m_PlayerMovement.Velocity += moveDirection * dashSpeed;
-            AudioManager.instance.Play("Dash");
         }
     }
 }
