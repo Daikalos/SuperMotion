@@ -193,7 +193,7 @@ public class SettingsManager : MonoBehaviour
         Screen.SetResolution(m_Resolutions[m_GameSettings.ResolutionIndex].width, m_Resolutions[m_GameSettings.ResolutionIndex].height, Screen.fullScreen);
         QualitySettings.masterTextureLimit = m_GameSettings.TextureQuality;
         QualitySettings.shadowResolution = (ShadowResolution)m_GameSettings.ShadowQuality;
-        QualitySettings.antiAliasing = (int)Mathf.Pow(2f, m_GameSettings.VerticalSync);
+        QualitySettings.antiAliasing = (int)Mathf.Pow(2f, m_GameSettings.AntiAliasing);
         QualitySettings.vSyncCount = m_GameSettings.VerticalSync;
         AudioListener.volume = m_GameSettings.MasterVolume;
     }
