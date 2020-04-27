@@ -53,6 +53,7 @@ public class PlayerDash : PlayerAbility
 
                     m_CanDash = false;
                 }
+                AudioManager.instance.Play("Dash");
             }
 
             if (m_DashTimer > 0.0f)
