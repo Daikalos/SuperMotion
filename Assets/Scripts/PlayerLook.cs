@@ -34,7 +34,7 @@ public class PlayerLook : MonoBehaviour
         m_YRotation = 0.0f;
         m_ZRotation = 0.0f;
         m_FieldOfView = Camera.main.fieldOfView;
-        m_MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity") * m_MouseSensitivity;
+        m_MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 1.0f) * m_MouseSensitivity;
 
         NormalFOV = m_FieldOfView;
 
