@@ -24,7 +24,7 @@ public class PlayerCameraEffects : MonoBehaviour
 
     [Header("Wall Running")]
     [SerializeField, Tooltip("Speed of which the camera moves towards the tilt value"), Range(0.0f, 50.0f)]
-    private float m_CameraTiltSpeed = 25.0f;
+    private float m_CameraTiltSpeed = 8.0f;
     [SerializeField, Tooltip("Angle in degrees camera rotates when wall running"), Range(0.0f, 90.0f)]
     private float m_CameraTilt = 25.0f;
 
@@ -39,6 +39,9 @@ public class PlayerCameraEffects : MonoBehaviour
     private bool m_IsCameraShaking;
     private float m_CameraShakeTimer;
     private float m_CameraShakeAmplitude;
+
+    public Vector3 Velocity { get; set; }
+    public bool CheckCameraShake { get; set; }
 
     void Start()
     {
@@ -77,15 +80,18 @@ public class PlayerCameraEffects : MonoBehaviour
 
     private void JumpAbility()
     {
-        if (m_CharacterController.isGrounded)
+        if (CheckCameraShake)
         {
-            if (!m_IsCameraShaking && m_PlayerMovement.Velocity.y < m_CameraShakeBounds)
+            if (!m_IsCameraShaking && Velocity.y < m_CameraShakeBounds)
             {
                 m_IsCameraShaking = true;
                 m_CameraShakeTimer = m_CameraShakeDuration;
 
                 m_CameraShakeAmplitude = Mathf.Clamp((m_PlayerMovement.Velocity.y / m_CameraShakeBounds) * m_CameraShakeAmount, m_CameraShakeAmount, m_CameraShakeLimit);
             }
+
+            Velocity = Vector3.zero;
+            CheckCameraShake = false;
         }
 
         if (m_IsCameraShaking && m_CameraShakeTimer > 0.0f)
@@ -105,11 +111,11 @@ public class PlayerCameraEffects : MonoBehaviour
     {
         if (m_PlayerWallRunning.CanWallRun() && m_PlayerWallRunning.enabled)
         {
-            m_PlayerLook.ZRotation = Mathf.SmoothStep(m_PlayerLook.ZRotation, m_CameraTilt * -m_PlayerWallRunning.MoveDirection, m_CameraTiltSpeed * Time.deltaTime);
+            m_PlayerLook.ZRotation = Mathf.LerpAngle(m_PlayerLook.ZRotation, m_CameraTilt * -m_PlayerWallRunning.MoveDirection, m_CameraTiltSpeed * Time.deltaTime);
         }
         else
         {
-            m_PlayerLook.ZRotation = Mathf.SmoothStep(m_PlayerLook.ZRotation, 0.0f, m_CameraTiltSpeed * Time.deltaTime);
+            m_PlayerLook.ZRotation = Mathf.LerpAngle(m_PlayerLook.ZRotation, 0.0f, m_CameraTiltSpeed * Time.deltaTime);
         }
     }
 }

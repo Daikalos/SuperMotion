@@ -39,11 +39,13 @@ public class PlayerMovement : MonoBehaviour
     private float m_PunchDistance = 5.0f;
 
     private CharacterController m_CharacterController;
+    private PlayerCameraEffects m_PlayerCameraEffects;
     private GameObject m_PreviousSlope;
     private GameObject m_CurrentSlope;
 
     private Vector3 m_Velocity;
     private Vector3 m_SlopeNormal;
+    private RaycastHit m_SlideOffEdge;
 
     private bool m_IsGrounded;
     private bool m_CanJump;
@@ -72,9 +74,11 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         m_CharacterController = GetComponent<CharacterController>();
+        m_PlayerCameraEffects = GetComponent<PlayerCameraEffects>();
 
         m_Velocity = Vector3.zero;
         m_SlopeNormal = Vector3.zero;
+        m_SlideOffEdge = new RaycastHit();
 
         m_IsGrounded = false;
         m_CanJump = true;
@@ -120,6 +124,12 @@ public class PlayerMovement : MonoBehaviour
             //Push character down to create smooth movement when walking down slopes
             m_CharacterController.Move(Vector3.down * (m_CharacterController.height / 2) * m_SlopeForce * Time.deltaTime);
         }
+
+        if (m_SlideOffEdge.collider != null)
+        {
+            //Player slides off object when standing on edge
+            m_CharacterController.Move(m_SlideOffEdge.normal * Time.deltaTime);
+        }
     }
 
     private void JumpInput()
@@ -156,6 +166,9 @@ public class PlayerMovement : MonoBehaviour
         {
             m_CharacterController.slopeLimit = m_SlopeLimit;
             m_CanJump = m_IsGrounded;
+
+            m_PlayerCameraEffects.Velocity = m_Velocity;
+            m_PlayerCameraEffects.CheckCameraShake = true;
 
             m_Velocity = Vector3.zero;
             m_Velocity.y = m_Gravity * Time.deltaTime;
@@ -244,12 +257,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        m_SlideOffEdge = new RaycastHit();
         if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit sphereHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
             if (rayHit.collider == null && m_IsGrounded)
             {
-                //Player slides off object when standing on edge
-                m_CharacterController.Move(sphereHit.normal * Time.deltaTime);
+                m_SlideOffEdge = sphereHit;
             }
         }
     }

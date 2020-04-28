@@ -84,11 +84,11 @@ public class PlayerWallRunning : MonoBehaviour
         //Find what direction to move; 1 = left, -1 = right
         Vector3 direction = Vector3.Cross(transform.forward, m_WallHit.normal);
         MoveDirection = (Vector3.Dot(direction, Vector3.up) > 0.0f) ? 1 : -1;
-        
-        m_CharacterController.Move(Vector3.Cross(m_WallHit.normal, Vector3.up) * MoveDirection * m_PlayerMovement.Speed * Time.deltaTime);
+
+        Vector3 moveCharacter = Vector3.Cross(m_WallHit.normal, Vector3.up) * MoveDirection * m_PlayerMovement.Speed;
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
-        m_CharacterController.Move(m_Velocity * Time.deltaTime);
+        m_CharacterController.Move((moveCharacter + m_Velocity) * Time.deltaTime);
     }
 
     private void WallJump()
@@ -118,7 +118,7 @@ public class PlayerWallRunning : MonoBehaviour
             if (Physics.Raycast(transform.position, Quaternion.AngleAxis(65.0f * i, Vector3.up) * transform.forward, out RaycastHit objectHit, m_CharacterController.radius + m_RayLength))
             {
                 //If wall is perpendicular to the ground and player is moving alongside the wall
-                if (Vector3.Dot(objectHit.normal, Vector3.up) == 0 && Vector3.Dot(m_MoveSpeed, transform.forward) > 0)
+                if (Vector3.Dot(objectHit.normal, Vector3.up) == 0 && Vector3.Dot(m_MoveSpeed, transform.forward) >= 0.0f)
                 {
                     if (objectHit.distance < wallDistance)
                     {

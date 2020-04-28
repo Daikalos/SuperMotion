@@ -30,7 +30,7 @@ public class PauseMenu : MonoBehaviour
         m_ControlsButton.onClick.AddListener(OpenControls);
         m_MainMenuButton.onClick.AddListener(OpenMainMenu);
         m_BackButton.onClick.AddListener(Back);
-
+        
         IsPaused = false;
 
         m_HUD.SetActive(!IsPaused);
@@ -76,6 +76,9 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenMainMenu()
     {
+        Time.timeScale = 1.0f;
+        IsPaused = false;
+
         SceneManager.LoadScene("Main_Menu");
     }
 }
