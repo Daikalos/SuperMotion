@@ -28,6 +28,12 @@ public class PlayerStrength : PlayerAbility
                     objectHit.collider.GetComponent<DestructibleGlass>().Shatter(m_PlayerCollider, m_CameraTransform.forward, objectHit);
                     AudioManager.instance.Play("BrokenGlass");
                 }
+
+                if (objectHit.collider.tag == "Ball")
+                {
+                    objectHit.collider.GetComponent<Rigidbody>().AddForce(m_CameraTransform.forward * 500.0f);
+                }
+
                 AudioManager.instance.Play("Hit");
             }
         }

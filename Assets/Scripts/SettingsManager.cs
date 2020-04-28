@@ -80,7 +80,7 @@ public class SettingsManager : MonoBehaviour
         //Predetermined values if PlayerPrefs does not exist
         QualitySettings.SetQualityLevel(5);
         m_MasterVolumeSlider.value = 0.4f;
-        m_MouseSensSlider.value = 0.35f;
+        m_MouseSensSlider.value = 1.0f;
 
         LoadSettings();
     }
