@@ -228,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit rayHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
-            if (rayHit.collider == objectHit.collider)
+            if (rayHit.collider == objectHit.collider && rayHit.normal == objectHit.normal)
             {
                 if (Vector3.Angle(Vector3.up, rayHit.normal) > m_SlopeLimit)
                 {
@@ -247,16 +247,22 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, m_CharacterController.radius - m_CharacterController.skinWidth, Vector3.down, out RaycastHit slopeHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
-            if (slopeHit.collider == objectHit.collider)
+            if (slopeHit.normal == objectHit.normal)
             {
-                m_CurrentSlope = objectHit.gameObject;
-                m_SlopeNormal = objectHit.normal;
-            }
+                if (slopeHit.collider == objectHit.collider)
+                {
+                    m_CurrentSlope = objectHit.gameObject;
+                    m_SlopeNormal = objectHit.normal;
+                }
 
-            if (slopeHit.collider == objectHit.collider && m_Velocity.y > 0.0f)
-            {
-                //Fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
-                m_CharacterController.slopeLimit = m_SlopeLimit;
+                if (slopeHit.collider == objectHit.collider && m_Velocity.y > 0.0f)
+                {
+                    //Fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
+                    m_CharacterController.slopeLimit = m_SlopeLimit;
+
+                    m_Velocity = Vector3.zero;
+                    m_Velocity.y = m_Gravity * Time.deltaTime;
+                }
             }
         }
 
