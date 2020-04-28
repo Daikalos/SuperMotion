@@ -31,7 +31,7 @@ public class PlayerStrength : PlayerAbility
 
                 if (objectHit.collider.tag == "Ball")
                 {
-                    objectHit.collider.GetComponent<Rigidbody>().AddForce(m_CameraTransform.forward * 500.0f);
+                    objectHit.collider.GetComponent<Rigidbody>().AddForce(m_CameraTransform.forward * m_PlayerMovement.PunchStrength);
                 }
 
                 AudioManager.instance.Play("Hit");

@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     private float m_HighJumpFactor = 2.0f;
     [SerializeField, Tooltip("Distance the player can hit objects when using strength ability"), Range(0.0f, 8.0f)]
     private float m_PunchDistance = 5.0f;
+    [SerializeField, Tooltip("How hard the player punches a moveable object"), Range(0.0f, 1500.0f)]
+    private float m_PunchStrength = 500.0f;
 
     private CharacterController m_CharacterController;
     private PlayerCameraEffects m_PlayerCameraEffects;
@@ -66,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
     public float DashTime { get => m_DashTime; }
     public float HighJumpFactor { get => m_HighJumpFactor; }
     public float PunchDistance { get => m_PunchDistance; }
+    public float PunchStrength { get => m_PunchStrength; }
 
     public float NormalSpeed { get; private set; }
     public float NormalJumpHeight { get; private set; }
