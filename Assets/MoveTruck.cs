@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class MoveTruck : MonoBehaviour
 {
-    public float m_speed = 2f;
+    [SerializeField, Tooltip("The spped of the truck"), Range(1f, 30f)]
+    public float m_Speed = 2f;
 
+    [Tooltip("The waypoints in the scene that you want the truck to move between")]
     public Transform[] wayPointArray;
 
-    int currentWayPoint;
-    Transform targetWayPoint;
-
+    int m_CurrentWayPoint;
+    Transform m_TargetWayPoint;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentWayPoint = 0;
+        m_CurrentWayPoint = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentWayPoint < wayPointArray.Length)
+        if (m_CurrentWayPoint < wayPointArray.Length)
         {
-            if (targetWayPoint == null)
+            if (m_TargetWayPoint == null)
             {
-                targetWayPoint = wayPointArray[currentWayPoint];
+                m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
             }
 
             Move();
@@ -33,32 +34,31 @@ public class MoveTruck : MonoBehaviour
         //  start at the first one again
         else
         {
-            currentWayPoint = 0;
-            targetWayPoint = wayPointArray[currentWayPoint];
+            m_CurrentWayPoint = 0;
+            m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
         }
     }
 
     void Move()
     {
         // rotate towards the target
-        transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, m_speed * Time.deltaTime, 0.0f);
+        transform.forward = Vector3.RotateTowards(transform.forward, m_TargetWayPoint.position - transform.position, m_Speed * Time.deltaTime, 0.0f);
 
         // move towards the target
-        transform.position = Vector3.MoveTowards(transform.position, targetWayPoint.position, m_speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, m_TargetWayPoint.position, m_Speed * Time.deltaTime);
 
-        if (transform.position == targetWayPoint.position)
+        if (transform.position == m_TargetWayPoint.position)
         {
-            currentWayPoint++;
-            Debug.Log(currentWayPoint.ToString());
+            m_CurrentWayPoint++;
 
             // osäker på varför jag måste ha det två ggr för att undvika felmeddelande
-            if (currentWayPoint >= wayPointArray.Length)
+            if (m_CurrentWayPoint >= wayPointArray.Length)
             {
-                targetWayPoint = wayPointArray[0];
+                m_TargetWayPoint = wayPointArray[0];
             }
             else
             {
-                targetWayPoint = wayPointArray[currentWayPoint];
+                m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
             }
         }
     }
