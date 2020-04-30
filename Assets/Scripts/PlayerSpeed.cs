@@ -13,7 +13,7 @@ public class PlayerSpeed : PlayerAbility
 
     public override void Start()
     {
-        m_PlayerMovement.Speed = m_PlayerMovement.NormalSpeed * m_PlayerMovement.BoostSpeed;
+        m_PlayerMovement.Speed = m_PlayerMovement.NormalSpeed * m_PlayerMovement.BoostSpeedFactor;
     }
 
     public override void Exit()
