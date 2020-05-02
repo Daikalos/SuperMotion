@@ -1361,8 +1361,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1899073642875571340}
-  - component: {fileID: 1899073642875571338}
-  - component: {fileID: 1899073642875571341}
   m_Layer: 5
   m_Name: ControlsMenu
   m_TagString: Untagged
@@ -1390,43 +1388,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -400, y: -100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1899073642875571338
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1899073642875571343}
-  m_CullTransparentMesh: 0
---- !u!114 &1899073642875571341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1899073642875571343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
 --- !u!1 &1899073642890355955
 GameObject:
   m_ObjectHideFlags: 0
@@ -3719,8 +3682,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -156, y: 147.5}
-  m_SizeDelta: {x: 753.2, y: 317.8}
+  m_AnchoredPosition: {x: -207.14992, y: 185}
+  m_SizeDelta: {x: 805.4, y: 341.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1899073643748761554
 CanvasRenderer:
@@ -3925,7 +3888,7 @@ GameObject:
   - component: {fileID: 1899073643797006586}
   - component: {fileID: 1899073643797006589}
   m_Layer: 5
-  m_Name: UI Canvas
+  m_Name: UICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3991,7 +3954,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4284,8 +4247,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -187.8}
-  m_SizeDelta: {x: 1272, y: 302.8}
+  m_AnchoredPosition: {x: -0.000030041, y: -213}
+  m_SizeDelta: {x: 1219.7, y: 359.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1899073644127259000
 CanvasRenderer:
@@ -4875,7 +4838,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 15.659912, y: -15.950928}
+  m_AnchoredPosition: {x: 15.660156, y: -15.950989}
   m_SizeDelta: {x: 131.32, y: 131.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1899073644411460115
@@ -4912,8 +4875,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 386, y: 147.5}
-  m_SizeDelta: {x: 192.1, y: 291.8}
+  m_AnchoredPosition: {x: 416.2, y: 177.98}
+  m_SizeDelta: {x: 239.1, y: 356}
   m_Pivot: {x: 0.49999958, y: 0.49999994}
 --- !u!222 &1899073644411460126
 CanvasRenderer:
@@ -5140,10 +5103,10 @@ RectTransform:
   m_Father: {fileID: 1899073642875571340}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1.4899902}
-  m_SizeDelta: {x: 0, y: -237.22}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 1.49}
+  m_SizeDelta: {x: 1300, y: 842.78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1899073644454522843
 CanvasRenderer:
@@ -5166,7 +5129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

@@ -2225,11 +2225,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 1899073644389860059, guid: 9888fedbffbd21d4e87b31bfd9b4845f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -15.95105
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
 --- !u!1001 &8197853284666617739
