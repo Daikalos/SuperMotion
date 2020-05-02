@@ -17,7 +17,7 @@ public class PlayerLook : MonoBehaviour
 
     public Transform CameraTransform { get => Camera.main.transform; }
 
-    public Vector3 OriginalPosition { get; private set; }
+    public Vector3 StartPosition { get; private set; }
 
     public float ZRotation { get => m_ZRotation; set => m_ZRotation = value; }
     public float FieldOfView { get => m_FieldOfView; set => m_FieldOfView = value; }
@@ -36,9 +36,8 @@ public class PlayerLook : MonoBehaviour
         m_FieldOfView = Camera.main.fieldOfView;
         m_MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 1.0f) * m_MouseSensitivity;
 
+        StartPosition = Camera.main.transform.localPosition;
         NormalFOV = m_FieldOfView;
-
-        OriginalPosition = Camera.main.transform.localPosition;
     }
 
     private void Update()

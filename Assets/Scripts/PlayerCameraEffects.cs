@@ -96,14 +96,14 @@ public class PlayerCameraEffects : MonoBehaviour
 
         if (m_IsCameraShaking && m_CameraShakeTimer > 0.0f)
         {
-            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition + Random.insideUnitSphere * m_CameraShakeAmplitude;
+            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.StartPosition + Random.insideUnitSphere * m_CameraShakeAmplitude;
             m_CameraShakeTimer -= Time.deltaTime;
         }
         else
         {
             m_IsCameraShaking = false;
             m_CameraShakeTimer = 0.0f;
-            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.OriginalPosition;
+            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.StartPosition;
         }
     }
 
