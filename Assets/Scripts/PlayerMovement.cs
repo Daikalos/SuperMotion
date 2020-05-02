@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
                     m_Velocity = m_SlopeNormal * AngleToValue(m_SlopeNormal, m_SlopeJump);
                     m_PreviousSlope = m_CurrentSlope;
                 }
-                AudioManager.instance.Play("Step");
+                AudioManager.m_Instance.Play("Step");
             }
         }
     }

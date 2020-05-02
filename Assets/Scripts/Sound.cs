@@ -5,16 +5,16 @@ using UnityEngine;
 [System.Serializable]
 public class Sound
 {
-    public string name;
+    public string m_Name;
 
-    public AudioClip clip;
+    public AudioClip m_Clip;
 
     [Range(0f, 1f)]
-    public float volume;
+    public float m_Volume;
     [Range(0.1f, 3f)]
-    public float pitch;
+    public float m_Pitch;
 
-    public bool loop;
+    public bool m_Loop;
 
     [HideInInspector]
     public AudioSource source;

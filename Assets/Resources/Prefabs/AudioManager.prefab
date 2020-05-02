@@ -43,46 +43,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6afb7af1df8bc64094c4f7c248057db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - name: Fist
-    clip: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
+  m_Sounds:
+  - m_Name: AbilitySelect
+    m_Clip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+    m_Volume: 0.491
+    m_Pitch: 1.02
+    m_Loop: 0
     source: {fileID: 0}
-  - name: Speed
-    clip: {fileID: 8300000, guid: 35fbad8cdde724f11ba6481f1e64af71, type: 3}
-    volume: 0.543
-    pitch: 1
-    loop: 0
+  - m_Name: Fist
+    m_Clip: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+    m_Volume: 0.491
+    m_Pitch: 1.02
+    m_Loop: 0
     source: {fileID: 0}
-  - name: Jump
-    clip: {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
-    volume: 0.433
-    pitch: 1
-    loop: 0
+  - m_Name: Hit
+    m_Clip: {fileID: 8300000, guid: b43d102aac6b145468dcaa94a5cccae1, type: 3}
+    m_Volume: 0.491
+    m_Pitch: 1.02
+    m_Loop: 0
     source: {fileID: 0}
-  - name: AbilitySelect
-    clip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
-    volume: 0.486
-    pitch: 1
-    loop: 0
+  - m_Name: BrokenGlass
+    m_Clip: {fileID: 8300000, guid: 6094342b3c23e304d8ea8a784897270b, type: 3}
+    m_Volume: 0.491
+    m_Pitch: 1.02
+    m_Loop: 0
     source: {fileID: 0}
-  - name: BrokenGlass
-    clip: {fileID: 8300000, guid: 6094342b3c23e304d8ea8a784897270b, type: 3}
-    volume: 0.699
-    pitch: 1
-    loop: 0
+  - m_Name: Step
+    m_Clip: {fileID: 8300000, guid: 07902d35c76dec04495ae89be0bca886, type: 3}
+    m_Volume: 0.491
+    m_Pitch: 1.02
+    m_Loop: 0
     source: {fileID: 0}
-  - name: Hit
-    clip: {fileID: 8300000, guid: b43d102aac6b145468dcaa94a5cccae1, type: 3}
-    volume: 0.699
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Step
-    clip: {fileID: 8300000, guid: 07902d35c76dec04495ae89be0bca886, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
+  - m_Name: Dash
+    m_Clip: {fileID: 8300000, guid: 33e88b5ba22c10f4f8a24a2ae98389af, type: 3}
+    m_Volume: 0.491
+    m_Pitch: 1.02
+    m_Loop: 0
     source: {fileID: 0}

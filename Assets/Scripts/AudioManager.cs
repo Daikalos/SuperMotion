@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public Sound[] sounds;
+    public Sound[] m_Sounds;
 
-    public static AudioManager instance;
+    public static AudioManager m_Instance;
 
     void Awake()
     {
-        if (instance == null)
+        if (m_Instance == null)
         {
-            instance = this;
+            m_Instance = this;
         }
         else
         {
@@ -22,19 +22,19 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        foreach (Sound sound in sounds)
+        foreach (Sound sound in m_Sounds)
         {
             sound.source = gameObject.AddComponent<AudioSource>();
-            sound.source.clip = sound.clip;
+            sound.source.clip = sound.m_Clip;
 
-            sound.source.volume = sound.volume;
-            sound.source.pitch = sound.pitch;
-            sound.source.loop = sound.loop;
+            sound.source.volume = sound.m_Volume;
+            sound.source.pitch = sound.m_Pitch;
+            sound.source.loop = sound.m_Loop;
         }
     }
     public void Play(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(m_Sounds, sound => sound.m_Name == name);
         s.source.Play();
     }
 }

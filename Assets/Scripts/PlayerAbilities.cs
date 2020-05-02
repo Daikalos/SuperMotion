@@ -83,7 +83,7 @@ public class PlayerAbilities : MonoBehaviour
 
         m_StartAbility();
 
-        AudioManager.instance.Play("AbilitySelect");
+        AudioManager.m_Instance.Play("AbilitySelect");
     }
 
     private void ActivateAbilityText(GameObject text)
