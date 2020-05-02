@@ -14,7 +14,7 @@ public class EnemyUpdate : MonoBehaviour
     [SerializeField, Tooltip("Distance the enemy checks for target"), Range(0.0f, 300.0f)]
     private float m_TargetDistance = 50.0f;
     [SerializeField, Tooltip("Extent of the field the enemy can see in degrees"), Range(0.0f, 360.0f)]
-    private float m_FieldOfView = 75.0f;
+    private float m_FieldOfView = 170.0f;
     [SerializeField, Tooltip("Wait time until enemy returns to normal state after having spotted a target"), Range(0.0f, 15.0f)]
     private float m_LostTargetDelay = 3.0f;
     [SerializeField, Tooltip("Speed the enemy rotates towards player"), Range(0.0f, 15.0f)]
