@@ -77,6 +77,7 @@ public class PlayerDash : PlayerAbility
             m_PlayerMovement.enabled = true;
             m_PlayerWallRunning.enabled = true;
 
+            m_DashTimer = 0.0f;
             m_MoveDirection = Vector3.zero;
         }
     }

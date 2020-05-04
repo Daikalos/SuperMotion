@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    public Text m_Timer;
+    [Tooltip("TextMeshProUGUI Object to display the timer")]
+    public TextMeshProUGUI m_Timer;
+
     private float m_StartTime;
 
     void Start()
@@ -20,6 +23,6 @@ public class Timer : MonoBehaviour
         string minutes = ((int)t / 60).ToString();
         string seconds = (t % 60).ToString("f2");
 
-        m_Timer.text = minutes + ":" + seconds;
+        m_Timer.SetText(minutes + ":" + seconds);
     }
 }

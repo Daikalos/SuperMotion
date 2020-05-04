@@ -14,10 +14,12 @@ public class PlayerJump : PlayerAbility
     public override void Start()
     {
         m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight * m_PlayerMovement.HighJumpFactor;
+        m_PlayerMovement.SlopeJump = m_PlayerMovement.NormalSlopeJump * m_PlayerMovement.SlopeHighJumpFactor;
     }
 
     public override void Exit()
     {
         m_PlayerMovement.JumpHeight = m_PlayerMovement.NormalJumpHeight;
+        m_PlayerMovement.SlopeJump = m_PlayerMovement.NormalSlopeJump;
     }
 }

@@ -33,8 +33,10 @@ public class PlayerMovement : MonoBehaviour
     private float m_DashSpeed = 50.0f;
     [SerializeField, Tooltip("For how long the dash is active"), Range(0.0f, 10.0f)]
     private float m_DashTime = 0.20f;
-    [SerializeField, Tooltip("Height when using jump ability"), Range(0.0f, 5.0f)]
+    [SerializeField, Tooltip("Height when using jump ability"), Range(0.0f, 6.0f)]
     private float m_HighJumpFactor = 2.0f;
+    [SerializeField, Tooltip("Height when using jump ability when on slope"), Range(0.0f, 6.0f)]
+    private float m_SlopeHighJumpFactor = 1.5f;
     [SerializeField, Tooltip("Distance the player can hit objects when using strength ability"), Range(0.0f, 8.0f)]
     private float m_PunchDistance = 5.0f;
     [SerializeField, Tooltip("How hard the player punches a moveable object"), Range(0.0f, 1500.0f)]
@@ -67,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
     public float DashSpeed { get => m_DashSpeed; }
     public float DashTime { get => m_DashTime; }
     public float HighJumpFactor { get => m_HighJumpFactor; }
+    public float SlopeHighJumpFactor { get => m_SlopeHighJumpFactor; }
     public float PunchDistance { get => m_PunchDistance; }
     public float PunchStrength { get => m_PunchStrength; }
 
@@ -115,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
             Mathf.Lerp(m_Velocity.x, moveDirection.x, m_RegainControl * Time.deltaTime) : m_Velocity.x;
         m_Velocity.z = ((m_Velocity.x != 0 || m_Velocity.z != 0) && (OppositeSigns(m_Velocity.z, moveDirection.z) || Mathf.Abs(m_Velocity.z) < Mathf.Abs(moveDirection.z)) && moveDirection.z != 0) ? 
             Mathf.Lerp(m_Velocity.z, moveDirection.z, m_RegainControl * Time.deltaTime) : m_Velocity.z;
-        
+
         //Turn off movement after walljump/slopejump
         moveDirection *= ((m_Velocity.x != 0 || m_Velocity.z != 0) ? 0.0f : 1.0f);
 
@@ -130,8 +133,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (m_SlideOffEdge.collider != null)
         {
-            //Player slides off object when standing on edge
-            m_CharacterController.Move(m_SlideOffEdge.normal * Time.deltaTime);
+            //Player slides off object when standing over edge
+            m_CharacterController.Move(new Vector3(m_SlideOffEdge.normal.x, 0.0f, m_SlideOffEdge.normal.z).normalized * Time.deltaTime);
         }
     }
 
@@ -141,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
+                //Set to 90 degrees to fix jitter issue when jumping next to a object
                 m_CharacterController.slopeLimit = 90.0f;
                 m_CanSlopeJump = false;
                 m_CanJump = false;
@@ -167,11 +171,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (m_CharacterController.isGrounded)
         {
-            m_CharacterController.slopeLimit = m_SlopeLimit;
-            m_CanJump = m_IsGrounded;
-
             m_PlayerCameraEffects.Velocity = m_Velocity;
             m_PlayerCameraEffects.CheckCameraShake = true;
+
+            m_CharacterController.slopeLimit = m_SlopeLimit;
+            m_CanJump = m_IsGrounded;
 
             m_Velocity = Vector3.zero;
             m_Velocity.y = m_Gravity * Time.deltaTime;
@@ -206,7 +210,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a interval representation (0 to max) of the angle given in the assigned limit
+    /// Returns a interval representation (0 to max) of the angle
     /// </summary>
     private float AngleToValue(Vector3 angle, float max)
     {
@@ -245,19 +249,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Physics.SphereCast(transform.position, m_CharacterController.radius - m_CharacterController.skinWidth, Vector3.down, out RaycastHit slopeHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit slopeHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
+            if (slopeHit.collider == objectHit.collider)
+            {
+                m_CurrentSlope = objectHit.gameObject;
+                m_SlopeNormal = objectHit.normal;
+            }
+
             if (slopeHit.normal == objectHit.normal)
             {
-                if (slopeHit.collider == objectHit.collider)
-                {
-                    m_CurrentSlope = objectHit.gameObject;
-                    m_SlopeNormal = objectHit.normal;
-                }
-
+                //Fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
                 if (slopeHit.collider == objectHit.collider && m_Velocity.y > 0.0f)
                 {
-                    //Fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
                     m_CharacterController.slopeLimit = m_SlopeLimit;
 
                     m_Velocity = Vector3.zero;
