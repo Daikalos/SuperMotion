@@ -6,13 +6,13 @@ public class PlayerStrength : PlayerAbility
 {
     private readonly PlayerMovement m_PlayerMovement;
     private readonly Collider m_PlayerCollider;
-    private readonly Transform m_CameraTransform;
+    private readonly Camera m_Camera;
 
     public PlayerStrength(GameObject playerObject)
     {
         m_PlayerMovement = playerObject.GetComponent<PlayerMovement>();
         m_PlayerCollider = playerObject.GetComponent<Collider>();
-        m_CameraTransform = playerObject.GetComponentInChildren<PlayerLook>().CameraTransform;
+        m_Camera = playerObject.GetComponentInChildren<PlayerLook>().MainCamera;
     }
 
     public override void Update()
@@ -21,17 +21,22 @@ public class PlayerStrength : PlayerAbility
         {
             AudioManager.instance.Play("Fist");
 
-            if (Physics.Raycast(m_CameraTransform.position, m_CameraTransform.forward, out RaycastHit objectHit, m_PlayerMovement.PunchDistance))
+            if (Physics.Raycast(m_Camera.transform.position, m_Camera.transform.forward, out RaycastHit objectHit, m_PlayerMovement.PunchDistance))
             {
                 if (objectHit.collider.tag == "Glass")
                 {
-                    objectHit.collider.GetComponent<DestructibleGlass>().Shatter(m_PlayerCollider, m_CameraTransform.forward, objectHit);
+                    objectHit.collider.GetComponent<DestructibleGlass>().Shatter(m_PlayerCollider, m_Camera.transform.forward, objectHit);
                     AudioManager.instance.Play("BrokenGlass");
                 }
 
                 if (objectHit.collider.tag == "Ball")
                 {
-                    objectHit.collider.GetComponent<Rigidbody>().AddForce(m_CameraTransform.forward * m_PlayerMovement.PunchStrength);
+                    objectHit.collider.GetComponent<Rigidbody>().AddForce(m_Camera.transform.forward * m_PlayerMovement.PunchStrength);
+                }
+                
+                if (objectHit.collider.tag == "Enemy")
+                {
+
                 }
 
                 AudioManager.instance.Play("Hit");

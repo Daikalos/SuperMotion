@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCameraEffects : MonoBehaviour
+public class PlayerEffects : MonoBehaviour
 {
     [Header("Speed Ability")]
     [SerializeField, Tooltip("FOV when player is using the speed ability"), Range(0.0f, 30.0f)]
@@ -12,15 +12,19 @@ public class PlayerCameraEffects : MonoBehaviour
     [SerializeField, Tooltip("Speed the camera adjusts the FOV to normal"), Range(0.0f, 50.0f)]
     private float m_SpeedResetFOV = 6.0f;
 
-    [Header("Jump Ability")]
-    [SerializeField, Tooltip("The boundary for downward velocity after shaking becomes visible"), Range(-30.0f, 0.0f)]
-    private float m_CameraShakeBounds = -20.0f;
-    [SerializeField, Tooltip("How long the camera should shake"), Range(0.0f, 2.0f)]
-    private float m_CameraShakeDuration = 0.15f;
-    [SerializeField, Tooltip("Amplitude of the shake"), Range(0.0f, 2.0f)]
-    private float m_CameraShakeAmount = 0.08f;
-    [SerializeField, Tooltip("The amplitude limit of the shake"), Range(0.0f, 2.0f)]
-    private float m_CameraShakeLimit = 0.20f;
+    [Header("Land Effects")]
+    [SerializeField]
+    private ParticleSystem m_ParticleDustEffect = null;
+    [SerializeField, Tooltip("The boundary for downward velocity after landing effects becomes active"), Range(-60.0f, 0.0f)]
+    private float m_LandEffectBounds = -20.0f;
+    [SerializeField, Tooltip("How fast the head bob occurs"), Range(0.0f, 30.0f)]
+    private float m_HeadBobSpeed = 12.0f;
+    [SerializeField, Tooltip("Amplitude of how far down the camera goes"), Range(0.0f, 2.0f)]
+    private float m_HeadBobAmplitude = 0.26f;
+    [SerializeField]
+    private int m_ParticleCountMin = 10;
+    [SerializeField]
+    private int m_ParticleCountMax = 18;
 
     [Header("Wall Running")]
     [SerializeField, Tooltip("Speed of which the camera moves towards the tilt value"), Range(0.0f, 50.0f)]
@@ -32,16 +36,14 @@ public class PlayerCameraEffects : MonoBehaviour
     private PlayerMovement m_PlayerMovement;
     private PlayerWallRunning m_PlayerWallRunning;
     private PlayerLook m_PlayerLook;
+    private Camera m_Camera;
 
+    private Vector3 m_Velocity;
     private Vector3 m_MoveSpeed;
     private Vector3 m_LastPos;
 
-    private bool m_IsCameraShaking;
-    private float m_CameraShakeTimer;
-    private float m_CameraShakeAmplitude;
-
-    public Vector3 Velocity { get; set; }
-    public bool CheckCameraShake { get; set; }
+    private bool m_StartHeadBob;
+    private float m_HeadBobCounter;
 
     void Start()
     {
@@ -49,10 +51,10 @@ public class PlayerCameraEffects : MonoBehaviour
         m_PlayerMovement = GetComponent<PlayerMovement>();
         m_PlayerWallRunning = GetComponent<PlayerWallRunning>();
         m_PlayerLook = GetComponentInChildren<PlayerLook>();
+        m_Camera = m_PlayerLook.MainCamera;
 
-        m_IsCameraShaking = false;
-        m_CameraShakeTimer = 0.0f;
-        m_CameraShakeAmplitude = 0.0f;
+        m_StartHeadBob = false;
+        m_HeadBobCounter = 0.0f;
     }
 
     void Update()
@@ -61,50 +63,56 @@ public class PlayerCameraEffects : MonoBehaviour
         m_LastPos = transform.position;
 
         SpeedAbility();
-        JumpAbility();
+        LandingEffect();
         WallRunning();
     }
 
     private void SpeedAbility()
     {
+        //If player is moving and is using speed ability
         if ((m_MoveSpeed.x != 0.0f || m_MoveSpeed.z != 0.0f) && m_PlayerMovement.Speed != m_PlayerMovement.NormalSpeed)
         {
+            //Assign new fov by the magnitude of the player's movement
             float newFOV = Mathf.Clamp((m_CharacterController.velocity.magnitude / m_PlayerMovement.Speed) * m_SpeedFOV, 0.0f, m_SpeedFOV);
             m_PlayerLook.FieldOfView = Mathf.Lerp(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV + newFOV, m_SpeedSmoothFOV * Time.deltaTime);
         }
         else
         {
+            //Reset fov to normal when not moving or not using ability
             m_PlayerLook.FieldOfView = Mathf.Lerp(m_PlayerLook.FieldOfView, m_PlayerLook.NormalFOV, m_SpeedResetFOV * Time.deltaTime);
         }
     }
 
-    private void JumpAbility()
+    private void LandingEffect()
     {
-        if (CheckCameraShake)
+        if (m_Velocity.y < m_LandEffectBounds)
         {
-            if (!m_IsCameraShaking && Velocity.y < m_CameraShakeBounds)
+            m_StartHeadBob = true;
+            m_ParticleDustEffect.Emit(Random.Range(m_ParticleCountMin, m_ParticleCountMax));
+        }
+
+        if (m_StartHeadBob)
+        {
+            if (m_HeadBobCounter < Mathf.PI)
             {
-                m_IsCameraShaking = true;
-                m_CameraShakeTimer = m_CameraShakeDuration;
-
-                m_CameraShakeAmplitude = Mathf.Clamp((m_PlayerMovement.Velocity.y / m_CameraShakeBounds) * m_CameraShakeAmount, m_CameraShakeAmount, m_CameraShakeLimit);
+                m_HeadBobCounter += m_HeadBobSpeed * Time.deltaTime;
+                m_Camera.transform.localPosition = m_PlayerLook.CameraStartPos + Vector3.down * (Mathf.Sin(m_HeadBobCounter) * m_HeadBobAmplitude);
             }
+            else
+            {
+                m_Camera.transform.localPosition = m_PlayerLook.CameraStartPos;
 
-            Velocity = Vector3.zero;
-            CheckCameraShake = false;
+                m_StartHeadBob = false;
+                m_HeadBobCounter = 0;
+            }
         }
 
-        if (m_IsCameraShaking && m_CameraShakeTimer > 0.0f)
-        {
-            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.StartPosition + Random.insideUnitSphere * m_CameraShakeAmplitude;
-            m_CameraShakeTimer -= Time.deltaTime;
-        }
-        else
-        {
-            m_IsCameraShaking = false;
-            m_CameraShakeTimer = 0.0f;
-            m_PlayerLook.CameraTransform.localPosition = m_PlayerLook.StartPosition;
-        }
+        m_Velocity = Vector3.zero;
+    }
+
+    public void CheckLandingEffect(Vector3 velocity)
+    {
+        m_Velocity = velocity;
     }
 
     private void WallRunning()
