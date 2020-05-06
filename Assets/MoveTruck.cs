@@ -17,6 +17,7 @@ public class MoveTruck : MonoBehaviour
     void Start()
     {
         m_CurrentWayPoint = 0;
+        m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
     }
 
     // Update is called once per frame
@@ -24,18 +25,7 @@ public class MoveTruck : MonoBehaviour
     {
         if (m_CurrentWayPoint < wayPointArray.Length)
         {
-            if (m_TargetWayPoint == null)
-            {
-                m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
-            }
-
             Move();
-        }
-        //  start at the first one again
-        else
-        {
-            m_CurrentWayPoint = 0;
-            m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
         }
     }
 
@@ -54,12 +44,10 @@ public class MoveTruck : MonoBehaviour
             // osäker på varför jag måste ha det två ggr för att undvika felmeddelande
             if (m_CurrentWayPoint >= wayPointArray.Length)
             {
-                m_TargetWayPoint = wayPointArray[0];
+                m_CurrentWayPoint = 0;
             }
-            else
-            {
-                m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
-            }
+
+            m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
         }
     }
 }
