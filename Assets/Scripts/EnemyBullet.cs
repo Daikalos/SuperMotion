@@ -18,7 +18,6 @@ public class EnemyBullet : MonoBehaviour
         {
             if (other.tag == "Player")
             {
-                GameManager.Instance.SetState(GameState.GameOver);
                 Destroy(gameObject);
             }
             else

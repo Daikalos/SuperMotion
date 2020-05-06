@@ -36,39 +36,40 @@ public class PlayerAbilities : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.GameState == GameState.Playing)
-        {
-            KeyInput();
-            m_UpdateAbility();
+        KeyInput();
 
-            foreach (PlayerAbility ability in m_PlayerAbilites.Values)
-            {
-                ability.ConstantUpdate();
-            }
+        if (!PauseMenu.IsPaused) { m_UpdateAbility(); }
+
+        foreach (PlayerAbility ability in m_PlayerAbilites.Values)
+        {
+            ability.ConstantUpdate();
         }
     }
 
     private void KeyInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (!PauseMenu.IsPaused)
         {
-            SetAbility("Speed");
-            ActivateAbilityText(m_SpeedText);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetAbility("Dash");
-            ActivateAbilityText(m_DashText);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetAbility("Jump");
-            ActivateAbilityText(m_JumpText);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SetAbility("Strength");
-            ActivateAbilityText(m_StrengthText);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetAbility("Speed");
+                ActivateAbilityText(m_SpeedText);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetAbility("Dash");
+                ActivateAbilityText(m_DashText);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SetAbility("Jump");
+                ActivateAbilityText(m_JumpText);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SetAbility("Strength");
+                ActivateAbilityText(m_StrengthText);
+            }
         }
     }
 

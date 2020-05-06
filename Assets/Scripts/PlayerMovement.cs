@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     private float m_PunchStrength = 500.0f;
 
     private CharacterController m_CharacterController;
-    private PlayerEffects m_PlayerEffects;
+    private PlayerCameraEffects m_PlayerCameraEffects;
     private GameObject m_PreviousSlope;
     private GameObject m_CurrentSlope;
 
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         m_CharacterController = GetComponent<CharacterController>();
-        m_PlayerEffects = GetComponent<PlayerEffects>();
+        m_PlayerCameraEffects = GetComponent<PlayerCameraEffects>();
 
         m_Velocity = Vector3.zero;
         m_SlopeNormal = Vector3.zero;
@@ -171,12 +171,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (m_CharacterController.isGrounded)
         {
-            m_PlayerEffects.CheckLandingEffect(m_Velocity);
+            m_PlayerCameraEffects.Velocity = m_Velocity;
+            m_PlayerCameraEffects.CheckCameraShake = true;
 
             m_CharacterController.slopeLimit = m_SlopeLimit;
             m_CanJump = m_IsGrounded;
 
-            m_Velocity = new Vector3(0, m_Gravity * Time.deltaTime, 0);
+            m_Velocity = Vector3.zero;
+            m_Velocity.y = m_Gravity * Time.deltaTime;
 
             if (!m_IsGrounded)
             {
@@ -247,33 +249,33 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit sphereHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit slopeHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
-            if (sphereHit.collider == objectHit.collider)
+            if (slopeHit.collider == objectHit.collider)
             {
                 m_CurrentSlope = objectHit.gameObject;
                 m_SlopeNormal = objectHit.normal;
             }
 
-            if (sphereHit.normal == objectHit.normal)
+            if (slopeHit.normal == objectHit.normal)
             {
                 //Fixes when player attempts to jump up a steep slope when slopelimit is set to 90 degrees when jumping, need further testing
-                if (sphereHit.collider == objectHit.collider && m_Velocity.y > 0.0f)
+                if (slopeHit.collider == objectHit.collider && m_Velocity.y > 0.0f)
                 {
                     m_CharacterController.slopeLimit = m_SlopeLimit;
 
-                    m_Velocity = new Vector3(0, m_Gravity * Time.deltaTime, 0);
+                    m_Velocity = Vector3.zero;
+                    m_Velocity.y = m_Gravity * Time.deltaTime;
                 }
             }
+        }
 
+        m_SlideOffEdge = new RaycastHit();
+        if (Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out RaycastHit sphereHit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        {
             if (rayHit.collider == null && m_IsGrounded)
             {
                 m_SlideOffEdge = sphereHit;
-            }
-            else
-            {
-                //Empty Raycast
-                m_SlideOffEdge = new RaycastHit();
             }
         }
     }

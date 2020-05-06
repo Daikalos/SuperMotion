@@ -17,7 +17,7 @@ public class EnemyUpdate : MonoBehaviour
     private float m_FieldOfView = 170.0f;
     [SerializeField, Tooltip("Wait time until enemy returns to normal state after having spotted a target"), Range(0.0f, 15.0f)]
     private float m_LostTargetDelay = 3.0f;
-    [SerializeField, Tooltip("Speed the enemy rotates towards target"), Range(0.0f, 15.0f)]
+    [SerializeField, Tooltip("Speed the enemy rotates towards player"), Range(0.0f, 15.0f)]
     private float m_Damping = 5.0f;
 
     private GameObject m_Weapon;
@@ -37,7 +37,6 @@ public class EnemyUpdate : MonoBehaviour
         m_Weapon = transform.Find("Weapon").gameObject;
         m_FirePoint = transform.Find("Weapon").Find("FirePoint").gameObject;
 
-        m_FireCoroutine = FireAtTarget(m_FireDelay);
         m_TargetPosition = Vector3.zero;
         m_StartPosition = transform.position;
         m_StartRotation = transform.rotation.eulerAngles;
@@ -92,6 +91,8 @@ public class EnemyUpdate : MonoBehaviour
             if (!m_CoroutineIsRunning)
             {
                 m_CoroutineIsRunning = true;
+
+                m_FireCoroutine = FireAtTarget(m_FireDelay);
                 StartCoroutine(m_FireCoroutine);
             }
         }
@@ -141,6 +142,7 @@ public class EnemyUpdate : MonoBehaviour
 
         m_Weapon.transform.localEulerAngles = rotateWeapon;
     }
+
 
     private bool CanSeeTarget()
     {
