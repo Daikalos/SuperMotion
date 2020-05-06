@@ -13,28 +13,25 @@ public class PauseMenu : MonoBehaviour
         m_ControlsButton = null,
         m_MainMenuButton = null,
         m_BackButton = null;
+    [SerializeField]
+    private GameObject 
+        m_HUD = null,
+        m_PauseOptions = null,
+        m_ControlsMenu = null;
 
-    private GameObject m_HUD;
-    private GameObject m_PauseMenu;
-    private GameObject m_ControlsMenu;
-
-    public static bool IsPaused { get; private set; }
+    private bool m_IsPaused;
 
     void Start()
     {
-        m_HUD = transform.parent.Find("HUD").gameObject;
-        m_PauseMenu = transform.Find("PauseOptions").gameObject;
-        m_ControlsMenu = transform.Find("ControlsMenu").gameObject;
-
         m_ResumeButton.onClick.AddListener(ResumeGame);
         m_ControlsButton.onClick.AddListener(OpenControls);
         m_MainMenuButton.onClick.AddListener(OpenMainMenu);
         m_BackButton.onClick.AddListener(Back);
         
-        IsPaused = false;
+        m_IsPaused = false;
 
-        m_HUD.SetActive(!IsPaused);
-        m_PauseMenu.SetActive(IsPaused);
+        m_HUD.SetActive(!m_IsPaused);
+        m_PauseOptions.SetActive(m_IsPaused);
         m_ControlsMenu.SetActive(false);
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -51,34 +48,37 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
-        IsPaused = !IsPaused;
-        Time.timeScale = 1.0f - Time.timeScale;
+        if (GameManager.Instance.GameState == GameState.Playing || GameManager.Instance.GameState == GameState.Paused)
+        {
+            m_IsPaused = !m_IsPaused;
+            Time.timeScale = 1.0f - Time.timeScale;
 
-        Cursor.lockState = IsPaused ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = IsPaused;
+            GameState newState = (m_IsPaused) ? GameState.Paused : GameState.Playing;
+            GameManager.Instance.SetState(newState);
 
-        m_HUD.SetActive(!IsPaused);
-        m_PauseMenu.SetActive(IsPaused);
-        m_ControlsMenu.SetActive(false);
+            Cursor.lockState = m_IsPaused ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = m_IsPaused;
+
+            m_HUD.SetActive(!m_IsPaused);
+            m_PauseOptions.SetActive(m_IsPaused);
+            m_ControlsMenu.SetActive(false);
+        }
     }
 
     public void OpenControls()
     {
-        m_PauseMenu.SetActive(false);
+        m_PauseOptions.SetActive(false);
         m_ControlsMenu.SetActive(true);
     }
 
     public void Back()
     {
-        m_PauseMenu.SetActive(true);
+        m_PauseOptions.SetActive(true);
         m_ControlsMenu.SetActive(false);
     }
 
     public void OpenMainMenu()
     {
-        Time.timeScale = 1.0f;
-        IsPaused = false;
-
         SceneManager.LoadScene("Main_Menu");
     }
 }
