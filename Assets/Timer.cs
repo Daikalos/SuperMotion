@@ -18,10 +18,10 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-        float t = Time.time - m_StartTime;
+        float timePassed = Time.time - m_StartTime;
 
-        string minutes = ((int)t / 60).ToString();
-        string seconds = (t % 60).ToString("f2");
+        string minutes = ((int)timePassed / 60).ToString();
+        string seconds = (timePassed % 60).ToString("f2");
 
         m_Timer.SetText(minutes + ":" + seconds);
     }

@@ -4,26 +4,24 @@ using UnityEngine;
 
 public class MoveTruck : MonoBehaviour
 {
-    [SerializeField, Tooltip("The spped of the truck"), Range(1f, 30f)]
-    public float m_Speed = 2f;
+    [SerializeField, Tooltip("The speed of the truck"), Range(1f, 30f)]
+    float m_Speed = 2f;
 
     [Tooltip("The waypoints in the scene that you want the truck to move between")]
-    public Transform[] wayPointArray;
+    public Transform[] m_wayPointArray;
 
     int m_CurrentWayPoint;
     Transform m_TargetWayPoint;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_CurrentWayPoint = 0;
         m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (m_CurrentWayPoint < wayPointArray.Length)
+        if (m_CurrentWayPoint < m_wayPointArray.Length)
         {
             Move();
         }
@@ -42,7 +40,7 @@ public class MoveTruck : MonoBehaviour
             m_CurrentWayPoint++;
 
             // osäker på varför jag måste ha det två ggr för att undvika felmeddelande
-            if (m_CurrentWayPoint >= wayPointArray.Length)
+            if (m_CurrentWayPoint >= m_wayPointArray.Length)
             {
                 m_CurrentWayPoint = 0;
             }
