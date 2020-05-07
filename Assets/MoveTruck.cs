@@ -16,7 +16,7 @@ public class MoveTruck : MonoBehaviour
     void Start()
     {
         m_CurrentWayPoint = 0;
-        m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
+        m_TargetWayPoint = m_wayPointArray[m_CurrentWayPoint];
     }
 
     void Update()
@@ -45,7 +45,7 @@ public class MoveTruck : MonoBehaviour
                 m_CurrentWayPoint = 0;
             }
 
-            m_TargetWayPoint = wayPointArray[m_CurrentWayPoint];
+            m_TargetWayPoint = m_wayPointArray[m_CurrentWayPoint];
         }
     }
 }
