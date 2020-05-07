@@ -24,7 +24,7 @@ public class HighScore : MonoBehaviour
     {
         for (int i = 1; i < m_LevelCount + 1; i++)
         {
-            float highScore = PlayerPrefs.GetFloat("HighScore-" + m_LevelCount, 0.0f);
+            float highScore = PlayerPrefs.GetFloat("HighScore-" + i, 0.0f);
 
             GameObject highScoreObject = Instantiate(m_HighScoreTemplate, m_HighScoreElements.transform) as GameObject;
             highScoreObject.transform.localScale = Vector3.one;
