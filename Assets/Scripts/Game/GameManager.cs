@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -13,6 +14,7 @@ public enum GameState
 public class GameManager : InitializeSingleton<GameManager>
 {
     public GameState GameState { get; private set; }
+    public static int LevelCount { get; private set; }
 
     void Start()
     {
@@ -22,6 +24,12 @@ public class GameManager : InitializeSingleton<GameManager>
 
     public void SetState(GameState newState)
     {
+        if (GameState == GameState.LevelComplete || GameState == GameState.GameOver)
+        {
+            //Don't allow gamestate to be changed when end state is set
+            return;
+        }
+
         GameState = newState;
     }
 }
