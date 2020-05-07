@@ -197,7 +197,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2801.4922, y: 980}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &36939182
 CanvasRenderer:
@@ -396,7 +396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000060081, y: -113}
+  m_AnchoredPosition: {x: 0.000060081, y: -81}
   m_SizeDelta: {x: 384, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &659134903
@@ -566,7 +566,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2801.4922, y: 979.9999}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &720166159
 CanvasRenderer:
@@ -1445,7 +1445,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035, y: -305}
+  m_AnchoredPosition: {x: 0.000061035, y: -273}
   m_SizeDelta: {x: 384, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2080647149
@@ -1559,7 +1559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035, y: -209}
+  m_AnchoredPosition: {x: 0.000061035, y: -177}
   m_SizeDelta: {x: 384, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8730615965846727076
@@ -6820,7 +6820,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000026703, y: 0}
+  m_AnchoredPosition: {x: 0.000026703, y: 45}
   m_SizeDelta: {x: 290.1, y: 53.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4640390587896691600
@@ -6923,7 +6923,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 2
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -7286,7 +7286,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000011444, y: 132}
+  m_AnchoredPosition: {x: 0.000011444, y: 189}
   m_SizeDelta: {x: 975.3, y: 152.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3715453430624516776
@@ -7360,7 +7360,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 6
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -7389,7 +7389,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 2
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
