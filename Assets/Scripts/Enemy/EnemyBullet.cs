@@ -18,6 +18,7 @@ public class EnemyBullet : MonoBehaviour
         {
             if (other.tag == "Player")
             {
+                AudioManager.m_Instance.Play("Death");
                 GameManager.Instance.SetState(GameState.GameOver);
                 Destroy(gameObject);
             }

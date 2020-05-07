@@ -80,3 +80,15 @@ MonoBehaviour:
     m_Pitch: 1.02
     m_Loop: 0
     source: {fileID: 0}
+  - m_Name: Death
+    m_Clip: {fileID: 8300000, guid: 76868f469024a2e4c8c0da51e64d670f, type: 3}
+    m_Volume: 0.491
+    m_Pitch: 1.02
+    m_Loop: 0
+    source: {fileID: 0}
+  - m_Name: Gun
+    m_Clip: {fileID: 8300000, guid: 54ea7759b61139741a3ed44f93704e5b, type: 3}
+    m_Volume: 0.491
+    m_Pitch: 1.02
+    m_Loop: 0
+    source: {fileID: 0}
