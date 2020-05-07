@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
     [Tooltip("TextMeshProUGUI Object to display the timer")]
     public TextMeshProUGUI m_Timer;
 
-    private float m_StartTime;
+    float m_StartTime;
 
     void Start()
     {
