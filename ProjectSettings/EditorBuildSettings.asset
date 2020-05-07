@@ -5,34 +5,34 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Main_Menu.unity
     guid: 598e5db52f88ae54fa81af33bef6f10f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Level_1.unity
     guid: 743522c4ee37edd499fde20b78e1226c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Level_2.unity
     guid: fbd2707379637ad41be1ab81b6681f8e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Levels/Level_3.unity
     guid: 0a7458bda4fb91b47addac14e23924ef
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Person/Albin_Scene.unity
     guid: dca1b44e3b08e1e429e21912a4ce7183
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Person/Philip_Scene.unity
     guid: 68f8d0d141c72be45b119d060447083c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Person/Tinea_Scene.unity
     guid: fe2f6535395351c478d2f95a0611f835
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Person/Tobias_Scene.unity
     guid: 2c557ffdde0de534282cf453414136f6
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Person/Yashi_Scene.unity
     guid: 3455865ebd4865d43902d05d0fa12870
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Levels/Test.unity
     guid: 43ff4491e9b0dbe4080f83d8f98f5323
   m_configObjects: {}
