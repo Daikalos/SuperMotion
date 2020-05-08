@@ -146,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Set to 90 degrees to fix jitter issue when jumping next to a object
                 m_CharacterController.slopeLimit = 90.0f;
+
                 m_CanSlopeJump = false;
                 m_CanJump = false;
 
