@@ -56,15 +56,7 @@ public class WinMenu : MonoBehaviour
                 m_HUD.SetActive(false);
                 m_WinTimerText.text = "Time: " + m_TimerText.text;
 
-                string levelName = SceneManager.GetActiveScene().name;
-                if (levelName.Contains("Level_"))
-                {
-                    levelName = levelName.Replace("Level_", string.Empty);
-                    if (int.TryParse(levelName, out int levelNumber))
-                    {
-                        //PlayerPrefs.SetFloat("HighScore-" + levelNumber, )
-                    }
-                }
+                SaveHighScore();
             }
         }
     }
@@ -97,20 +89,65 @@ public class WinMenu : MonoBehaviour
         SceneManager.LoadScene("Main_Menu");
     }
 
+    /// <summary>
+    /// Save completion time if it is lower than highscore
+    /// </summary>
+    private void SaveHighScore()
+    {
+        if (OnLevel())
+        {
+            float levelHS = PlayerPrefs.GetFloat("HighScore-" + LevelNumber(), Mathf.Infinity);
+            float currentHS = 0.0f;
+
+            //New HighScore is achieved
+            if (currentHS < levelHS)
+            {
+                //PlayerPrefs.SetFloat("HighScore-" + levelNumber, )
+            }
+        }
+    }
+
+    /// <summary>
+    /// Check if next level exists or not
+    /// </summary>
     private bool NextLevelExists()
     {
-        string levelName = SceneManager.GetActiveScene().name;
-        if (levelName.Contains("Level_"))
+        if (OnLevel())
         {
-            levelName = levelName.Replace("Level_", string.Empty);
-            if (int.TryParse(levelName, out int levelNumber))
-            {
-                return SceneExists("Level_" + (levelNumber + 1));
-            }
+            return SceneExists("Level_" + (LevelNumber() + 1));
         }
         return false;
     }
 
+    /// <summary>
+    /// If player is currently in a level
+    /// </summary>
+    private bool OnLevel()
+    {
+        string levelName = SceneManager.GetActiveScene().name;
+        return levelName.Contains("Level");
+    }
+
+    /// <summary>
+    /// Get the current number identifier of the level
+    /// </summary>
+    private int LevelNumber()
+    {
+        string levelName = SceneManager.GetActiveScene().name;
+        if (levelName.Contains("Level"))
+        {
+            levelName = levelName.Replace("Level_", string.Empty);
+            if (int.TryParse(levelName, out int levelNumber))
+            {
+                return levelNumber;
+            }
+        }
+        return 0;
+    }
+
+    /// <summary>
+    /// Go through all scene names and check if scene exists
+    /// </summary>
     private bool SceneExists(string scene)
     {
         for (int i = 1; i < SceneManager.sceneCountInBuildSettings; i++)

@@ -88,6 +88,8 @@ public class PlayerEffects : MonoBehaviour
         if (m_Velocity.y < m_LandEffectBounds)
         {
             m_StartHeadBob = true;
+
+            //Emit dust particles from particle system situated at the bottom of the player
             m_ParticleDustEffect.Emit(Random.Range(m_ParticleCountMin, m_ParticleCountMax));
         }
 
@@ -95,6 +97,7 @@ public class PlayerEffects : MonoBehaviour
         {
             if (m_HeadBobCounter < Mathf.PI)
             {
+                //Use Sine curve
                 m_HeadBobCounter += m_HeadBobSpeed * Time.deltaTime;
                 m_Camera.transform.localPosition = m_PlayerLook.CameraStartPos + Vector3.down * (Mathf.Sin(m_HeadBobCounter) * m_HeadBobAmplitude);
             }

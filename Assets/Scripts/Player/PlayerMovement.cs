@@ -176,7 +176,8 @@ public class PlayerMovement : MonoBehaviour
             m_CharacterController.slopeLimit = m_SlopeLimit;
             m_CanJump = m_IsGrounded;
 
-            m_Velocity = new Vector3(0, m_Gravity * Time.deltaTime, 0);
+            m_Velocity = Vector3.zero;
+            m_Velocity.y = m_Gravity * Time.deltaTime;
 
             if (!m_IsGrounded)
             {
@@ -262,7 +263,8 @@ public class PlayerMovement : MonoBehaviour
                 {
                     m_CharacterController.slopeLimit = m_SlopeLimit;
 
-                    m_Velocity = new Vector3(0, m_Gravity * Time.deltaTime, 0);
+                    m_Velocity = Vector3.zero;
+                    m_Velocity.y = m_Gravity * Time.deltaTime;
                 }
             }
 
