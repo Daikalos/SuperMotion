@@ -9,19 +9,23 @@ public class Timer : MonoBehaviour
     [Tooltip("TextMeshProUGUI Object to display the timer")]
     public TextMeshProUGUI m_Timer;
 
-    float m_StartTime;
+    private float m_StartTime;
+    private float m_TimePassed;
+
+    public float TimePassed => m_TimePassed;
 
     void Start()
     {
         m_StartTime = Time.time;
+        m_TimePassed = 0.0f;
     }
 
     void Update()
     {
-        float timePassed = Time.time - m_StartTime;
+        m_TimePassed = Time.time - m_StartTime;
 
-        string minutes = ((int)timePassed / 60).ToString();
-        string seconds = (timePassed % 60).ToString("f2");
+        string minutes = ((int)m_TimePassed / 60).ToString();
+        string seconds = (m_TimePassed % 60).ToString("f2");
 
         m_Timer.SetText(minutes + ":" + seconds);
     }
