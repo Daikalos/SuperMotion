@@ -58,7 +58,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - m_Name: Hit
     m_Clip: {fileID: 8300000, guid: b43d102aac6b145468dcaa94a5cccae1, type: 3}
-    m_Volume: 0.491
+    m_Volume: 0.225
     m_Pitch: 1.02
     m_Loop: 0
     source: {fileID: 0}
@@ -88,6 +88,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - m_Name: Gun
     m_Clip: {fileID: 8300000, guid: 54ea7759b61139741a3ed44f93704e5b, type: 3}
+    m_Volume: 0.491
+    m_Pitch: 1.02
+    m_Loop: 0
+    source: {fileID: 0}
+  - m_Name: Win
+    m_Clip: {fileID: 8300000, guid: 7478151cf36724a7dada558f746c3633, type: 3}
     m_Volume: 0.491
     m_Pitch: 1.02
     m_Loop: 0
