@@ -14,7 +14,6 @@ public enum GameState
 public class GameManager : InitializeSingleton<GameManager>
 {
     public GameState GameState { get; private set; }
-    public static int LevelCount { get; private set; }
 
     void Start()
     {
