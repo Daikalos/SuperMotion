@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestructibleGlass : MonoBehaviour
+public class GlassShatter : MonoBehaviour
 {
     [SerializeField, Tooltip("Force the glass shatters from impact point"), Range(0.0f, 800.0f)]
     private float m_ShatterForce = 150.0f;

@@ -25,9 +25,6 @@ public class PlayerLook : MonoBehaviour
     
     private void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         m_Camera = Camera.main;
 
         m_XRotation = 0.0f;

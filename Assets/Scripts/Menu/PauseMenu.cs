@@ -33,9 +33,6 @@ public class PauseMenu : MonoBehaviour
         m_HUD.SetActive(!m_IsPaused);
         m_PauseOptions.SetActive(m_IsPaused);
         m_ControlsMenu.SetActive(false);
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     void Update()
