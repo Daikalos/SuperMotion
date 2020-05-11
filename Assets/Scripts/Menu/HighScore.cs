@@ -6,7 +6,7 @@ using TMPro;
 public class HighScore : MonoBehaviour
 {
     [SerializeField, Tooltip("How many levels that are used in the game")]
-    int m_LevelCount = 0;
+    private int m_LevelCount = 0;
 
     [SerializeField]
     private GameObject

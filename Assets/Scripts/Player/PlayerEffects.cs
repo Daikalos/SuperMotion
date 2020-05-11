@@ -97,7 +97,7 @@ public class PlayerEffects : MonoBehaviour
         {
             if (m_HeadBobCounter < Mathf.PI)
             {
-                //Use Sine curve
+                //Use Sine curve to imitate head bob
                 m_HeadBobCounter += m_HeadBobSpeed * Time.deltaTime;
                 m_Camera.transform.localPosition = m_PlayerLook.CameraStartPos + Vector3.down * (Mathf.Sin(m_HeadBobCounter) * m_HeadBobAmplitude);
             }

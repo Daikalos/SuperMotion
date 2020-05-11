@@ -15,10 +15,18 @@ public class GameManager : InitializeSingleton<GameManager>
 {
     public GameState GameState { get; private set; }
 
-    void Start()
+    private void Awake()
+    {
+        InitializeGame();
+    }
+
+    public void InitializeGame()
     {
         GameState = GameState.Playing;
         Time.timeScale = 1.0f;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void SetState(GameState newState)

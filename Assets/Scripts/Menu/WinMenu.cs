@@ -14,15 +14,15 @@ public class WinMenu : MonoBehaviour
         m_MainMenuButton = null;
     [SerializeField]
     private TMP_Text
-        m_TimerText,
-        m_WinTimeText,
-        m_HighScoreTimeText;
+        m_TimerText = null,
+        m_WinTimeText = null,
+        m_HighScoreTimeText = null;
     [SerializeField]
     private GameObject
         m_HUD = null,
         m_WinOptions = null;
     [SerializeField]
-    private Timer m_Timer;
+    private Timer m_Timer = null;
 
     private CanvasGroup m_GUI;
 
@@ -77,6 +77,7 @@ public class WinMenu : MonoBehaviour
     private void Replay()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        CheckpointManager.Instance.Checkpoint = Vector3.zero;
     }
 
     private void NextLevel()

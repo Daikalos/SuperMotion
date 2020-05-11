@@ -12,6 +12,7 @@ public class Timer : MonoBehaviour
     private float m_StartTime;
     private float m_TimePassed;
 
+    public float StartTime { set => m_StartTime = value; }
     public float TimePassed => m_TimePassed;
 
     void Start()
