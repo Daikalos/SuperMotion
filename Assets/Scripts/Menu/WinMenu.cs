@@ -14,14 +14,15 @@ public class WinMenu : MonoBehaviour
         m_MainMenuButton = null;
     [SerializeField]
     private TMP_Text
-        m_TimerText,
-        m_WinTimerText;
+        m_TimerText = null,
+        m_WinTimeText = null,
+        m_HighScoreTimeText = null;
     [SerializeField]
     private GameObject
         m_HUD = null,
         m_WinOptions = null;
     [SerializeField]
-    private Timer m_Timer;
+    private Timer m_Timer = null;
 
     private CanvasGroup m_GUI;
 
@@ -54,7 +55,7 @@ public class WinMenu : MonoBehaviour
                 Cursor.visible = true;
 
                 m_HUD.SetActive(false);
-                m_WinTimerText.text = "Time: " + m_TimerText.text;
+                m_WinTimeText.text = "Time: " + m_TimerText.text;
 
                 SaveHighScore();
             }
@@ -76,6 +77,7 @@ public class WinMenu : MonoBehaviour
     private void Replay()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        CheckpointManager.Instance.Checkpoint = Vector3.zero;
     }
 
     private void NextLevel()
@@ -94,16 +96,24 @@ public class WinMenu : MonoBehaviour
     /// </summary>
     private void SaveHighScore()
     {
-        if (OnLevel())
+        if (InLevel())
         {
             float levelHS = PlayerPrefs.GetFloat("HighScore-" + LevelNumber(), Mathf.Infinity);
-            float currentHS = 0.0f;
+            float currentHS = m_Timer.TimePassed;
 
             //New HighScore is achieved
             if (currentHS < levelHS)
             {
-                //PlayerPrefs.SetFloat("HighScore-" + levelNumber, )
+                PlayerPrefs.SetFloat("HighScore-" + LevelNumber(), currentHS);
             }
+
+            //Get highscore
+            float highScore = PlayerPrefs.GetFloat("HighScore-" + LevelNumber(), 0.0f);
+            string minutes = ((int)highScore / 60).ToString();
+            string seconds = (highScore % 60).ToString("f2");
+
+            //Display highscore
+            m_HighScoreTimeText.text = highScore != 0.0f ? "HighScore: " + minutes + ":" + seconds : "HighScore: -";
         }
     }
 
@@ -112,7 +122,7 @@ public class WinMenu : MonoBehaviour
     /// </summary>
     private bool NextLevelExists()
     {
-        if (OnLevel())
+        if (InLevel())
         {
             return SceneExists("Level_" + (LevelNumber() + 1));
         }
@@ -122,7 +132,7 @@ public class WinMenu : MonoBehaviour
     /// <summary>
     /// If player is currently in a level
     /// </summary>
-    private bool OnLevel()
+    private bool InLevel()
     {
         string levelName = SceneManager.GetActiveScene().name;
         return levelName.Contains("Level");
@@ -162,5 +172,15 @@ public class WinMenu : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private string NumberFormat(int number)
+    {
+        return (number < 10) ? "0" + number : number.ToString();
+    }
+
+    private string TimeFormat(float number)
+    {
+        return string.Format("{0}:{1:00}", (int)(number / 60), (int)(number % 60));
     }
 }

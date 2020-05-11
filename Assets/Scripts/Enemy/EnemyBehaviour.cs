@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyUpdate : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField]
     private GameObject m_Target = null;
@@ -29,8 +29,10 @@ public class EnemyUpdate : MonoBehaviour
     private Vector3 m_StartRotation;
 
     private bool m_CoroutineIsRunning;
-    private bool m_TargetSighted;
+    private bool m_IsTargetSighted;
     private float m_LostTargetTimer;
+
+    public bool IsTargetSighted { get => m_IsTargetSighted; set => m_IsTargetSighted = value; }
 
     void Start()
     {
@@ -43,7 +45,7 @@ public class EnemyUpdate : MonoBehaviour
         m_StartRotation = transform.rotation.eulerAngles;
 
         m_CoroutineIsRunning = false;
-        m_TargetSighted = false;
+        m_IsTargetSighted = false;
 
         m_LostTargetTimer = 0.0f;
     }
@@ -55,7 +57,7 @@ public class EnemyUpdate : MonoBehaviour
 
         if (CanSeeTarget())
         {
-            m_TargetSighted = true;
+            m_IsTargetSighted = true;
             m_LostTargetTimer = m_LostTargetDelay;
         }
         else
@@ -68,14 +70,14 @@ public class EnemyUpdate : MonoBehaviour
 
     private void TargetLost()
     {
-        if (m_TargetSighted)
+        if (m_IsTargetSighted)
         {
             m_LostTargetTimer -= Time.deltaTime;
         }
 
         if (m_LostTargetTimer <= 0)
         {
-            m_TargetSighted = false;
+            m_IsTargetSighted = false;
 
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(m_StartRotation), m_Damping * Time.deltaTime);
             m_Weapon.transform.localRotation = Quaternion.Slerp(m_Weapon.transform.localRotation, Quaternion.identity, m_Damping * Time.deltaTime);
@@ -84,7 +86,7 @@ public class EnemyUpdate : MonoBehaviour
 
     private void TargetSighted()
     {
-        if (m_TargetSighted)
+        if (m_IsTargetSighted)
         {
             RotateEnemy();
             RotateWeapon();
