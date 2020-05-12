@@ -7,6 +7,9 @@ public class CheckpointCollision : MonoBehaviour
     [SerializeField]
     private ParticleSystem m_Particles = null;
 
+    [SerializeField, Tooltip("Spawn Position relative to transform")]
+    private Vector3 m_SpawnPosition = Vector3.up;
+    
     public bool IsFlagged { get; set; }
 
     void Start()
@@ -29,7 +32,7 @@ public class CheckpointCollision : MonoBehaviour
         {
             if (!IsFlagged) //If this object is not flagged as current checkpoint, update it
             {
-                other.GetComponent<PlayerCheckpoint>().SetCheckpoint(gameObject);
+                other.GetComponent<PlayerCheckpoint>().SetCheckpoint(gameObject, m_SpawnPosition);
             }
         }
     }
