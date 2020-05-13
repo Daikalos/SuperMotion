@@ -9,7 +9,7 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject m_Bullet = null;
 
-    [SerializeField, Tooltip("Delay before enemy fires a shoot at target"), Range(0.0f, 10.0f)]
+    [SerializeField, Tooltip("Delay before enemy fires at target"), Range(0.0f, 10.0f)]
     private float m_FireDelay = 1.0f;
     [SerializeField, Tooltip("Distance the enemy checks for target"), Range(0.0f, 300.0f)]
     private float m_TargetDistance = 50.0f;

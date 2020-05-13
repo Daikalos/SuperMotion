@@ -103,6 +103,23 @@ public class PauseMenu : MonoBehaviour
 
     private void OpenMainMenu()
     {
-        SceneManager.LoadScene("Main_Menu");
+        if (!m_ConfirmPanel.activeSelf)
+        {
+            m_ConfirmPanel.SetActive(true);
+            m_PauseOptions.SetActive(false);
+
+            ConfirmMenu confirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
+
+            confirmMenu.YesAction(new UnityAction(() =>
+            {
+                SceneManager.LoadScene("Main_Menu");
+            }));
+
+            confirmMenu.NoAction(new UnityAction(() =>
+            {
+                m_ConfirmPanel.SetActive(false);
+                m_PauseOptions.SetActive(true);
+            }));
+        }
     }
 }

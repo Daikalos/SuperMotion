@@ -20,12 +20,8 @@ public class EnemyBullet : MonoBehaviour
             {
                 AudioManager.m_Instance.Play("Death");
                 GameManager.Instance.SetState(GameState.GameOver);
-                Destroy(gameObject);
             }
-            else
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 }

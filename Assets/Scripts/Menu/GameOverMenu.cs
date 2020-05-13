@@ -92,6 +92,23 @@ public class GameOverMenu : MonoBehaviour
 
     public void OpenMainMenu()
     {
-        SceneManager.LoadScene("Main_Menu");
+        if (!m_ConfirmPanel.activeSelf)
+        {
+            m_ConfirmPanel.SetActive(true);
+            m_GameOverOptions.SetActive(false);
+
+            ConfirmMenu confirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
+
+            confirmMenu.YesAction(new UnityAction(() =>
+            {
+                SceneManager.LoadScene("Main_Menu");
+            }));
+
+            confirmMenu.NoAction(new UnityAction(() =>
+            {
+                m_ConfirmPanel.SetActive(false);
+                m_GameOverOptions.SetActive(true);
+            }));
+        }
     }
 }
