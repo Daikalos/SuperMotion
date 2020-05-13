@@ -98,3 +98,9 @@ MonoBehaviour:
     m_Pitch: 1.02
     m_Loop: 0
     source: {fileID: 0}
+  - m_Name: Checkpoint
+    m_Clip: {fileID: 8300000, guid: 0c008ee3ee72a4362a35be25fa5de043, type: 3}
+    m_Volume: 0.318
+    m_Pitch: 1.02
+    m_Loop: 0
+    source: {fileID: 0}

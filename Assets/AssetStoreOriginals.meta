@@ -1,14 +1,8 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:Assets/Resources/Materials/tutorial_image.mat.meta
-guid: 5f2f277bd4b3af344910b49c20ce3bc7
-NativeFormatImporter:
-=======
-guid: fa1caf47ba601b847b5beb30efa7f29f
+guid: ac51c667ac0a4334b9316e06c5e7b97b
 folderAsset: yes
 DefaultImporter:
->>>>>>> master:Assets/AssetStoreOriginals.meta
   externalObjects: {}
-  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

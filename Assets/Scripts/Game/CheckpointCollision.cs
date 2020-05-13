@@ -33,6 +33,7 @@ public class CheckpointCollision : MonoBehaviour
             if (!IsFlagged) //If this object is not flagged as current checkpoint, update it
             {
                 other.GetComponent<PlayerCheckpoint>().SetCheckpoint(gameObject, m_SpawnPosition);
+                AudioManager.m_Instance.PlayOnce("Checkpoint");
             }
         }
     }
