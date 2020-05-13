@@ -4,18 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
     private Button 
         m_ResumeButton = null,
+        m_CheckpointButton = null,
         m_ControlsButton = null,
         m_MainMenuButton = null,
         m_BackButton = null;
     [SerializeField]
     private GameObject 
         m_HUD = null,
+        m_ConfirmPanel = null,
         m_PauseOptions = null,
         m_ControlsMenu = null;
 
@@ -24,6 +27,7 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         m_ResumeButton.onClick.AddListener(ResumeGame);
+        m_CheckpointButton.onClick.AddListener(LoadCheckpoint);
         m_ControlsButton.onClick.AddListener(OpenControls);
         m_MainMenuButton.onClick.AddListener(OpenMainMenu);
         m_BackButton.onClick.AddListener(Back);
@@ -43,7 +47,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void ResumeGame()
+    private void ResumeGame()
     {
         if (GameManager.Instance.GameState == GameState.Playing || GameManager.Instance.GameState == GameState.Paused)
         {
@@ -57,24 +61,47 @@ public class PauseMenu : MonoBehaviour
             Cursor.visible = m_IsPaused;
 
             m_HUD.SetActive(!m_IsPaused);
+            m_ConfirmPanel.SetActive(false);
             m_PauseOptions.SetActive(m_IsPaused);
             m_ControlsMenu.SetActive(false);
         }
     }
 
-    public void OpenControls()
+    private void LoadCheckpoint()
+    {
+        if (!m_ConfirmPanel.activeSelf)
+        {
+            m_ConfirmPanel.SetActive(true);
+            m_PauseOptions.SetActive(false);
+
+            ConfirmMenu confirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
+
+            confirmMenu.YesAction(new UnityAction(() =>
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }));
+
+            confirmMenu.NoAction(new UnityAction(() =>
+            {
+                m_ConfirmPanel.SetActive(false);
+                m_PauseOptions.SetActive(true);
+            }));
+        }
+    }
+
+    private void OpenControls()
     {
         m_PauseOptions.SetActive(false);
         m_ControlsMenu.SetActive(true);
     }
 
-    public void Back()
+    private void Back()
     {
         m_PauseOptions.SetActive(true);
         m_ControlsMenu.SetActive(false);
     }
 
-    public void OpenMainMenu()
+    private void OpenMainMenu()
     {
         SceneManager.LoadScene("Main_Menu");
     }

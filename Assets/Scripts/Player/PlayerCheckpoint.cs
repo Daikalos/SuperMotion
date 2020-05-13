@@ -26,10 +26,10 @@ public class PlayerCheckpoint : MonoBehaviour
         m_CharacterController.enabled = true;
     }
 
-    public void SetCheckpoint(GameObject checkpoint)
+    public void SetCheckpoint(GameObject checkpoint, Vector3 spawnPos)
     {
         //Update checkpoint
-        CheckpointManager.Instance.Checkpoint = checkpoint.transform.position;
+        CheckpointManager.Instance.Checkpoint = checkpoint.transform.position + spawnPos;
 
         //Update each checkpoint according to current one
         foreach (GameObject c in m_Checkpoints)

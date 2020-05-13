@@ -32,8 +32,6 @@ public class EnemyBehaviour : MonoBehaviour
     private bool m_IsTargetSighted;
     private float m_LostTargetTimer;
 
-    public bool IsTargetSighted { get => m_IsTargetSighted; set => m_IsTargetSighted = value; }
-
     void Start()
     {
         m_Weapon = transform.Find("Weapon").gameObject;

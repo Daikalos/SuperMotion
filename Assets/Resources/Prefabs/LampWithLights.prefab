@@ -84,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5395998331811717047}
   m_Layer: 5
-  m_Name: Lamp
+  m_Name: LampWithLights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0.07996106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5400904550204645413}
+  - {fileID: 6085550531785292125}
   - {fileID: 5395998332721653367}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -222,7 +222,7 @@ RectTransform:
   m_AnchoredPosition: {x: -0.35, y: 0.48}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &5395998332170373325
+--- !u!1001 &6081414211305525685
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -251,15 +251,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4980746487900392, guid: af66cb781f2abe44abe97b567b10153a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4980746487900392, guid: af66cb781f2abe44abe97b567b10153a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4980746487900392, guid: af66cb781f2abe44abe97b567b10153a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4980746487900392, guid: af66cb781f2abe44abe97b567b10153a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -283,9 +283,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af66cb781f2abe44abe97b567b10153a, type: 3}
---- !u!4 &5400904550204645413 stripped
+--- !u!4 &6085550531785292125 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4980746487900392, guid: af66cb781f2abe44abe97b567b10153a,
     type: 3}
-  m_PrefabInstance: {fileID: 5395998332170373325}
+  m_PrefabInstance: {fileID: 6081414211305525685}
   m_PrefabAsset: {fileID: 0}
