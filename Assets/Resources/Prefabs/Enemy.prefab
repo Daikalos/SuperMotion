@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Target: {fileID: 0}
   m_Bullet: {fileID: 2481879445312314898, guid: a3db8a42cd61d434287aa03fdb8eaacd,
     type: 3}
-  m_FireDelay: 1
+  m_FireDelay: 0.7
   m_TargetDistance: 50
   m_FieldOfView: 170
   m_LostTargetDelay: 3
@@ -235,3 +235,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6207ae8b46e0b24389b02eeb80c5ae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ImpactForce: 1500

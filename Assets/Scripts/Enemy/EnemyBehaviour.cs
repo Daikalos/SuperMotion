@@ -110,6 +110,7 @@ public class EnemyBehaviour : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(waitTime);
+
             AudioManager.m_Instance.Play("Gun");
             GameObject bullet = Instantiate(m_Bullet, 
                 m_FirePoint.transform.position, 
