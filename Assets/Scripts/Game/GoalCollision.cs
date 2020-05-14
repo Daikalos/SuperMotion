@@ -9,6 +9,7 @@ public class GoalCollision : MonoBehaviour
         if (other.tag == "Player")
         {
             GameManager.Instance.SetState(GameState.LevelComplete);
+            AudioManager.m_Instance.PlayOnce("Win");
         }
     }
 }
