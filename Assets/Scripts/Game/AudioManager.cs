@@ -32,9 +32,22 @@ public class AudioManager : MonoBehaviour
             sound.source.loop = sound.m_Loop;
         }
     }
+
+    void Start()
+    {
+        //Play("Song");
+    }
     public void Play(string name)
     {
         Sound s = Array.Find(m_Sounds, sound => sound.m_Name == name);
         s.source.Play();
+    }
+    public void PlayOnce(string name)
+    {
+        Sound s = Array.Find(m_Sounds, sound => sound.m_Name == name);
+        if (s.source.isPlaying == false)
+        {
+            s.source.PlayOneShot(s.source.clip);
+        }
     }
 }

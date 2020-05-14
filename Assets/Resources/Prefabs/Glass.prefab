@@ -104,6 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af50f8d5eaf1fd49a27233be67ec18a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShatterForce: 150
   m_DestroyedVersion: {fileID: 966406615191970198, guid: 8156dfd3c2dcfbc42ab04f83a022d920,
     type: 3}
+  m_PlayerCollider: {fileID: 1620546374612657660, guid: ec5f61250bd483e46b73c9c8cba16ffb,
+    type: 3}
+  m_ShatterForce: 150

@@ -9,7 +9,7 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject m_Bullet = null;
 
-    [SerializeField, Tooltip("Delay before enemy fires a shoot at target"), Range(0.0f, 10.0f)]
+    [SerializeField, Tooltip("Delay before enemy fires at target"), Range(0.0f, 10.0f)]
     private float m_FireDelay = 1.0f;
     [SerializeField, Tooltip("Distance the enemy checks for target"), Range(0.0f, 300.0f)]
     private float m_TargetDistance = 50.0f;
@@ -31,8 +31,6 @@ public class EnemyBehaviour : MonoBehaviour
     private bool m_CoroutineIsRunning;
     private bool m_IsTargetSighted;
     private float m_LostTargetTimer;
-
-    public bool IsTargetSighted { get => m_IsTargetSighted; set => m_IsTargetSighted = value; }
 
     void Start()
     {
@@ -112,6 +110,7 @@ public class EnemyBehaviour : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(waitTime);
+
             AudioManager.m_Instance.Play("Gun");
             GameObject bullet = Instantiate(m_Bullet, 
                 m_FirePoint.transform.position, 

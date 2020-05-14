@@ -14,7 +14,6 @@ public class WinMenu : MonoBehaviour
         m_MainMenuButton = null;
     [SerializeField]
     private TMP_Text
-        m_TimerText = null,
         m_WinTimeText = null,
         m_HighScoreTimeText = null;
     [SerializeField]
@@ -55,7 +54,7 @@ public class WinMenu : MonoBehaviour
                 Cursor.visible = true;
 
                 m_HUD.SetActive(false);
-                m_WinTimeText.text = "Time: " + m_TimerText.text;
+                m_WinTimeText.text = "Time: " + TimeFormat(m_Timer.TimePassed);
 
                 SaveHighScore();
             }
@@ -109,11 +108,9 @@ public class WinMenu : MonoBehaviour
 
             //Get highscore
             float highScore = PlayerPrefs.GetFloat("HighScore-" + LevelNumber(), 0.0f);
-            string minutes = ((int)highScore / 60).ToString();
-            string seconds = (highScore % 60).ToString("f2");
 
             //Display highscore
-            m_HighScoreTimeText.text = highScore != 0.0f ? "HighScore: " + minutes + ":" + seconds : "HighScore: -";
+            m_HighScoreTimeText.text = "HighScore: " + ((highScore != 0.0f) ? TimeFormat(highScore) : "-");
         }
     }
 
@@ -143,10 +140,11 @@ public class WinMenu : MonoBehaviour
     /// </summary>
     private int LevelNumber()
     {
-        string levelName = SceneManager.GetActiveScene().name;
-        if (levelName.Contains("Level"))
+        if (InLevel())
         {
+            string levelName = SceneManager.GetActiveScene().name;
             levelName = levelName.Replace("Level_", string.Empty);
+
             if (int.TryParse(levelName, out int levelNumber))
             {
                 return levelNumber;
@@ -174,13 +172,8 @@ public class WinMenu : MonoBehaviour
         return false;
     }
 
-    private string NumberFormat(int number)
-    {
-        return (number < 10) ? "0" + number : number.ToString();
-    }
-
     private string TimeFormat(float number)
     {
-        return string.Format("{0}:{1:00}", (int)(number / 60), (int)(number % 60));
+        return string.Format("{0:00}:{1:00}.{2:000}", (int)(number / 60), (int)(number % 60), (number * 1000) % 1000);
     }
 }

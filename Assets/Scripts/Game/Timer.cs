@@ -11,22 +11,24 @@ public class Timer : MonoBehaviour
 
     private float m_StartTime;
     private float m_TimePassed;
+    private float m_CheckpointTime;
 
-    public float StartTime { set => m_StartTime = value; }
     public float TimePassed => m_TimePassed;
 
     void Start()
     {
         m_StartTime = Time.time;
-        m_TimePassed = 0.0f;
+
+        //Set time to the time when checkpoint was triggered
+        m_CheckpointTime = CheckpointManager.Instance.CheckpointTime;
     }
 
     void Update()
     {
-        m_TimePassed = Time.time - m_StartTime;
+        m_TimePassed = (Time.time + m_CheckpointTime) - m_StartTime;
 
         string minutes = ((int)m_TimePassed / 60).ToString();
-        string seconds = (m_TimePassed % 60).ToString("f2");
+        string seconds = (m_TimePassed % 60).ToString("f3");
 
         m_Timer.SetText(minutes + ":" + seconds);
     }

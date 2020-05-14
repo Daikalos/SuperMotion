@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class PlayerCheckpoint : MonoBehaviour
 {
+    [SerializeField]
+    private Timer m_Timer = null;
+
     private GameObject[] m_Checkpoints;
     private CharacterController m_CharacterController;
 
@@ -18,6 +21,7 @@ public class PlayerCheckpoint : MonoBehaviour
         if (CheckpointManager.Instance.Checkpoint == Vector3.zero)
         {
             CheckpointManager.Instance.Checkpoint = transform.position;
+            CheckpointManager.Instance.CheckpointTime = 0.0f;
         }
 
         //Deactivate character controller to be able to change position of player
@@ -26,10 +30,11 @@ public class PlayerCheckpoint : MonoBehaviour
         m_CharacterController.enabled = true;
     }
 
-    public void SetCheckpoint(GameObject checkpoint)
+    public void SetCheckpoint(GameObject checkpoint, Vector3 spawnPos)
     {
         //Update checkpoint
-        CheckpointManager.Instance.Checkpoint = checkpoint.transform.position;
+        CheckpointManager.Instance.Checkpoint = checkpoint.transform.position + spawnPos;
+        CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
 
         //Update each checkpoint according to current one
         foreach (GameObject c in m_Checkpoints)

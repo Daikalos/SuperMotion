@@ -5,13 +5,11 @@ using UnityEngine;
 public class PlayerStrength : PlayerAbility
 {
     private readonly PlayerMovement m_PlayerMovement;
-    private readonly Collider m_PlayerCollider;
     private readonly Camera m_Camera;
 
     public PlayerStrength(GameObject playerObject)
     {
         m_PlayerMovement = playerObject.GetComponent<PlayerMovement>();
-        m_PlayerCollider = playerObject.GetComponent<Collider>();
         m_Camera = playerObject.GetComponentInChildren<PlayerLook>().MainCamera;
     }
 
@@ -23,23 +21,24 @@ public class PlayerStrength : PlayerAbility
 
             if (Physics.Raycast(m_Camera.transform.position, m_Camera.transform.forward, out RaycastHit objectHit, m_PlayerMovement.PunchDistance))
             {
-                if (objectHit.collider.tag == "Glass")
-                {
-                    objectHit.collider.GetComponent<GlassShatter>().Shatter(m_PlayerCollider, m_Camera.transform.forward, objectHit);
-                    AudioManager.m_Instance.Play("BrokenGlass");
-                }
-
-                if (objectHit.collider.tag == "Ball")
-                {
-                    objectHit.collider.GetComponent<Rigidbody>().AddForce(m_Camera.transform.forward * m_PlayerMovement.PunchStrength);
-                }
-
                 if (objectHit.collider.tag == "Enemy")
                 {
-
+                    objectHit.collider.GetComponent<EnemyDeath>().EnemyHit(m_Camera.transform.forward, objectHit.point);
                 }
-
-                AudioManager.m_Instance.Play("Hit");
+                else if (objectHit.collider.tag == "Glass")
+                {
+                    objectHit.collider.GetComponent<GlassShatter>().Shatter(m_Camera.transform.forward, objectHit.point);
+                    AudioManager.m_Instance.Play("BrokenGlass");
+                }
+                else if (objectHit.collider.tag == "Ball")
+                {
+                    objectHit.collider.GetComponent<Rigidbody>().AddForce(m_Camera.transform.forward * m_PlayerMovement.PunchStrength);
+                    AudioManager.m_Instance.Play("Hit");
+                }
+                else
+                {
+                    AudioManager.m_Instance.Play("Hit");
+                }
             }
         }
     }

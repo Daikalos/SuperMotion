@@ -7,8 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class CheckpointManager : InitializeSingleton<CheckpointManager>
 {
-    public Vector3 Checkpoint { get; set; }
+
     private string m_SceneName;
+
+    public Vector3 Checkpoint { get; set; }
+    public float CheckpointTime { get; set; }
 
     private void Awake()
     {
@@ -20,13 +23,12 @@ public class CheckpointManager : InitializeSingleton<CheckpointManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //If this is a new scene, reset checkpoints
+        //If this is a new scene, reset checkpoint
         if (m_SceneName != scene.name && this != null)
         {
-            Destroy(gameObject);
-            DontDestroyOnLoad(Instance);
-
             m_SceneName = scene.name;
+
+            Destroy(gameObject);
         }
     }
 }

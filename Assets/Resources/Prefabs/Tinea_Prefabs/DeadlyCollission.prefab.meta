@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Resources/Prefabs/Tinea_Prefabs/DeadlyCollission.prefab.meta
 guid: dda8d5ad415fe4c43b0e8c54e1d21e2b
 PrefabImporter:
+=======
+guid: c8ccd672e48be1343a6a80be2b17c73b
+folderAsset: yes
+DefaultImporter:
+>>>>>>> master:Assets/Resources/Materials/Level_1_Materials.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
