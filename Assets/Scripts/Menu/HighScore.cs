@@ -50,6 +50,6 @@ public class HighScore : MonoBehaviour
 
     private string TimeFormat(float number)
     {
-        return string.Format("{0}:{1:00}", (int)(number / 60), (int)(number % 60));
+        return string.Format("{0:00}:{1:00}.{2:000}", (int)(number / 60), (int)(number % 60), (number * 1000) % 1000);
     }
 }
