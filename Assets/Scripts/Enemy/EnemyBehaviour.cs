@@ -20,6 +20,8 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Speed the enemy rotates towards target"), Range(0.0f, 15.0f)]
     private float m_Damping = 5.0f;
 
+    private AudioSource m_AudioSource;
+
     private GameObject m_Weapon;
     private GameObject m_FirePoint;
 
@@ -34,6 +36,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     void Start()
     {
+        m_AudioSource = gameObject.AddComponent<AudioSource>();
+
+        m_AudioSource.clip = AudioManager.m_Instance.GetSound("Gun").m_Clip;
+        m_AudioSource.spatialBlend = 1.0f;
+
         m_Weapon = transform.Find("Weapon").gameObject;
         m_FirePoint = transform.Find("Weapon").Find("FirePoint").gameObject;
 
@@ -111,7 +118,9 @@ public class EnemyBehaviour : MonoBehaviour
         {
             yield return new WaitForSeconds(waitTime);
 
-            AudioManager.m_Instance.Play("Gun");
+            //Play gun sound when bullet is fired
+            m_AudioSource.Play();
+
             GameObject bullet = Instantiate(m_Bullet, 
                 m_FirePoint.transform.position, 
                 Quaternion.LookRotation(m_TargetPosition - m_Weapon.transform.position)) as GameObject;

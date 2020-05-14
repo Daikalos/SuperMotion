@@ -28,7 +28,6 @@ public class PlayerStrength : PlayerAbility
                 else if (objectHit.collider.tag == "Glass")
                 {
                     objectHit.collider.GetComponent<GlassShatter>().Shatter(m_Camera.transform.forward, objectHit.point);
-                    AudioManager.m_Instance.Play("BrokenGlass");
                 }
                 else if (objectHit.collider.tag == "Ball")
                 {
