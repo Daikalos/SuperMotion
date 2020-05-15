@@ -2083,6 +2083,16 @@ PrefabInstance:
       propertyPath: m_Target
       value: 
       objectReference: {fileID: 584321301}
+    - target: {fileID: 843126053704784864, guid: 9bec580da9da01e4b914fac4857460f3,
+        type: 3}
+      propertyPath: m_FireDelay
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 843126053704784864, guid: 9bec580da9da01e4b914fac4857460f3,
+        type: 3}
+      propertyPath: m_FieldOfView
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 843126053704784865, guid: 9bec580da9da01e4b914fac4857460f3,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class BulletCollisionPlayer : MonoBehaviour
 {
+    private EnemyBullet m_EnemyBullet;
+
+    private void Start()
+    {
+        m_EnemyBullet = transform.parent.GetComponent<EnemyBullet>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (!m_EnemyBullet.ObjectCollision)
         {
-            AudioManager.m_Instance.Play("Death");
-            GameManager.Instance.SetState(GameState.GameOver);
+            if (other.CompareTag("Player"))
+            {
+                AudioManager.m_Instance.Play("Death");
+                GameManager.Instance.SetState(GameState.GameOver);
 
-            Destroy(transform.parent.gameObject);
+                Destroy(transform.parent.gameObject);
+            }
         }
     }
 }

@@ -24,19 +24,19 @@ public class GlassShatter : MonoBehaviour
 
         for (int i = 0; i < newObject.transform.childCount; i++)
         {
-            Rigidbody childRigidBody = newObject.transform.GetChild(i).GetComponent<Rigidbody>();
+            Rigidbody childRigidbody = newObject.transform.GetChild(i).GetComponent<Rigidbody>();
             Collider childCollider = newObject.transform.GetChild(i).GetComponent<Collider>();
 
             //Apply a force to each glass shard relative to hit direction and impact point
-            float forceDistance = (1.0f / (childRigidBody.transform.position - impactPoint).magnitude);
-            childRigidBody.AddForce(
+            float forceDistance = (1.0f / (childRigidbody.transform.position - impactPoint).magnitude);
+            childRigidbody.AddForce(
                 (hitDirection * forceDistance * m_HitForce) + 
-                (childRigidBody.transform.position - impactPoint) * forceDistance * m_ImpactForce);
+                (childRigidbody.transform.position - impactPoint) * forceDistance * m_ImpactForce);
 
             Physics.IgnoreCollision(childCollider, playerCollider);
 
             //Fixes performance and jitter
-            Destroy(childRigidBody, 10.0f);
+            Destroy(childRigidbody, 10.0f);
             Destroy(childCollider, 10.0f);
         }
 
