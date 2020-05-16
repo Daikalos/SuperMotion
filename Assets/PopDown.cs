@@ -6,22 +6,28 @@ public class PopDown : MonoBehaviour
 {
     public GameObject panel;
     float m_timer = 0;
+    const float m_timerMaxTimeOpen = 10;
     bool m_isOpen;
 
     private void Start()
     {
         //Show at start
-        m_timer = 3;
+        m_timer = m_timerMaxTimeOpen; //max time open set to 10 seconds, in case user forgets to close (keep or nah?)
         m_isOpen = true;
     }
 
     private void Update()
     {
-        //Show if "5" is pressed and the panel is not currently visible
-        if (Input.GetKeyDown(KeyCode.Alpha5) && !m_isOpen)
+        //Show if "Tab" is pressed and the panel is not currently visible
+        if (Input.GetKeyDown(KeyCode.Tab) && !m_isOpen)
         {
-            m_timer = 3;
+            m_timer = m_timerMaxTimeOpen;
             m_isOpen = true;
+        }
+        //Close if "Tab" is pressed and the panel is currently visible
+        else if (Input.GetKeyDown(KeyCode.Tab) && m_isOpen)
+        {
+            m_timer = 0;
         }
 
         HandlePanel();

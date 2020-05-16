@@ -2285,7 +2285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &119576296
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2323,9 +2323,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Activate strength by pressing 4.
+  m_text: 'Break glass by left clicking with strength active.
 
-    Use Strength to be able to break glass.'
+    Activate strength by pressing 4.
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a0cea044eb34e47bc5b734f7854df3, type: 2}
   m_sharedMaterial: {fileID: 21311069698749972, guid: 45a0cea044eb34e47bc5b734f7854df3,
@@ -2354,8 +2356,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2395,9 +2397,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -433.3302, w: 0}
   m_textInfo:
     textComponent: {fileID: 119576297}
-    characterCount: 72
+    characterCount: 84
     spriteCount: 0
-    spaceCount: 12
+    spaceCount: 13
     wordCount: 13
     linkCount: 0
     lineCount: 2
@@ -2822,7 +2824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &165604732
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7382,7 +7384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &459705018
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7420,9 +7422,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Activate speed by pressing 1.
+  m_text: 'Use Speed to move faster.
 
-    Use Speed to move faster.'
+    Activate speed by pressing 1.
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a0cea044eb34e47bc5b734f7854df3, type: 2}
   m_sharedMaterial: {fileID: 21311069698749972, guid: 45a0cea044eb34e47bc5b734f7854df3,
@@ -7451,8 +7455,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7492,9 +7496,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -433.3302, w: 0}
   m_textInfo:
     textComponent: {fileID: 459705019}
-    characterCount: 55
+    characterCount: 56
     spriteCount: 0
-    spaceCount: 9
+    spaceCount: 10
     wordCount: 10
     linkCount: 0
     lineCount: 2
@@ -8435,9 +8439,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Activate dash by pressing 2.
-
-    Use Dash to dash (?).'
+  m_text: "Dash through the air by \njumping and clicking Right Mouse Button.\nActivate
+    Dash by pressing 2."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a0cea044eb34e47bc5b734f7854df3, type: 2}
   m_sharedMaterial: {fileID: 21311069698749972, guid: 45a0cea044eb34e47bc5b734f7854df3,
@@ -8466,8 +8469,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8483,7 +8486,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 66
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -8507,12 +8510,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -433.3302, w: 0}
   m_textInfo:
     textComponent: {fileID: 572464586}
-    characterCount: 50
+    characterCount: 94
     spriteCount: 0
-    spaceCount: 9
-    wordCount: 9
+    spaceCount: 16
+    wordCount: 16
     linkCount: 0
-    lineCount: 2
+    lineCount: 3
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -23752,9 +23755,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Activate High Jump by pressing 3.
+  m_text: 'Use High Jump to jump higher.
 
-    Use High Jump to jump higher.'
+    Activate High Jump by pressing 3.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a0cea044eb34e47bc5b734f7854df3, type: 2}
   m_sharedMaterial: {fileID: 21311069698749972, guid: 45a0cea044eb34e47bc5b734f7854df3,
@@ -23783,8 +23786,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -24621,7 +24624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1944255139
 RectTransform:
   m_ObjectHideFlags: 0
