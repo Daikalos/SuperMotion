@@ -9,6 +9,7 @@ TagManager:
   - Ball
   - Enemy
   - Checkpoint
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -8750,8 +8750,8 @@ RectTransform:
   m_Father: {fileID: 196252472}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.000000059604645}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.99999994}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9625,7 +9625,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 436.15, y: -0.000030517578}
+  m_AnchoredPosition: {x: 436.15, y: -0.000061035156}
   m_SizeDelta: {x: 872.3, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &695297286
@@ -14823,7 +14823,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 615404376}
   m_HandleRect: {fileID: 615404374}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -22152,8 +22152,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 218.07, y: 0.00023651}
-  m_SizeDelta: {x: 436.16, y: 120}
+  m_AnchoredPosition: {x: 218.12, y: 0.00023651}
+  m_SizeDelta: {x: 436.25, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1761429468
 MonoBehaviour:
@@ -22173,7 +22173,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '0:00
+  m_text: '00:00.000
 
 '
   m_isRightToLeft: 0
@@ -22211,7 +22211,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 520
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -22242,13 +22242,13 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 124.85817, y: 0, z: 0, w: 0}
+  m_margin: {x: 0.10900302, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1761429468}
-    characterCount: 5
+    characterCount: 10
     spriteCount: 0
     spaceCount: 1
-    wordCount: 2
+    wordCount: 3
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -24968,7 +24968,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 44.5
+  m_fontSize: 39.8
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -25009,7 +25009,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1998196600}
-    characterCount: 10
+    characterCount: 8
     spriteCount: 0
     spaceCount: 1
     wordCount: 1

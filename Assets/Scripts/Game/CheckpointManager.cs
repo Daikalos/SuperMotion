@@ -7,8 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class CheckpointManager : InitializeSingleton<CheckpointManager>
 {
-    public Vector3 Checkpoint { get; set; }
+
     private string m_SceneName;
+
+    public Vector3 Checkpoint { get; set; }
+    public float CheckpointTime { get; set; }
 
     private void Awake()
     {

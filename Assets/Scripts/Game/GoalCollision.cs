@@ -6,7 +6,7 @@ public class GoalCollision : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             GameManager.Instance.SetState(GameState.LevelComplete);
             AudioManager.m_Instance.PlayOnce("Win");
