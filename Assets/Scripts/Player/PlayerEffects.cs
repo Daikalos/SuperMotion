@@ -91,6 +91,7 @@ public class PlayerEffects : MonoBehaviour
 
             //Emit dust particles from particle system situated at the bottom of the player
             m_ParticleDustEffect.Emit(Random.Range(m_ParticleCountMin, m_ParticleCountMax));
+            AudioManager.m_Instance.Play("Landing");
         }
 
         if (m_StartHeadBob)
