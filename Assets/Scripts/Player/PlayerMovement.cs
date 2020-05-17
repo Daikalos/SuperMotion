@@ -58,8 +58,6 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 Velocity { get => m_Velocity; set => m_Velocity = value; }
 
-    public bool CanSlopeJump { get => m_CanSlopeJump; set => m_CanSlopeJump = value; }
-
     public float Speed { get => m_Speed; set => m_Speed = value; }
     public float JumpHeight { get => m_JumpHeight; set => m_JumpHeight = value; }
     public float Gravity { get => m_Gravity; set => m_Gravity = value; }
