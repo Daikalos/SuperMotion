@@ -21,16 +21,15 @@ public class PlayerStrength : PlayerAbility
 
             if (Physics.Raycast(m_Camera.transform.position, m_Camera.transform.forward, out RaycastHit objectHit, m_PlayerMovement.PunchDistance))
             {
-                if (objectHit.collider.tag == "Enemy")
+                if (objectHit.collider.CompareTag("Enemy"))
                 {
                     objectHit.collider.GetComponent<EnemyDeath>().EnemyHit(m_Camera.transform.forward, objectHit.point);
                 }
-                else if (objectHit.collider.tag == "Glass")
+                else if (objectHit.collider.CompareTag("Glass"))
                 {
                     objectHit.collider.GetComponent<GlassShatter>().Shatter(m_Camera.transform.forward, objectHit.point);
-                    AudioManager.m_Instance.Play("BrokenGlass");
                 }
-                else if (objectHit.collider.tag == "Ball")
+                else if (objectHit.collider.CompareTag("Ball"))
                 {
                     objectHit.collider.GetComponent<Rigidbody>().AddForce(m_Camera.transform.forward * m_PlayerMovement.PunchStrength);
                     AudioManager.m_Instance.Play("Hit");

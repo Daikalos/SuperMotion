@@ -151,7 +151,7 @@ public class PlayerWallRunning : MonoBehaviour
     {
         return
             m_WallHit.collider != null && 
-            m_WallHit.collider.tag == "Runnable Wall" &&
+            m_WallHit.collider.CompareTag("Runnable Wall") &&
             m_WallFound &&
             m_CanWallJump &&
             !m_CharacterController.isGrounded &&
