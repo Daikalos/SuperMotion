@@ -170,8 +170,6 @@ public class EnemyBehaviour : MonoBehaviour
                 float horizontalAngle = Mathf.Abs(Vector3.Angle(transform.forward, horizontalVector));
                 float verticalAngle = Mathf.Abs(Vector3.Angle(lookVector, verticalVector) - 90.0f);
 
-                Debug.Log(verticalAngle);
-
                 //If target is in enemy field of view
                 if (horizontalAngle < m_HorizontalFOV / 2.0f && verticalAngle < m_VerticalFOV / 2.0f)
                 {
