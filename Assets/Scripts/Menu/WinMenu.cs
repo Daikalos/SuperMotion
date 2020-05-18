@@ -78,7 +78,7 @@ public class WinMenu : MonoBehaviour
     private void Replay()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        CheckpointManager.Instance.Checkpoint = Vector3.zero;
+        CheckpointManager.Instance.CheckpointSet = false;
     }
 
     private void NextLevel()
