@@ -19,7 +19,7 @@ public class Timer : MonoBehaviour
     {
         m_StartTime = Time.time;
 
-        //Set time to the time when checkpoint was triggered
+        //Set this time to the time when checkpoint was triggered
         m_CheckpointTime = CheckpointManager.Instance.CheckpointTime;
     }
 

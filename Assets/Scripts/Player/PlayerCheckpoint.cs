@@ -24,7 +24,7 @@ public class PlayerCheckpoint : MonoBehaviour
             CheckpointManager.Instance.CheckpointTime = 0.0f;
         }
 
-        //Deactivate character controller to be able to change position of player
+        //Deactivate character controller temporarily to be able to change position of player
         m_CharacterController.enabled = false;
         transform.position = CheckpointManager.Instance.Checkpoint;
         m_CharacterController.enabled = true;
