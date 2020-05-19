@@ -17,6 +17,8 @@ public class GameOverMenu : MonoBehaviour
         m_HUD = null,
         m_ConfirmPanel = null,
         m_GameOverOptions = null;
+    [SerializeField]
+    private Timer m_Timer = null;
 
     private CanvasGroup m_GUI;
 
@@ -46,6 +48,9 @@ public class GameOverMenu : MonoBehaviour
                 Cursor.visible = true;
 
                 m_HUD.SetActive(false);
+
+                m_CheckpointButton.interactable = (CheckpointManager.Instance.CheckpointSet);
+                CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
             }
         }
     }
@@ -79,7 +84,7 @@ public class GameOverMenu : MonoBehaviour
             confirmMenu.YesAction(new UnityAction(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                CheckpointManager.Instance.Checkpoint = Vector3.zero;
+                CheckpointManager.Instance.CheckpointSet = false;
             }));
 
             confirmMenu.NoAction(new UnityAction(() =>
