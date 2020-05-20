@@ -52,8 +52,8 @@ public class PlayerDash : PlayerAbility
                     m_PlayerMovement.Velocity = Vector3.zero;
 
                     m_CanDash = false;
+                    AudioManager.m_Instance.Play("Dash");
                 }
-                AudioManager.m_Instance.Play("Dash");
             }
 
             if (m_DashTimer > 0.0f)
