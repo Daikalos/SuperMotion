@@ -11,6 +11,7 @@ public class PlayerDash : PlayerAbility
     private Vector3 m_MoveDirection;
 
     private bool m_CanDash;
+    private bool m_IsDashing;
     private float m_DashTimer;
 
     public PlayerDash(GameObject playerObject)
@@ -22,6 +23,7 @@ public class PlayerDash : PlayerAbility
         m_MoveDirection = Vector3.zero;
 
         m_CanDash = true;
+        m_IsDashing = false;
         m_DashTimer = 0.0f;
     }
 
@@ -46,6 +48,8 @@ public class PlayerDash : PlayerAbility
             if (Input.GetMouseButtonDown(1) && m_CanDash)
             {
                 m_MoveDirection = (m_CharacterController.transform.right * horizInput + m_CharacterController.transform.forward * vertInput).normalized;
+
+                //Dash only if player is moving while in air
                 if (m_MoveDirection.magnitude > 0.0f)
                 {
                     m_DashTimer = m_PlayerMovement.DashTime;
@@ -55,30 +59,34 @@ public class PlayerDash : PlayerAbility
                     AudioManager.m_Instance.Play("Dash");
                 }
             }
-
-            if (m_DashTimer > 0.0f)
-            {
-                m_PlayerMovement.enabled = false;
-                m_PlayerWallRunning.enabled = false;
-
-                m_CharacterController.Move(m_MoveDirection * m_PlayerMovement.DashSpeed * Time.deltaTime);
-
-                m_DashTimer -= Time.deltaTime;
-            }
-            else
-            {
-                m_PlayerMovement.enabled = true;
-                m_PlayerWallRunning.enabled = true;
-            }
+        }
+        else
+        {
+            m_DashTimer = 0.0f;
+            m_MoveDirection = Vector3.zero;
         }
 
-        if (m_CharacterController.isGrounded)
+        DashMovement();
+    }
+
+    private void DashMovement()
+    {
+        if (m_DashTimer > 0.0f)
         {
+            //Disable controls while dash is active
+            m_PlayerMovement.enabled = false;
+            m_PlayerWallRunning.enabled = false;
+
+            m_CharacterController.Move(m_MoveDirection * m_PlayerMovement.DashSpeed * Time.deltaTime);
+            m_DashTimer -= Time.deltaTime;
+        }
+        else if (m_IsDashing)
+        {
+            //Reenable controls to player
             m_PlayerMovement.enabled = true;
             m_PlayerWallRunning.enabled = true;
 
-            m_DashTimer = 0.0f;
-            m_MoveDirection = Vector3.zero;
+            m_IsDashing = false;
         }
     }
 
