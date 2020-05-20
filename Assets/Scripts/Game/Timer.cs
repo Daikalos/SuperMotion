@@ -24,10 +24,6 @@ public class Timer : MonoBehaviour
     void Update()
     {
         m_TimePassed = (Time.time + m_CheckpointTime) - m_StartTime;
-
-        string minutes = ((int)m_TimePassed / 60).ToString();
-        string seconds = (m_TimePassed % 60).ToString("f3");
-
-        m_Timer.SetText(minutes + ":" + seconds);
+        m_Timer.SetText(Utilities.TimeFormat(m_TimePassed, "0.62"));
     }
 }

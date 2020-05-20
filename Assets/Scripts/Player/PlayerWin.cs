@@ -46,9 +46,9 @@ public class PlayerWin : MonoBehaviour
     /// </summary>
     private void SaveHighScore()
     {
-        if (Extensions.InLevel())
+        if (Utilities.InLevel())
         {
-            float levelHS = PlayerPrefs.GetFloat("HighScore-" + Extensions.LevelNumber(), Mathf.Infinity);
+            float levelHS = PlayerPrefs.GetFloat("HighScore-" + Utilities.LevelNumber(), Mathf.Infinity);
             float currentHS = m_Timer.TimePassed;
 
             //If impossible HighScore is already set, reset it
@@ -60,7 +60,7 @@ public class PlayerWin : MonoBehaviour
             //New HighScore is achieved
             if (currentHS < levelHS)
             {
-                PlayerPrefs.SetFloat("HighScore-" + Extensions.LevelNumber(), currentHS);
+                PlayerPrefs.SetFloat("HighScore-" + Utilities.LevelNumber(), currentHS);
             }
         }
     }

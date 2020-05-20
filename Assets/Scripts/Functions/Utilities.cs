@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class Extensions
+public static class Utilities
 {
     #region LevelManagement
     /// <summary>
@@ -85,8 +85,19 @@ public static class Extensions
     }
     #endregion
 
-    public static string TimeFormat(float number)
+    #region StringFormat
+    public static string NumberFormat(int number)
     {
-        return string.Format("{0:00}:{1:00}.{2:000}", (int)(number / 60), (int)(number % 60), (number * 1000) % 1000);
+        return (number < 10) ? "0" + number : number.ToString();
     }
+
+    public static string TimeFormat(float totalTime, string characterSpace)
+    {
+        return string.Format(
+            "<mspace=" + characterSpace + "em>{0:00}</mspace>" + ":" +
+            "<mspace=" + characterSpace + "em>{1:00}</mspace>" + "." +
+            "<mspace=" + characterSpace + "em>{2:000}</mspace>",
+            (int)(totalTime / 60), (int)(totalTime % 60), (int)(totalTime * 1000) % 1000);
+    }
+    #endregion
 }
