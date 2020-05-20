@@ -56,6 +56,8 @@ public class PlayerDash : PlayerAbility
                     m_PlayerMovement.Velocity = Vector3.zero;
 
                     m_CanDash = false;
+                    m_IsDashing = true;
+
                     AudioManager.m_Instance.Play("Dash");
                 }
             }

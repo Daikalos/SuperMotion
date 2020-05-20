@@ -104,3 +104,27 @@ MonoBehaviour:
     m_Pitch: 1.02
     m_Loop: 0
     source: {fileID: 0}
+  - m_Name: Song
+    m_Clip: {fileID: 8300000, guid: f34c8b9e9ef310642909a0e63c336afd, type: 3}
+    m_Volume: 0.318
+    m_Pitch: 1.02
+    m_Loop: 1
+    source: {fileID: 0}
+  - m_Name: Landing
+    m_Clip: {fileID: 8300000, guid: 5d8455fb534849442ad490965ff71279, type: 3}
+    m_Volume: 0.526
+    m_Pitch: 1.02
+    m_Loop: 0
+    source: {fileID: 0}
+  - m_Name: EnemyDeath
+    m_Clip: {fileID: 8300000, guid: 5f2abfb9414f3994e8649298eac18c00, type: 3}
+    m_Volume: 0.526
+    m_Pitch: 1.02
+    m_Loop: 0
+    source: {fileID: 0}
+  - m_Name: Splash
+    m_Clip: {fileID: 8300000, guid: 67f18ea9e1a6d994c845d5f0a5253c44, type: 3}
+    m_Volume: 0.41
+    m_Pitch: 1.02
+    m_Loop: 0
+    source: {fileID: 0}
