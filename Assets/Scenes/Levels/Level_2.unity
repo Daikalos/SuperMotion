@@ -5644,7 +5644,7 @@ PrefabInstance:
     - target: {fileID: 843126053704784864, guid: 9bec580da9da01e4b914fac4857460f3,
         type: 3}
       propertyPath: m_TargetDistance
-      value: 39
+      value: 63
       objectReference: {fileID: 0}
     - target: {fileID: 843126053704784864, guid: 9bec580da9da01e4b914fac4857460f3,
         type: 3}
@@ -36474,7 +36474,7 @@ PrefabInstance:
     - target: {fileID: 843126053704784864, guid: 9bec580da9da01e4b914fac4857460f3,
         type: 3}
       propertyPath: m_TargetDistance
-      value: 43
+      value: 67
       objectReference: {fileID: 0}
     - target: {fileID: 843126053704784864, guid: 9bec580da9da01e4b914fac4857460f3,
         type: 3}
