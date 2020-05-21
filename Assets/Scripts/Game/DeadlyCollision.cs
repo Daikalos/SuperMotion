@@ -9,7 +9,7 @@ public class DeadlyCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.CompareTag("Player"))
         {
             GameManager.Instance.SetState(GameState.GameOver);
         }

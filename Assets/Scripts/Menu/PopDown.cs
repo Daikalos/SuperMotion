@@ -9,8 +9,14 @@ public class PopDown : MonoBehaviour
     const float m_timerMaxTimeOpen = 10;
     bool m_isOpen;
 
+    private Animator m_Animator;
+    private CanvasGroup m_PopDownCanvasGroup;
+
     private void Start()
     {
+        m_Animator = GetComponent<Animator>();
+        m_PopDownCanvasGroup = GetComponent<CanvasGroup>();
+
         //Show at start
         m_timer = m_timerMaxTimeOpen; //max time open set to 10 seconds, in case user forgets to close (keep or nah?)
         m_isOpen = true;
@@ -31,27 +37,40 @@ public class PopDown : MonoBehaviour
         }
 
         HandlePanel();
+        HidePanel();
     }
 
     public void HandlePanel()
     {
         if (panel != null)
         {
-            Animator animator = panel.GetComponent<Animator>();
-
             m_timer -= Time.deltaTime;
             if (m_timer < 0)
             {
-                animator.SetBool("open", false);
+                m_Animator.SetBool("open", false);
                 m_isOpen = false;
             }
             else
             {
-                if (animator != null)
+                if (m_Animator != null)
                 {
-                    animator.SetBool("open", true);
+                    m_Animator.SetBool("open", true);
                 }
             }
+        }
+    }
+
+    private void HidePanel()
+    {
+        if (GameManager.Instance.GameState == GameState.Paused)
+        {
+            m_Animator.speed = 0.0f;
+            m_PopDownCanvasGroup.alpha = 0.0f;
+        }
+        if (GameManager.Instance.GameState == GameState.Playing)
+        {
+            m_Animator.speed = 1.0f;
+            m_PopDownCanvasGroup.alpha = 1.0f;
         }
     }
 }

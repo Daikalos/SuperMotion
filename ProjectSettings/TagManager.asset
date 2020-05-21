@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Checkpoint
   - Bullet
+  - MovingObject
   layers:
   - Default
   - TransparentFX

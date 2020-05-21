@@ -13,6 +13,8 @@ public class MoveTruck : MonoBehaviour
     int m_CurrentWayPoint;
     Transform m_TargetWayPoint;
 
+    public float Speed { get => m_Speed; }
+
     void Start()
     {
         m_CurrentWayPoint = 0;

@@ -530,6 +530,7 @@ GameObject:
   - component: {fileID: 222221108}
   - component: {fileID: 222221110}
   - component: {fileID: 222221111}
+  - component: {fileID: 899091524}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -631,6 +632,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 222221106}
+--- !u!225 &899091524
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222221106}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &251284596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,7 +1989,7 @@ RectTransform:
   m_Children:
   - {fileID: 222221107}
   m_Father: {fileID: 1899073643797006584}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2230,7 +2243,7 @@ RectTransform:
   - {fileID: 680626537}
   - {fileID: 884254912}
   m_Father: {fileID: 1899073643797006584}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7830,8 +7843,8 @@ RectTransform:
   - {fileID: 1899073644209140533}
   - {fileID: 1168413246}
   - {fileID: 695995862}
-  - {fileID: 1126362676}
   - {fileID: 1259652839}
+  - {fileID: 1126362676}
   - {fileID: 1899073642629214109}
   m_Father: {fileID: 0}
   m_RootOrder: 0
