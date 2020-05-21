@@ -58,8 +58,8 @@ public class PauseMenu : MonoBehaviour
             m_IsPaused = !m_IsPaused;
             Time.timeScale = 1.0f - Time.timeScale;
 
-            GameState newState = (m_IsPaused) ? GameState.Paused : GameState.Playing;
-            GameManager.Instance.SetState(newState);
+            GameState currentState = (m_IsPaused) ? GameState.Paused : GameState.Playing;
+            GameManager.Instance.SetState(currentState);
 
             Cursor.lockState = m_IsPaused ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = m_IsPaused;

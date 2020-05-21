@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.41393575, g: 0.439993, b: 0.45234686, a: 1}
+  m_IndirectSpecularColor: {r: 0.15552011, g: 0.17770648, b: 0.190545, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2159,6 +2159,78 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 277472190, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 277472190, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 277472190, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 277472190, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 277472190, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 277472190, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511744, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -32
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511744, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 514.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511744, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -32
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511744, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 53.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511744, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511744, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511745, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_textAlignment
+      value: 4100
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511745, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511745, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_wordWrappingRatios
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511745, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_text
+      value: 00:00.000
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511745, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 895511745, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1899073642895836074, guid: 9888fedbffbd21d4e87b31bfd9b4845f,
         type: 3}
       propertyPath: m_IsActive

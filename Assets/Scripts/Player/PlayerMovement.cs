@@ -200,10 +200,14 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnSlope()
     {
-        return
-            m_CanJump &&
-            Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength) &&
-            hit.normal != Vector3.up;
+        if (m_CanJump && m_IsGrounded && Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
+        {
+            if (hit.normal != Vector3.up)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -224,6 +228,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (m_PreviousSlope != objectHit.gameObject && m_IsGrounded)
         {
+            //Reset previous if current object is a new slope
             m_PreviousSlope = null;
         }
 
