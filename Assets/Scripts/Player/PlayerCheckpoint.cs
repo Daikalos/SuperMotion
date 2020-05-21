@@ -12,19 +12,19 @@ public class PlayerCheckpoint : MonoBehaviour
     private GameObject[] m_Checkpoints;
     private CharacterController m_CharacterController;
 
-    void Start()
+    private void Awake()
     {
         m_Checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         m_CharacterController = GetComponent<CharacterController>();
 
         //No checkpoint is set yet
-        if (CheckpointManager.Instance.Checkpoint == Vector3.zero)
+        if (!CheckpointManager.Instance.CheckpointSet)
         {
             CheckpointManager.Instance.Checkpoint = transform.position;
             CheckpointManager.Instance.CheckpointTime = 0.0f;
         }
 
-        //Deactivate character controller to be able to change position of player
+        //Deactivate character controller temporarily to be able to change position of player
         m_CharacterController.enabled = false;
         transform.position = CheckpointManager.Instance.Checkpoint;
         m_CharacterController.enabled = true;
@@ -35,6 +35,7 @@ public class PlayerCheckpoint : MonoBehaviour
         //Update checkpoint
         CheckpointManager.Instance.Checkpoint = checkpoint.transform.position + spawnPos;
         CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
+        CheckpointManager.Instance.CheckpointSet = true;
 
         //Update each checkpoint according to current one
         foreach (GameObject c in m_Checkpoints)

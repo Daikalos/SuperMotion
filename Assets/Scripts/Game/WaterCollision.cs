@@ -9,7 +9,7 @@ public class WaterCollision : MonoBehaviour
         if (other.tag == "Player")
         {
             GameManager.Instance.SetState(GameState.GameOver);
-            AudioManager.m_Instance.PlayOnce("Death");
+            AudioManager.m_Instance.PlayOnce("Splash");
         }
     }
 }

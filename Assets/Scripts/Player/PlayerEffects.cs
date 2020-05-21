@@ -91,6 +91,7 @@ public class PlayerEffects : MonoBehaviour
 
             //Emit dust particles from particle system situated at the bottom of the player
             m_ParticleDustEffect.Emit(Random.Range(m_ParticleCountMin, m_ParticleCountMax));
+            AudioManager.m_Instance.Play("Landing");
         }
 
         if (m_StartHeadBob)
@@ -122,11 +123,13 @@ public class PlayerEffects : MonoBehaviour
     {
         if (m_PlayerWallRunning.CanWallRun() && m_PlayerWallRunning.enabled)
         {
-            m_PlayerLook.ZRotation = Mathf.LerpAngle(m_PlayerLook.ZRotation, m_CameraTilt * -m_PlayerWallRunning.MoveDirection, m_CameraTiltSpeed * Time.deltaTime);
+            float leanAngle = Mathf.LerpAngle(m_PlayerLook.CameraRotation.z, m_CameraTilt * -m_PlayerWallRunning.MoveDirection, m_CameraTiltSpeed * Time.deltaTime);
+            m_PlayerLook.CameraRotation = m_PlayerLook.CameraRotation.SetZ(leanAngle);
         }
         else
         {
-            m_PlayerLook.ZRotation = Mathf.LerpAngle(m_PlayerLook.ZRotation, 0.0f, m_CameraTiltSpeed * Time.deltaTime);
+            float leanAngle = Mathf.LerpAngle(m_PlayerLook.CameraRotation.z, 0.0f, m_CameraTiltSpeed * Time.deltaTime);
+            m_PlayerLook.CameraRotation = m_PlayerLook.CameraRotation.SetZ(leanAngle);
         }
     }
 }

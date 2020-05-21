@@ -220,7 +220,8 @@ MonoBehaviour:
     type: 3}
   m_FireDelay: 0.7
   m_TargetDistance: 50
-  m_FieldOfView: 170
+  m_HorizontalFOV: 140
+  m_VerticalFOV: 120
   m_LostTargetDelay: 3
   m_Damping: 5
 --- !u!114 &468763191

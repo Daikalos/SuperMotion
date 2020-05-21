@@ -3,53 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class HighScore : MonoBehaviour
+public class Highscore : MonoBehaviour
 {
     [SerializeField, Tooltip("How many levels that are used in the game")]
     private int m_LevelCount = 0;
 
     [SerializeField]
     private GameObject
-        m_HighScoreElements = null,
-        m_HighScoreTemplate = null;
+        m_HighscoreElements = null,
+        m_HighscoreTemplate = null;
 
-    private List<GameObject> m_HighScores;
+    private List<GameObject> m_Highscores;
 
     private void Awake()
     {
-        m_HighScores = new List<GameObject>();
+        m_Highscores = new List<GameObject>();
     }
 
     private void OnEnable()
     {
         for (int i = 1; i < m_LevelCount + 1; i++)
         {
-            float highScore = PlayerPrefs.GetFloat("HighScore-" + i, 0.0f);
+            float highscore = PlayerPrefs.GetFloat("HighScore-" + i, 0.0f);
 
-            GameObject highScoreObject = Instantiate(m_HighScoreTemplate, m_HighScoreElements.transform) as GameObject;
-            highScoreObject.transform.localScale = Vector3.one;
-            highScoreObject.SetActive(true);
+            GameObject highscoreObject = Instantiate(m_HighscoreTemplate, m_HighscoreElements.transform) as GameObject;
+            highscoreObject.transform.localScale = Vector3.one;
+            highscoreObject.SetActive(true);
 
-            highScoreObject.transform.Find("LevelText").GetComponent<TMP_Text>().text = "Level-" + NumberFormat(i);
-            highScoreObject.transform.Find("TimeText").GetComponent<TMP_Text>().text = highScore != 0.0f ? TimeFormat(highScore) : "-";
+            highscoreObject.transform.Find("LevelText").GetComponent<TMP_Text>().text = "Level-" + Utilities.NumberFormat(i);
+            highscoreObject.transform.Find("TimeText").GetComponent<TMP_Text>().text = (highscore != 0.0f) ? Utilities.TimeFormat(highscore, "0.8") : "-";
 
-            m_HighScores.Add(highScoreObject);
+            m_Highscores.Add(highscoreObject);
         }
     }
 
     private void OnDisable()
     {
-        m_HighScores.ForEach(o => Destroy(o));
-        m_HighScores.Clear();
-    }
-
-    private string NumberFormat(int number)
-    {
-        return (number < 10) ? "0" + number : number.ToString();
-    }
-
-    private string TimeFormat(float number)
-    {
-        return string.Format("{0:00}:{1:00}.{2:000}", (int)(number / 60), (int)(number % 60), (number * 1000) % 1000);
+        m_Highscores.ForEach(o => Destroy(o));
+        m_Highscores.Clear();
     }
 }

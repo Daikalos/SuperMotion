@@ -8,6 +8,16 @@ public class EnemyDeath : MonoBehaviour
     [SerializeField, Tooltip("The force applied when hit"), Range(0.0f, 5000.0f)]
     private float m_ImpactForce = 1500.0f;
 
+    private AudioSource m_AudioSource;
+
+    void Start()
+    {
+        m_AudioSource = gameObject.AddComponent<AudioSource>();
+
+        m_AudioSource.clip = AudioManager.m_Instance.GetSound("EnemyDeath").m_Clip;
+        m_AudioSource.spatialBlend = 1.0f;
+    }
+
     public void EnemyHit(Vector3 hitDirection, Vector3 impactPoint)
     {
         //Apply force relative to impact point
@@ -23,5 +33,8 @@ public class EnemyDeath : MonoBehaviour
 
         //Destroy all scripts on enemy
         Array.ForEach(gameObject.GetComponents<MonoBehaviour>(), s => Destroy(s));
+
+        //Play scream sound when enemy is hit
+        m_AudioSource.Play();
     }
 }

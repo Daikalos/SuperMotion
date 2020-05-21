@@ -23,7 +23,7 @@ public class WinMenu : MonoBehaviour
     [SerializeField]
     private Timer m_Timer = null;
 
-    private CanvasGroup m_GUI;
+    private CanvasGroup m_OptionsCanvasGroup;
 
     private bool m_CoroutineIsRunning;
 
@@ -33,10 +33,10 @@ public class WinMenu : MonoBehaviour
         m_NextLevelButton.onClick.AddListener(NextLevel);
         m_MainMenuButton.onClick.AddListener(OpenMainMenu);
 
-        m_GUI = m_WinOptions.GetComponent<CanvasGroup>();
+        m_OptionsCanvasGroup = m_WinOptions.GetComponent<CanvasGroup>();
         
         //Can only press next level if next level exists
-        m_NextLevelButton.interactable = NextLevelExists();
+        m_NextLevelButton.interactable = Utilities.NextLevelExists();
 
         m_CoroutineIsRunning = false;
     }
@@ -48,35 +48,37 @@ public class WinMenu : MonoBehaviour
             if (!m_CoroutineIsRunning)
             {
                 m_CoroutineIsRunning = true;
-                StartCoroutine(FadeInGUI());
+                StartCoroutine(FadeInOptions());
 
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
 
                 m_HUD.SetActive(false);
-                m_WinTimeText.text = "Time: " + TimeFormat(m_Timer.TimePassed);
+                m_WinTimeText.text = "Time: " + Utilities.TimeFormat(m_Timer.TimePassed, "0.62");
 
-                SaveHighScore();
+                float highScore = PlayerPrefs.GetFloat("HighScore-" + Utilities.LevelNumber(), 0.0f);
+                m_HighScoreTimeText.text = "HighScore: " + ((highScore > Mathf.Epsilon) ? Utilities.TimeFormat(highScore, "0.62") : "-");
             }
         }
     }
 
-    private IEnumerator FadeInGUI()
+    private IEnumerator FadeInOptions()
     {
         m_WinOptions.SetActive(true);
-        m_GUI.alpha = 0.0f;
+        m_OptionsCanvasGroup.alpha = 0.0f;
 
-        while (m_GUI.alpha < 1.0f)
+        while (m_OptionsCanvasGroup.alpha < 1.0f)
         {
             yield return null;
-            m_GUI.alpha = (1.0f - Time.timeScale);
+
+            m_OptionsCanvasGroup.alpha = (1.0f - Time.timeScale);
         }
     }
 
     private void Replay()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        CheckpointManager.Instance.Checkpoint = Vector3.zero;
+        CheckpointManager.Instance.CheckpointSet = false;
     }
 
     private void NextLevel()
@@ -88,92 +90,5 @@ public class WinMenu : MonoBehaviour
     private void OpenMainMenu()
     {
         SceneManager.LoadScene("Main_Menu");
-    }
-
-    /// <summary>
-    /// Save completion time if it is lower than highscore
-    /// </summary>
-    private void SaveHighScore()
-    {
-        if (InLevel())
-        {
-            float levelHS = PlayerPrefs.GetFloat("HighScore-" + LevelNumber(), Mathf.Infinity);
-            float currentHS = m_Timer.TimePassed;
-
-            //New HighScore is achieved
-            if (currentHS < levelHS)
-            {
-                PlayerPrefs.SetFloat("HighScore-" + LevelNumber(), currentHS);
-            }
-
-            //Get highscore
-            float highScore = PlayerPrefs.GetFloat("HighScore-" + LevelNumber(), 0.0f);
-
-            //Display highscore
-            m_HighScoreTimeText.text = "HighScore: " + ((highScore != 0.0f) ? TimeFormat(highScore) : "-");
-        }
-    }
-
-    /// <summary>
-    /// Check if next level exists or not
-    /// </summary>
-    private bool NextLevelExists()
-    {
-        if (InLevel())
-        {
-            return SceneExists("Level_" + (LevelNumber() + 1));
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// If player is currently in a level
-    /// </summary>
-    private bool InLevel()
-    {
-        string levelName = SceneManager.GetActiveScene().name;
-        return levelName.Contains("Level");
-    }
-
-    /// <summary>
-    /// Get the current number identifier of the level
-    /// </summary>
-    private int LevelNumber()
-    {
-        if (InLevel())
-        {
-            string levelName = SceneManager.GetActiveScene().name;
-            levelName = levelName.Replace("Level_", string.Empty);
-
-            if (int.TryParse(levelName, out int levelNumber))
-            {
-                return levelNumber;
-            }
-        }
-        return 0;
-    }
-
-    /// <summary>
-    /// Go through all scene names and check if scene exists
-    /// </summary>
-    private bool SceneExists(string scene)
-    {
-        for (int i = 1; i < SceneManager.sceneCountInBuildSettings; i++)
-        {
-            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
-            int lastSlash = scenePath.LastIndexOf("/");
-            string sceneName = scenePath.Substring(lastSlash + 1, scenePath.LastIndexOf(".") - lastSlash - 1);
-
-            if (sceneName == scene)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private string TimeFormat(float number)
-    {
-        return string.Format("{0:00}:{1:00}.{2:000}", (int)(number / 60), (int)(number % 60), (number * 1000) % 1000);
     }
 }

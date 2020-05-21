@@ -10,11 +10,13 @@ public class EnemyBehaviour : MonoBehaviour
     private GameObject m_Bullet = null;
 
     [SerializeField, Tooltip("Delay before enemy fires at target"), Range(0.0f, 10.0f)]
-    private float m_FireDelay = 1.0f;
+    private float m_FireDelay = 0.9f;
     [SerializeField, Tooltip("Distance the enemy checks for target"), Range(0.0f, 300.0f)]
     private float m_TargetDistance = 50.0f;
-    [SerializeField, Tooltip("Extent of the field the enemy can see in degrees"), Range(0.0f, 360.0f)]
-    private float m_FieldOfView = 170.0f;
+    [SerializeField, Tooltip("Extent of the field the enemy can see horizontally in degrees"), Range(0.0f, 360.0f)]
+    private float m_HorizontalFOV = 140.0f;
+    [SerializeField, Tooltip("Extent of the field the enemy can see vertically in degrees"), Range(0.0f, 360.0f)]
+    private float m_VerticalFOV = 120.0f;
     [SerializeField, Tooltip("Wait time until enemy returns to normal state after having spotted a target"), Range(0.0f, 15.0f)]
     private float m_LostTargetDelay = 3.0f;
     [SerializeField, Tooltip("Speed the enemy rotates towards target"), Range(0.0f, 15.0f)]
@@ -129,6 +131,32 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    private bool CanSeeTarget()
+    {
+        //No walls between target and enemy
+        if (!Physics.Linecast(transform.position, m_TargetPosition))
+        {
+            //In target distance of enemy
+            if (Vector3.Distance(transform.position, m_TargetPosition) <= m_TargetDistance)
+            {
+                Vector3 lookVector = (m_TargetPosition - transform.position);
+
+                Vector3 horizontalVector = new Vector3(lookVector.x, 0.0f, lookVector.z);
+                Vector3 verticalVector = new Vector3(0.0f, lookVector.y, 0.0f);
+
+                float horizontalAngle = Mathf.Abs(Vector3.Angle(transform.forward, horizontalVector));
+                float verticalAngle = Mathf.Abs(Vector3.Angle(lookVector, verticalVector) - 90.0f);
+
+                //If target is in enemy field of view
+                if (horizontalAngle < m_HorizontalFOV / 2.0f && verticalAngle < m_VerticalFOV / 2.0f)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void RotateEnemy()
     {
         Vector3 lookPosition = m_TargetPosition - transform.position;
@@ -150,23 +178,5 @@ public class EnemyBehaviour : MonoBehaviour
         rotateWeapon.y = 0;
 
         m_Weapon.transform.localEulerAngles = rotateWeapon;
-    }
-
-    private bool CanSeeTarget()
-    {
-        //No walls between target and enemy
-        if (!Physics.Linecast(transform.position, m_TargetPosition))
-        {
-            //In target distance of enemy
-            if (Vector3.Distance(transform.position, m_TargetPosition) <= m_TargetDistance)
-            {
-                //If target is in enemy field of view
-                if (Mathf.Abs(Vector3.Angle(transform.forward, m_TargetPosition - transform.position)) < m_FieldOfView / 2.0f)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

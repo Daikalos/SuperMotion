@@ -28,7 +28,7 @@ public class CheckpointCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             if (!IsFlagged) //If this object is not flagged as current checkpoint, update it
             {

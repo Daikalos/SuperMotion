@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     private Button 
         m_ResumeButton = null,
         m_CheckpointButton = null,
+        m_RestartButton = null,
         m_ControlsButton = null,
         m_MainMenuButton = null,
         m_BackButton = null;
@@ -21,13 +22,16 @@ public class PauseMenu : MonoBehaviour
         m_ConfirmPanel = null,
         m_PauseOptions = null,
         m_ControlsMenu = null;
+    [SerializeField]
+    private Timer m_Timer = null;
 
     private bool m_IsPaused;
 
-    void Start()
+    private void Start()
     {
         m_ResumeButton.onClick.AddListener(ResumeGame);
         m_CheckpointButton.onClick.AddListener(LoadCheckpoint);
+        m_RestartButton.onClick.AddListener(Restart);
         m_ControlsButton.onClick.AddListener(OpenControls);
         m_MainMenuButton.onClick.AddListener(OpenMainMenu);
         m_BackButton.onClick.AddListener(Back);
@@ -39,7 +43,7 @@ public class PauseMenu : MonoBehaviour
         m_ControlsMenu.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -54,8 +58,8 @@ public class PauseMenu : MonoBehaviour
             m_IsPaused = !m_IsPaused;
             Time.timeScale = 1.0f - Time.timeScale;
 
-            GameState newState = (m_IsPaused) ? GameState.Paused : GameState.Playing;
-            GameManager.Instance.SetState(newState);
+            GameState currentState = (m_IsPaused) ? GameState.Paused : GameState.Playing;
+            GameManager.Instance.SetState(currentState);
 
             Cursor.lockState = m_IsPaused ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = m_IsPaused;
@@ -64,6 +68,8 @@ public class PauseMenu : MonoBehaviour
             m_ConfirmPanel.SetActive(false);
             m_PauseOptions.SetActive(m_IsPaused);
             m_ControlsMenu.SetActive(false);
+
+            m_CheckpointButton.interactable = (CheckpointManager.Instance.CheckpointSet);
         }
     }
 
@@ -79,6 +85,30 @@ public class PauseMenu : MonoBehaviour
             confirmMenu.YesAction(new UnityAction(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
+            }));
+
+            confirmMenu.NoAction(new UnityAction(() =>
+            {
+                m_ConfirmPanel.SetActive(false);
+                m_PauseOptions.SetActive(true);
+            }));
+        }
+    }
+
+    private void Restart()
+    {
+        if (!m_ConfirmPanel.activeSelf)
+        {
+            m_ConfirmPanel.SetActive(true);
+            m_PauseOptions.SetActive(false);
+
+            ConfirmMenu confirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
+
+            confirmMenu.YesAction(new UnityAction(() =>
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                CheckpointManager.Instance.CheckpointSet = false;
             }));
 
             confirmMenu.NoAction(new UnityAction(() =>
