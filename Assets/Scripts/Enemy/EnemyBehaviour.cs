@@ -131,29 +131,6 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    private void RotateEnemy()
-    {
-        Vector3 lookPosition = m_TargetPosition - transform.position;
-
-        //Ignore y-coordinate to only rotate by x-axis and z-axis
-        lookPosition.y = 0;
-
-        Quaternion rotateEnemy = Quaternion.LookRotation(lookPosition);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotateEnemy, m_Damping * Time.deltaTime);
-    }
-
-    private void RotateWeapon()
-    {
-        Vector3 lookPosition = m_TargetPosition - m_Weapon.transform.position;
-        Vector3 rotateWeapon = Quaternion.LookRotation(lookPosition).eulerAngles;
-
-        //Lock rotation so only x-coordinate can rotate
-        rotateWeapon.z = 0;
-        rotateWeapon.y = 0;
-
-        m_Weapon.transform.localEulerAngles = rotateWeapon;
-    }
-
     private bool CanSeeTarget()
     {
         //No walls between target and enemy
@@ -178,5 +155,28 @@ public class EnemyBehaviour : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void RotateEnemy()
+    {
+        Vector3 lookPosition = m_TargetPosition - transform.position;
+
+        //Ignore y-coordinate to only rotate by x-axis and z-axis
+        lookPosition.y = 0;
+
+        Quaternion rotateEnemy = Quaternion.LookRotation(lookPosition);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotateEnemy, m_Damping * Time.deltaTime);
+    }
+
+    private void RotateWeapon()
+    {
+        Vector3 lookPosition = m_TargetPosition - m_Weapon.transform.position;
+        Vector3 rotateWeapon = Quaternion.LookRotation(lookPosition).eulerAngles;
+
+        //Lock rotation so only x-coordinate can rotate
+        rotateWeapon.z = 0;
+        rotateWeapon.y = 0;
+
+        m_Weapon.transform.localEulerAngles = rotateWeapon;
     }
 }

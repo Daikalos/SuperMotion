@@ -20,7 +20,7 @@ public class GameOverMenu : MonoBehaviour
     [SerializeField]
     private Timer m_Timer = null;
 
-    private CanvasGroup m_GUI;
+    private CanvasGroup m_OptionsCanvasGroup;
 
     private bool m_CoroutineIsRunning;
 
@@ -30,7 +30,7 @@ public class GameOverMenu : MonoBehaviour
         m_RestartButton.onClick.AddListener(Restart);
         m_MainMenuButton.onClick.AddListener(OpenMainMenu);
 
-        m_GUI = m_GameOverOptions.GetComponent<CanvasGroup>();
+        m_OptionsCanvasGroup = m_GameOverOptions.GetComponent<CanvasGroup>();
 
         m_CoroutineIsRunning = false;
     }
@@ -42,7 +42,7 @@ public class GameOverMenu : MonoBehaviour
             if (!m_CoroutineIsRunning)
             {
                 m_CoroutineIsRunning = true;
-                StartCoroutine(FadeInGUI());
+                StartCoroutine(FadeInOptions());
 
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
@@ -55,15 +55,15 @@ public class GameOverMenu : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeInGUI()
+    private IEnumerator FadeInOptions()
     {
         m_GameOverOptions.SetActive(true);
-        m_GUI.alpha = 0.0f;
+        m_OptionsCanvasGroup.alpha = 0.0f;
 
-        while (m_GUI.alpha < 1.0f)
+        while (m_OptionsCanvasGroup.alpha < 1.0f)
         {
             yield return null;
-            m_GUI.alpha = (1.0f - Time.timeScale);
+            m_OptionsCanvasGroup.alpha = (1.0f - Time.timeScale);
         }
     }
 
