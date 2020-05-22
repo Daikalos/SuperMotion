@@ -49,6 +49,7 @@ public class GameOverMenu : MonoBehaviour
 
                 m_HUD.SetActive(false);
 
+                //Can only press load checkpoint if one has been set
                 m_CheckpointButton.interactable = (CheckpointManager.Instance.CheckpointSet);
                 CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
             }

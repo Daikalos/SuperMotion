@@ -17,7 +17,7 @@ public class EnemyBehaviour : MonoBehaviour
     private float m_HorizontalFOV = 140.0f;
     [SerializeField, Tooltip("Extent of the field the enemy can see vertically in degrees"), Range(0.0f, 360.0f)]
     private float m_VerticalFOV = 120.0f;
-    [SerializeField, Tooltip("Wait time until enemy returns to normal state after having spotted a target"), Range(0.0f, 15.0f)]
+    [SerializeField, Tooltip("Wait time until enemy returns to normal state after having lost sight of target"), Range(0.0f, 15.0f)]
     private float m_LostTargetDelay = 3.0f;
     [SerializeField, Tooltip("Speed the enemy rotates towards target"), Range(0.0f, 15.0f)]
     private float m_Damping = 5.0f;

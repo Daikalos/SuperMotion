@@ -29,7 +29,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        m_ResumeButton.onClick.AddListener(ResumeGame);
+        m_ResumeButton.onClick.AddListener(TogglePause);
         m_CheckpointButton.onClick.AddListener(LoadCheckpoint);
         m_RestartButton.onClick.AddListener(Restart);
         m_ControlsButton.onClick.AddListener(OpenControls);
@@ -47,11 +47,11 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ResumeGame();
+            TogglePause();
         }
     }
 
-    private void ResumeGame()
+    private void TogglePause()
     {
         if (GameManager.Instance.GameState == GameState.Playing || GameManager.Instance.GameState == GameState.Paused)
         {
@@ -69,6 +69,7 @@ public class PauseMenu : MonoBehaviour
             m_PauseOptions.SetActive(m_IsPaused);
             m_ControlsMenu.SetActive(false);
 
+            //Can only press load checkpoint if one has been set
             m_CheckpointButton.interactable = (CheckpointManager.Instance.CheckpointSet);
         }
     }

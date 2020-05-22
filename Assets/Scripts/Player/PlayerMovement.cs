@@ -202,8 +202,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnSlope()
     {
+        //If currently on the ground
         if (m_CanJump && m_IsGrounded && Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
+            //If the ground is not flat
             if (hit.normal != Vector3.up)
             {
                 return true;
