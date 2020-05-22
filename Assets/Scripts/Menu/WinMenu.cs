@@ -14,8 +14,8 @@ public class WinMenu : MonoBehaviour
         m_MainMenuButton = null;
     [SerializeField]
     private TMP_Text
-        m_WinTimeText = null,
-        m_HighScoreTimeText = null;
+        m_WinTime = null,
+        m_HighscoreTime = null;
     [SerializeField]
     private GameObject
         m_HUD = null,
@@ -54,10 +54,10 @@ public class WinMenu : MonoBehaviour
                 Cursor.visible = true;
 
                 m_HUD.SetActive(false);
-                m_WinTimeText.text = "Time: " + Utilities.TimeFormat(m_Timer.TimePassed, "0.62");
+                m_WinTime.text = Utilities.TimeFormat(m_Timer.TimePassed, "0.557");
 
-                float highScore = PlayerPrefs.GetFloat("HighScore-" + Utilities.LevelNumber(), 0.0f);
-                m_HighScoreTimeText.text = "HighScore: " + ((highScore > Mathf.Epsilon) ? Utilities.TimeFormat(highScore, "0.62") : "-");
+                float highscore = PlayerPrefs.GetFloat("HighScore-" + Utilities.LevelNumber(), 0.0f);
+                m_HighscoreTime.text = (highscore > Mathf.Epsilon) ? Utilities.TimeFormat(highscore, "0.557") : "-";
             }
         }
     }
@@ -70,7 +70,6 @@ public class WinMenu : MonoBehaviour
         while (m_OptionsCanvasGroup.alpha < 1.0f)
         {
             yield return null;
-
             m_OptionsCanvasGroup.alpha = (1.0f - Time.timeScale);
         }
     }

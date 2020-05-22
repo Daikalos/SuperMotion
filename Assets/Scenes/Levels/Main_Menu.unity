@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1600298109}
-  m_IndirectSpecularColor: {r: 0.521685, g: 0.2740271, b: 0.57843184, a: 1}
+  m_IndirectSpecularColor: {r: 0.7494627, g: 0.56017643, b: 0.78482896, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17689,6 +17689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1429793839}
   - component: {fileID: 1429793840}
+  - component: {fileID: 1429793841}
   m_Layer: 5
   m_Name: PlayMenu
   m_TagString: Untagged
@@ -17734,6 +17735,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66bbc42f0e1f1ac48b8113f854a8cd50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1429793841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429793838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1240d158126c33418fffb3b98745dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Levels:
+  - {fileID: 1903766779}
+  - {fileID: 1790529473}
+  - {fileID: 501720773}
+  m_LockLevels: 1
 --- !u!1 &1430366121
 GameObject:
   m_ObjectHideFlags: 0
