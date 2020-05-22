@@ -17,7 +17,7 @@ public class LevelLock : MonoBehaviour
             int currentLevel = 0;
 
             //Lock each level if it has not been completed; Skip first level to lock
-            for (int i = 2; i < m_Levels.Length + 1; i++)
+            for (int i = 1; i < m_Levels.Length; i++)
             {
                 //Use Highscore as a way to see if level has been completed
                 float highscore = PlayerPrefs.GetFloat("HighScore-" + i, 0.0f);
