@@ -1,11 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System;
-using System.IO;
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.Audio;
 
 public struct GameSettings
 {
@@ -16,25 +13,20 @@ public struct GameSettings
     public int AntiAliasing { get; set; }
     public int VerticalSync { get; set; }
     public float MasterVolume { get; set; }
+    public float MusicVolume { get; set; }
+    public float EffectsVolume { get; set; }
     public float MouseSensitivity { get; set; }
 }
 
-public class SettingsManager : MonoBehaviour
+public class SettingsManager : InitializeSingleton<SettingsManager>
 {
-    public Toggle m_FullscreenToggle;
-    public TMP_Dropdown m_ResolutionDropdown;
-    public TMP_Dropdown m_TextureQualityDropdown;
-    public TMP_Dropdown m_ShadowQualityDropdown;
-    public TMP_Dropdown m_AntiAliasingDropdown;
-    public TMP_Dropdown m_VSyncDropdown;
-    public Slider m_MasterVolumeSlider;
-    public Slider m_MouseSensSlider;
-    public TMP_Text m_MasterVolumeText;
-    public TMP_Text m_MouseSensText;
-    public Button m_ApplyButton;
-    public Resolution[] m_Resolutions;
+    [SerializeField]
+    private AudioMixer m_MainMixer = null;
+    [SerializeField]
+    private SettingsMenu m_SettingsMenu = null;
 
     private GameSettings m_GameSettings;
+    private Resolution[] m_Resolutions;
 
     private string m_Fullscreen;
     private string m_ResolutionIndex;
@@ -43,7 +35,12 @@ public class SettingsManager : MonoBehaviour
     private string m_AntiAliasing;
     private string m_VerticalSync;
     private string m_MasterVolume;
+    private string m_MusicVolume;
+    private string m_EffectsVolume;
     private string m_MouseSensitivity;
+
+    public GameSettings GameSettings => m_GameSettings;
+    public Resolution[] Resolutions => m_Resolutions;
 
     void Start()
     {
@@ -56,118 +53,30 @@ public class SettingsManager : MonoBehaviour
         m_AntiAliasing = "AntiAliasing";
         m_VerticalSync = "VerticalSync";
         m_MasterVolume = "MasterVolume";
+        m_MusicVolume = "MusicVolume";
+        m_EffectsVolume = "EffectsVolume";
         m_MouseSensitivity = "MouseSensitivity";
 
-        m_FullscreenToggle.onValueChanged.AddListener(delegate { OnFullScreenToggle(); });
-        m_ResolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
-        m_TextureQualityDropdown.onValueChanged.AddListener(delegate { OnTextureQualityChange(); });
-        m_ShadowQualityDropdown.onValueChanged.AddListener(delegate { OnShadowQualityChange(); });
-        m_AntiAliasingDropdown.onValueChanged.AddListener(delegate { OnAntiAliasingChange(); });
-        m_VSyncDropdown.onValueChanged.AddListener(delegate { OnVSyncChange(); });
-        m_MasterVolumeSlider.onValueChanged.AddListener(delegate { OnMasterVolumeChange(); });
-        m_MouseSensSlider.onValueChanged.AddListener(delegate { OnMouseSensChange(); });
-        m_ApplyButton.onClick.AddListener(delegate { OnApplyButtonClick(); });
-        
         m_Resolutions = Screen.resolutions;
-        if (m_ResolutionDropdown.options.Count == 0)
-        {
-            foreach (Resolution resolution in m_Resolutions)
-            {
-                m_ResolutionDropdown.options.Add(new TMP_Dropdown.OptionData(resolution.ToString()));
-            }
-        }
 
         QualitySettings.SetQualityLevel(5);
 
         LoadSettings();
+        m_SettingsMenu.UpdateSettingsMenu();
     }
 
-    private void OnFullScreenToggle()
-    {
-        m_GameSettings.IsFullscreen = m_FullscreenToggle.isOn;
-    }
-
-    private void OnResolutionChange()
-    {
-        m_GameSettings.ResolutionIndex = m_ResolutionDropdown.value;
-    }
-
-    private void OnTextureQualityChange()
-    {
-        m_GameSettings.TextureQuality = (5 - m_TextureQualityDropdown.value);
-    }
-
-    private void OnShadowQualityChange()
-    {
-        m_GameSettings.ShadowQuality = m_ShadowQualityDropdown.value;
-    }
-
-    private void OnAntiAliasingChange()
-    {
-        m_GameSettings.AntiAliasing = m_AntiAliasingDropdown.value;
-    }
-
-    private void OnVSyncChange()
-    {
-        m_GameSettings.VerticalSync = m_VSyncDropdown.value;
-    }
-
-    private void OnMasterVolumeChange()
-    {
-        m_GameSettings.MasterVolume = m_MasterVolumeSlider.value;
-        m_MasterVolumeText.text = "Master Volume = " + (int)(m_MasterVolumeSlider.value * 100) + "%";
-    }
-
-    private void OnMouseSensChange()
-    {
-        m_GameSettings.MouseSensitivity = m_MouseSensSlider.value;
-        m_MouseSensText.text = "Mouse Sensitivity = " + (m_MouseSensSlider.value * 10);
-    }
-
-    private void OnApplyButtonClick()
-    {
-        SaveSettings();
-        LoadSettings();
-    }
-
-    private void SaveSettings()
-    {
-        PlayerPrefs.SetInt(m_Fullscreen, m_GameSettings.IsFullscreen ? 1 : 0);
-        PlayerPrefs.SetInt(m_TextureQuality, m_GameSettings.TextureQuality);
-        PlayerPrefs.SetInt(m_ShadowQuality, m_GameSettings.ShadowQuality);
-        PlayerPrefs.SetInt(m_AntiAliasing, m_GameSettings.AntiAliasing);
-        PlayerPrefs.SetInt(m_VerticalSync, m_GameSettings.VerticalSync);
-        PlayerPrefs.SetInt(m_ResolutionIndex, m_GameSettings.ResolutionIndex);
-        PlayerPrefs.SetFloat(m_MasterVolume, m_GameSettings.MasterVolume);
-        PlayerPrefs.SetFloat(m_MouseSensitivity, m_GameSettings.MouseSensitivity);
-    }
-
-    private void LoadSettings()
+    public void LoadSettings()
     {
         m_GameSettings.IsFullscreen = Convert.ToBoolean(PlayerPrefs.GetInt(m_Fullscreen, 0));
         m_GameSettings.TextureQuality = PlayerPrefs.GetInt(m_TextureQuality, QualitySettings.masterTextureLimit);
         m_GameSettings.ShadowQuality = PlayerPrefs.GetInt(m_ShadowQuality, (int)QualitySettings.shadowResolution);
         m_GameSettings.AntiAliasing = PlayerPrefs.GetInt(m_AntiAliasing, (int)(Mathf.Log(QualitySettings.antiAliasing) / Mathf.Log(2.0f)));
         m_GameSettings.VerticalSync = PlayerPrefs.GetInt(m_VerticalSync, QualitySettings.vSyncCount);
-        m_GameSettings.ResolutionIndex = PlayerPrefs.GetInt(m_ResolutionIndex, m_Resolutions.Length);
-        m_GameSettings.MasterVolume = PlayerPrefs.GetFloat(m_MasterVolume, 0.5f);
+        m_GameSettings.ResolutionIndex = PlayerPrefs.GetInt(m_ResolutionIndex, m_Resolutions.Length - 1);
+        m_GameSettings.MasterVolume = PlayerPrefs.GetFloat(m_MasterVolume, -20.0f);
+        m_GameSettings.MusicVolume = PlayerPrefs.GetFloat(m_MusicVolume, 0.0f);
+        m_GameSettings.EffectsVolume = PlayerPrefs.GetFloat(m_EffectsVolume, 0.0f);
         m_GameSettings.MouseSensitivity = PlayerPrefs.GetFloat(m_MouseSensitivity, 1.0f);
-
-        m_FullscreenToggle.isOn = m_GameSettings.IsFullscreen;
-
-        m_ResolutionDropdown.value = m_GameSettings.ResolutionIndex;
-        m_TextureQualityDropdown.value = (5 - m_GameSettings.TextureQuality);
-        m_ShadowQualityDropdown.value = m_GameSettings.ShadowQuality;
-        m_AntiAliasingDropdown.value = m_GameSettings.AntiAliasing;
-        m_VSyncDropdown.value = m_GameSettings.VerticalSync;
-
-        m_MasterVolumeSlider.value = m_GameSettings.MasterVolume;
-        m_MasterVolumeText.text = "Master Volume = " + (int)(m_MasterVolumeSlider.value * 100) + "%";
-
-        m_MouseSensSlider.value = m_GameSettings.MouseSensitivity;
-        m_MouseSensText.text = "Mouse Sensitivity = " + (m_MouseSensSlider.value * 10);
-
-        m_ResolutionDropdown.RefreshShownValue();
 
         Screen.fullScreen = m_GameSettings.IsFullscreen;
         Screen.SetResolution(m_Resolutions[m_GameSettings.ResolutionIndex].width, m_Resolutions[m_GameSettings.ResolutionIndex].height, Screen.fullScreen);
@@ -175,6 +84,24 @@ public class SettingsManager : MonoBehaviour
         QualitySettings.shadowResolution = (ShadowResolution)m_GameSettings.ShadowQuality;
         QualitySettings.antiAliasing = (int)Mathf.Pow(2.0f, m_GameSettings.AntiAliasing);
         QualitySettings.vSyncCount = m_GameSettings.VerticalSync;
-        AudioListener.volume = m_GameSettings.MasterVolume;
+        m_MainMixer.SetFloat("MasterVolume", m_GameSettings.MasterVolume);
+        m_MainMixer.SetFloat("MusicVolume", m_GameSettings.MusicVolume);
+        m_MainMixer.SetFloat("EffectsVolume", m_GameSettings.EffectsVolume);
+    }
+
+    public void SaveSettings(GameSettings gameSettings)
+    {
+        m_GameSettings = gameSettings;
+
+        PlayerPrefs.SetInt(m_Fullscreen, m_GameSettings.IsFullscreen ? 1 : 0);
+        PlayerPrefs.SetInt(m_TextureQuality, m_GameSettings.TextureQuality);
+        PlayerPrefs.SetInt(m_ShadowQuality, m_GameSettings.ShadowQuality);
+        PlayerPrefs.SetInt(m_AntiAliasing, m_GameSettings.AntiAliasing);
+        PlayerPrefs.SetInt(m_VerticalSync, m_GameSettings.VerticalSync);
+        PlayerPrefs.SetInt(m_ResolutionIndex, m_GameSettings.ResolutionIndex);
+        PlayerPrefs.SetFloat(m_MasterVolume, m_GameSettings.MasterVolume);
+        PlayerPrefs.SetFloat(m_MusicVolume, m_GameSettings.MusicVolume);
+        PlayerPrefs.SetFloat(m_EffectsVolume, m_GameSettings.EffectsVolume);
+        PlayerPrefs.SetFloat(m_MouseSensitivity, m_GameSettings.MouseSensitivity);
     }
 }

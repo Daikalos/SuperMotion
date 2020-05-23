@@ -25,11 +25,7 @@ public class AudioManager : MonoBehaviour
         foreach (Sound sound in m_Sounds)
         {
             sound.source = gameObject.AddComponent<AudioSource>();
-            sound.source.clip = sound.m_Clip;
-
-            sound.source.volume = sound.m_Volume;
-            sound.source.pitch = sound.m_Pitch;
-            sound.source.loop = sound.m_Loop;
+            SetAudioSource(sound.source, sound);
         }
     }
 
@@ -53,8 +49,46 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public Sound GetSound(string name)
+    public AudioSource AddSpatialAudioSource(GameObject gameObject, string name)
+    {
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+
+        SetAudioSource(audioSource, GetSound(name));
+        audioSource.spatialBlend = 1.0f;
+
+        return audioSource;
+    }
+
+    public void PlaySoundAtPoint(Vector3 position, string name)
+    {
+        GameObject soundObject = new GameObject();
+        soundObject.transform.position = position;
+
+        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+
+        SetAudioSource(audioSource, GetSound(name));
+        audioSource.spatialBlend = 1.0f;
+
+        audioSource.Play();
+
+        Destroy(soundObject, audioSource.clip.length);
+    }
+
+    private Sound GetSound(string name)
     {
         return Array.Find(m_Sounds, sound => sound.m_Name == name);
+    }
+
+    private void SetAudioSource(AudioSource audioSource, Sound sound)
+    {
+        if (audioSource != null)
+        {
+            audioSource.clip = sound.m_Clip;
+            audioSource.outputAudioMixerGroup = sound.m_Output;
+
+            audioSource.volume = sound.m_Volume;
+            audioSource.pitch = sound.m_Pitch;
+            audioSource.loop = sound.m_Loop;
+        }
     }
 }

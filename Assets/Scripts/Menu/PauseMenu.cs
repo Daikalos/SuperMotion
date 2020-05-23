@@ -25,6 +25,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private Timer m_Timer = null;
 
+    private ConfirmMenu m_ConfirmMenu;
     private bool m_IsPaused;
 
     private void Start()
@@ -35,7 +36,8 @@ public class PauseMenu : MonoBehaviour
         m_ControlsButton.onClick.AddListener(OpenControls);
         m_MainMenuButton.onClick.AddListener(OpenMainMenu);
         m_BackButton.onClick.AddListener(Back);
-        
+
+        m_ConfirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
         m_IsPaused = false;
 
         m_HUD.SetActive(!m_IsPaused);
@@ -81,15 +83,13 @@ public class PauseMenu : MonoBehaviour
             m_ConfirmPanel.SetActive(true);
             m_PauseOptions.SetActive(false);
 
-            ConfirmMenu confirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
-
-            confirmMenu.YesAction(new UnityAction(() =>
+            m_ConfirmMenu.YesAction(new UnityAction(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
             }));
 
-            confirmMenu.NoAction(new UnityAction(() =>
+            m_ConfirmMenu.NoAction(new UnityAction(() =>
             {
                 m_ConfirmPanel.SetActive(false);
                 m_PauseOptions.SetActive(true);
@@ -104,15 +104,13 @@ public class PauseMenu : MonoBehaviour
             m_ConfirmPanel.SetActive(true);
             m_PauseOptions.SetActive(false);
 
-            ConfirmMenu confirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
-
-            confirmMenu.YesAction(new UnityAction(() =>
+            m_ConfirmMenu.YesAction(new UnityAction(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 CheckpointManager.Instance.CheckpointSet = false;
             }));
 
-            confirmMenu.NoAction(new UnityAction(() =>
+            m_ConfirmMenu.NoAction(new UnityAction(() =>
             {
                 m_ConfirmPanel.SetActive(false);
                 m_PauseOptions.SetActive(true);
@@ -139,14 +137,12 @@ public class PauseMenu : MonoBehaviour
             m_ConfirmPanel.SetActive(true);
             m_PauseOptions.SetActive(false);
 
-            ConfirmMenu confirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
-
-            confirmMenu.YesAction(new UnityAction(() =>
+            m_ConfirmMenu.YesAction(new UnityAction(() =>
             {
                 SceneManager.LoadScene("Main_Menu");
             }));
 
-            confirmMenu.NoAction(new UnityAction(() =>
+            m_ConfirmMenu.NoAction(new UnityAction(() =>
             {
                 m_ConfirmPanel.SetActive(false);
                 m_PauseOptions.SetActive(true);
