@@ -10,7 +10,8 @@ public class CheckpointManager : InitializeSingleton<CheckpointManager>
 
     private string m_SceneName;
 
-    public Vector3 Checkpoint { get; set; }
+    public Vector3 CheckpointPosition { get; set; }
+    public Vector3 CheckpointRotation { get; set; }
     public bool CheckpointSet { get; set; }
     public float CheckpointTime { get; set; }
 

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LevelLock : MonoBehaviour
 {
     [SerializeField]
-    private Button[] m_Levels;
+    private Button[] m_Levels = null;
     [SerializeField, Tooltip("If levels are to be locked or not, used for debugging")]
     private bool m_LockLevels;
 
