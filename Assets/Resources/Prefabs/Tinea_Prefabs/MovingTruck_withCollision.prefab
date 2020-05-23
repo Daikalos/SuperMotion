@@ -168,8 +168,8 @@ GameObject:
   - component: {fileID: 7439972437193200733}
   - component: {fileID: 7464562221725071952}
   m_Layer: 0
-  m_Name: MovingTruck_2
-  m_TagString: Untagged
+  m_Name: MovingTruck_withCollision
+  m_TagString: MovingObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,7 +181,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411845679951992318}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 35.69098, y: -7.8767653, z: 63.06188}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
@@ -343,6 +343,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1958240155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448846934241109046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee9dee5d200d0f418759ca5cf8dd0e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &462033569104230211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -358,7 +370,7 @@ PrefabInstance:
     - target: {fileID: 1329177105645802358, guid: dda8d5ad415fe4c43b0e8c54e1d21e2b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.418
+      value: 0.42
       objectReference: {fileID: 0}
     - target: {fileID: 1329177105645802358, guid: dda8d5ad415fe4c43b0e8c54e1d21e2b,
         type: 3}
@@ -368,7 +380,7 @@ PrefabInstance:
     - target: {fileID: 1329177105645802358, guid: dda8d5ad415fe4c43b0e8c54e1d21e2b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.673
+      value: 3.77
       objectReference: {fileID: 0}
     - target: {fileID: 1329177105645802358, guid: dda8d5ad415fe4c43b0e8c54e1d21e2b,
         type: 3}
@@ -412,6 +424,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dda8d5ad415fe4c43b0e8c54e1d21e2b, type: 3}
+--- !u!1 &1448846934241109046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1329177105645802357, guid: dda8d5ad415fe4c43b0e8c54e1d21e2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 462033569104230211}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1448846934241109045 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1329177105645802358, guid: dda8d5ad415fe4c43b0e8c54e1d21e2b,

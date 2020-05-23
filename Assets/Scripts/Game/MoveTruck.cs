@@ -13,10 +13,15 @@ public class MoveTruck : MonoBehaviour
     int m_CurrentWayPoint;
     Transform m_TargetWayPoint;
 
+    public float Speed { get => m_Speed; set => m_Speed = value; }
+    public float NormalSpeed { get; private set; }
+
     void Start()
     {
         m_CurrentWayPoint = 0;
         m_TargetWayPoint = m_wayPointArray[m_CurrentWayPoint];
+
+        NormalSpeed = Speed;
     }
 
     void Update()
@@ -30,7 +35,7 @@ public class MoveTruck : MonoBehaviour
     void Move()
     {
         // rotate towards the target
-        transform.forward = Vector3.RotateTowards(transform.forward, m_TargetWayPoint.position - transform.position, m_Speed * Time.deltaTime, 0.0f);
+        transform.rotation = Quaternion.LookRotation(m_TargetWayPoint.position - transform.position);
 
         // move towards the target
         transform.position = Vector3.MoveTowards(transform.position, m_TargetWayPoint.position, m_Speed * Time.deltaTime);

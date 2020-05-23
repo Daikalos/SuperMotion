@@ -17,23 +17,32 @@ public class PlayerCheckpoint : MonoBehaviour
         m_Checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         m_CharacterController = GetComponent<CharacterController>();
 
+        LoadCheckpoint();
+    }
+
+    private void LoadCheckpoint()
+    {
         //No checkpoint is set yet
         if (!CheckpointManager.Instance.CheckpointSet)
         {
-            CheckpointManager.Instance.Checkpoint = transform.position;
+            CheckpointManager.Instance.CheckpointPosition = transform.position;
+            CheckpointManager.Instance.CheckpointRotation = transform.rotation.eulerAngles;
             CheckpointManager.Instance.CheckpointTime = 0.0f;
         }
 
         //Deactivate character controller temporarily to be able to change position of player
         m_CharacterController.enabled = false;
-        transform.position = CheckpointManager.Instance.Checkpoint;
+        transform.position = CheckpointManager.Instance.CheckpointPosition;
         m_CharacterController.enabled = true;
+
+        transform.rotation = Quaternion.Euler(CheckpointManager.Instance.CheckpointRotation);
     }
 
     public void SetCheckpoint(GameObject checkpoint, Vector3 spawnPos)
     {
         //Update checkpoint
-        CheckpointManager.Instance.Checkpoint = checkpoint.transform.position + spawnPos;
+        CheckpointManager.Instance.CheckpointPosition = checkpoint.transform.position + spawnPos;
+        CheckpointManager.Instance.CheckpointRotation = new Vector3(0.0f, checkpoint.transform.rotation.eulerAngles.y, 0.0f);
         CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
         CheckpointManager.Instance.CheckpointSet = true;
 

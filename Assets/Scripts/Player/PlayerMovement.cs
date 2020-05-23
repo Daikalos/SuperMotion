@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject m_CurrentSlope;
 
     private Vector3 m_Velocity;
+    private Vector3 m_ExternalForce;
     private Vector3 m_SlopeNormal;
     private RaycastHit m_SlideOffEdge;
 
@@ -56,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
     private float m_SlopeLimit;
 
     public Vector3 Velocity { get => m_Velocity; set => m_Velocity = value; }
+    public Vector3 ExternalForce { get => m_ExternalForce; set => m_ExternalForce = value; }
 
     public float Speed { get => m_Speed; set => m_Speed = value; }
     public float JumpHeight { get => m_JumpHeight; set => m_JumpHeight = value; }
@@ -120,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection *= ((m_Velocity.x != 0 || m_Velocity.z != 0) ? 0.0f : 1.0f);
 
         m_Velocity.y += m_Gravity * Time.deltaTime;
-        m_CharacterController.Move((moveDirection + m_Velocity) * Time.deltaTime);
+        m_CharacterController.Move((moveDirection + m_Velocity + m_ExternalForce) * Time.deltaTime);
 
         if ((horizInput != 0 || vertInput != 0) && OnSlope())
         {
@@ -200,8 +202,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnSlope()
     {
+        //If currently on the ground
         if (m_CanJump && m_IsGrounded && Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, (m_CharacterController.height / 2) * m_SlopeRayLength))
         {
+            //If the ground is not flat
             if (hit.normal != Vector3.up)
             {
                 return true;
