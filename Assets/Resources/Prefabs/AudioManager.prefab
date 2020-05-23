@@ -49,7 +49,7 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Fist
@@ -57,7 +57,7 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Hit
@@ -65,7 +65,7 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.225
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: BrokenGlass
@@ -73,7 +73,7 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Step
@@ -81,7 +81,7 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Dash
@@ -89,7 +89,7 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Death
@@ -97,15 +97,15 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Gun
     m_Clip: {fileID: 8300000, guid: 54ea7759b61139741a3ed44f93704e5b, type: 3}
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
-    m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Volume: 0.6
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Win
@@ -113,7 +113,7 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Checkpoint
@@ -121,15 +121,15 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.318
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Song
-    m_Clip: {fileID: 8300000, guid: f34c8b9e9ef310642909a0e63c336afd, type: 3}
+    m_Clip: {fileID: 8300000, guid: 33b98d1db8b88fb47b9987cf92b7edf6, type: 3}
     m_Output: {fileID: 243344223906838914, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
-    m_Volume: 0.318
-    m_Pitch: 1.02
+    m_Volume: 0.15
+    m_Pitch: 1
     m_Loop: 1
     source: {fileID: 0}
   - m_Name: Landing
@@ -137,7 +137,7 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.526
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: EnemyDeath
@@ -145,7 +145,7 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.526
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Splash
@@ -153,6 +153,6 @@ MonoBehaviour:
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
     m_Volume: 0.41
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}

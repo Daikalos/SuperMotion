@@ -73,9 +73,9 @@ public class SettingsManager : InitializeSingleton<SettingsManager>
         m_GameSettings.AntiAliasing = PlayerPrefs.GetInt(m_AntiAliasing, (int)(Mathf.Log(QualitySettings.antiAliasing) / Mathf.Log(2.0f)));
         m_GameSettings.VerticalSync = PlayerPrefs.GetInt(m_VerticalSync, QualitySettings.vSyncCount);
         m_GameSettings.ResolutionIndex = PlayerPrefs.GetInt(m_ResolutionIndex, m_Resolutions.Length - 1);
-        m_GameSettings.MasterVolume = PlayerPrefs.GetFloat(m_MasterVolume, -20.0f);
-        m_GameSettings.MusicVolume = PlayerPrefs.GetFloat(m_MusicVolume, 0.0f);
-        m_GameSettings.EffectsVolume = PlayerPrefs.GetFloat(m_EffectsVolume, 0.0f);
+        m_GameSettings.MasterVolume = PlayerPrefs.GetFloat(m_MasterVolume, 0.75f);
+        m_GameSettings.MusicVolume = PlayerPrefs.GetFloat(m_MusicVolume, 1.0f);
+        m_GameSettings.EffectsVolume = PlayerPrefs.GetFloat(m_EffectsVolume, 1.0f);
         m_GameSettings.MouseSensitivity = PlayerPrefs.GetFloat(m_MouseSensitivity, 1.0f);
 
         Screen.fullScreen = m_GameSettings.IsFullscreen;
@@ -84,9 +84,9 @@ public class SettingsManager : InitializeSingleton<SettingsManager>
         QualitySettings.shadowResolution = (ShadowResolution)m_GameSettings.ShadowQuality;
         QualitySettings.antiAliasing = (int)Mathf.Pow(2.0f, m_GameSettings.AntiAliasing);
         QualitySettings.vSyncCount = m_GameSettings.VerticalSync;
-        m_MainMixer.SetFloat("MasterVolume", m_GameSettings.MasterVolume);
-        m_MainMixer.SetFloat("MusicVolume", m_GameSettings.MusicVolume);
-        m_MainMixer.SetFloat("EffectsVolume", m_GameSettings.EffectsVolume);
+        m_MainMixer.SetFloat("MasterVolume", Mathf.Log(m_GameSettings.MasterVolume) * 20);
+        m_MainMixer.SetFloat("MusicVolume", Mathf.Log(m_GameSettings.MusicVolume) * 20);
+        m_MainMixer.SetFloat("EffectsVolume", Mathf.Log(m_GameSettings.EffectsVolume) * 20);
     }
 
     public void SaveSettings(GameSettings gameSettings)

@@ -33,17 +33,17 @@ public class SettingsMenu : MonoBehaviour
 
     private void OnMasterVolumeChange()
     {
-        m_MasterVolumeText.text = "Master Volume = " + (int)(100 - (m_MasterVolumeSlider.value / m_MasterVolumeSlider.minValue) * 100) + "%";
+        m_MasterVolumeText.text = "Master Volume = " + (int)(m_MasterVolumeSlider.value * 100) + "%";
     }
 
     private void OnMusicVolumeChange()
     {
-        m_MusicVolumeText.text = "Music Volume = " + (int)(100 - (m_MusicVolumeSlider.value / m_MusicVolumeSlider.minValue) * 100) + "%";
+        m_MusicVolumeText.text = "Music Volume = " + (int)(m_MusicVolumeSlider.value * 100) + "%";
     }
 
     private void OnEffectsVolumeChange()
     {
-        m_EffectsVolumeText.text = "Sound Effects Volume = " + (int)(100 - (m_EffectsVolumeSlider.value / m_EffectsVolumeSlider.minValue) * 100) + "%";
+        m_EffectsVolumeText.text = "Sound Effects Volume = " + (int)(m_EffectsVolumeSlider.value * 100) + "%";
     }
 
     private void OnMouseSensChange()
@@ -100,13 +100,13 @@ public class SettingsMenu : MonoBehaviour
         m_ResolutionDropdown.RefreshShownValue();
 
         m_MasterVolumeSlider.value = gameSettings.MasterVolume;
-        m_MasterVolumeText.text = "Master Volume = " + (int)(100 - (m_MasterVolumeSlider.value / m_MasterVolumeSlider.minValue) * 100) + "%";
+        m_MasterVolumeText.text = "Master Volume = " + (int)(m_MasterVolumeSlider.value * 100) + "%";
 
         m_MusicVolumeSlider.value = gameSettings.MusicVolume;
-        m_MusicVolumeText.text = "Music Volume = " + (int)(100 - (m_MusicVolumeSlider.value / m_MusicVolumeSlider.minValue) * 100) + "%";
+        m_MusicVolumeText.text = "Music Volume = " + (int)(m_MusicVolumeSlider.value * 100) + "%";
 
         m_EffectsVolumeSlider.value = gameSettings.EffectsVolume;
-        m_EffectsVolumeText.text = "Sound Effects Volume = " + (int)(100 - ((m_EffectsVolumeSlider.value / m_EffectsVolumeSlider.minValue) * 100)) + "%";
+        m_EffectsVolumeText.text = "Sound Effects Volume = " + (int)(m_EffectsVolumeSlider.value * 100) + "%";
 
         m_MouseSensSlider.value = gameSettings.MouseSensitivity;
         m_MouseSensText.text = "Mouse Sensitivity = " + m_MouseSensSlider.value;
