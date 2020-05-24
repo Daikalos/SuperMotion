@@ -14,7 +14,7 @@ public class LevelLock : MonoBehaviour
     {
         if (m_LockLevels)
         {
-            int currentLevel = 0;
+            int currentLevel = 2;
 
             //Lock each level if it has not been completed; Skip first level to lock
             for (int i = 1; i < m_Levels.Length; i++)
