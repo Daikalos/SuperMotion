@@ -11331,7 +11331,7 @@ Light:
   m_Type: 0
   m_Color: {r: 0.8301887, g: 0.7542945, b: 0.5521538, a: 1}
   m_Intensity: 3
-  m_Range: 96.168045
+  m_Range: 40
   m_SpotAngle: 84.052475
   m_CookieSize: 10
   m_Shadows:
@@ -31585,7 +31585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399858712}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.66008, y: -16.346474, z: -3.3185}
+  m_LocalPosition: {x: 13.66008, y: -16.346474, z: -1.2}
   m_LocalScale: {x: 20.648851, y: 14.53797, z: 0.36133173}
   m_Children: []
   m_Father: {fileID: 1253365776}
@@ -36844,7 +36844,7 @@ PrefabInstance:
     - target: {fileID: 413435916224312328, guid: b25a8c2cf56ee7043881c3241361ca37,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.515617
+      value: 9.48
       objectReference: {fileID: 0}
     - target: {fileID: 413435916224312328, guid: b25a8c2cf56ee7043881c3241361ca37,
         type: 3}
@@ -38376,7 +38376,7 @@ PrefabInstance:
     - target: {fileID: 1620546374612657661, guid: ec5f61250bd483e46b73c9c8cba16ffb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20
+      value: -64.86
       objectReference: {fileID: 0}
     - target: {fileID: 1620546374612657661, guid: ec5f61250bd483e46b73c9c8cba16ffb,
         type: 3}
@@ -38386,7 +38386,7 @@ PrefabInstance:
     - target: {fileID: 1620546374612657661, guid: ec5f61250bd483e46b73c9c8cba16ffb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 113
+      value: -24.84
       objectReference: {fileID: 0}
     - target: {fileID: 1620546374612657661, guid: ec5f61250bd483e46b73c9c8cba16ffb,
         type: 3}
@@ -44766,7 +44766,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996832917}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.3599205, y: -16.346474, z: 33.99244}
+  m_LocalPosition: {x: -2.3599205, y: -16.346474, z: 34.77}
   m_LocalScale: {x: 30.872099, y: 14.53797, z: 0.37527314}
   m_Children: []
   m_Father: {fileID: 1253365776}
