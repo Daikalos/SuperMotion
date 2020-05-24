@@ -8,7 +8,7 @@ public class LevelLock : MonoBehaviour
     [SerializeField]
     private Button[] m_Levels = null;
     [SerializeField, Tooltip("If levels are to be locked or not, used for debugging")]
-    private bool m_LockLevels;
+    private bool m_LockLevels = true;
 
     private void Start()
     {
@@ -20,7 +20,7 @@ public class LevelLock : MonoBehaviour
             for (int i = 1; i < m_Levels.Length; i++)
             {
                 //Use Highscore as a way to see if level has been completed
-                float highscore = PlayerPrefs.GetFloat("HighScore-" + i, 0.0f);
+                float highscore = PlayerPrefs.GetFloat("Highscore-" + i, 0.0f);
                 bool levelCompleted = (highscore > Mathf.Epsilon);
 
                 //Unlock next level if current level is completed

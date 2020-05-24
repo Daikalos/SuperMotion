@@ -46,85 +46,113 @@ MonoBehaviour:
   m_Sounds:
   - m_Name: AbilitySelect
     m_Clip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Fist
     m_Clip: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Hit
     m_Clip: {fileID: 8300000, guid: b43d102aac6b145468dcaa94a5cccae1, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.225
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: BrokenGlass
     m_Clip: {fileID: 8300000, guid: 6094342b3c23e304d8ea8a784897270b, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Step
     m_Clip: {fileID: 8300000, guid: 07902d35c76dec04495ae89be0bca886, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Dash
     m_Clip: {fileID: 8300000, guid: 33e88b5ba22c10f4f8a24a2ae98389af, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Death
     m_Clip: {fileID: 8300000, guid: 76868f469024a2e4c8c0da51e64d670f, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Gun
     m_Clip: {fileID: 8300000, guid: 54ea7759b61139741a3ed44f93704e5b, type: 3}
-    m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
+    m_Volume: 0.6
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Win
     m_Clip: {fileID: 8300000, guid: 7478151cf36724a7dada558f746c3633, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.491
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Checkpoint
     m_Clip: {fileID: 8300000, guid: 0c008ee3ee72a4362a35be25fa5de043, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.318
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Song
-    m_Clip: {fileID: 8300000, guid: f34c8b9e9ef310642909a0e63c336afd, type: 3}
-    m_Volume: 0.318
-    m_Pitch: 1.02
+    m_Clip: {fileID: 8300000, guid: 33b98d1db8b88fb47b9987cf92b7edf6, type: 3}
+    m_Output: {fileID: 243344223906838914, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
+    m_Volume: 0.15
+    m_Pitch: 1
     m_Loop: 1
     source: {fileID: 0}
   - m_Name: Landing
     m_Clip: {fileID: 8300000, guid: 5d8455fb534849442ad490965ff71279, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.526
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: EnemyDeath
     m_Clip: {fileID: 8300000, guid: 5f2abfb9414f3994e8649298eac18c00, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.526
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
   - m_Name: Splash
     m_Clip: {fileID: 8300000, guid: 67f18ea9e1a6d994c845d5f0a5253c44, type: 3}
+    m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
+      type: 2}
     m_Volume: 0.41
-    m_Pitch: 1.02
+    m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}

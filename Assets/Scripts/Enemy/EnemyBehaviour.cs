@@ -38,10 +38,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     void Start()
     {
-        m_AudioSource = gameObject.AddComponent<AudioSource>();
-
-        m_AudioSource.clip = AudioManager.m_Instance.GetSound("Gun").m_Clip;
-        m_AudioSource.spatialBlend = 1.0f;
+        m_AudioSource = AudioManager.m_Instance.AddSpatialAudioSource(gameObject, "Gun");
 
         m_Weapon = transform.Find("Weapon").gameObject;
         m_FirePoint = transform.Find("Weapon").Find("FirePoint").gameObject;

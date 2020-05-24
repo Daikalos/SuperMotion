@@ -20,6 +20,7 @@ public class GameOverMenu : MonoBehaviour
     [SerializeField]
     private Timer m_Timer = null;
 
+    private ConfirmMenu m_ConfirmMenu;
     private CanvasGroup m_OptionsCanvasGroup;
 
     private bool m_CoroutineIsRunning;
@@ -30,6 +31,7 @@ public class GameOverMenu : MonoBehaviour
         m_RestartButton.onClick.AddListener(Restart);
         m_MainMenuButton.onClick.AddListener(OpenMainMenu);
 
+        m_ConfirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
         m_OptionsCanvasGroup = m_GameOverOptions.GetComponent<CanvasGroup>();
 
         m_CoroutineIsRunning = false;
@@ -80,15 +82,13 @@ public class GameOverMenu : MonoBehaviour
             m_ConfirmPanel.SetActive(true);
             m_GameOverOptions.SetActive(false);
 
-            ConfirmMenu confirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
-
-            confirmMenu.YesAction(new UnityAction(() =>
+            m_ConfirmMenu.YesAction(new UnityAction(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 CheckpointManager.Instance.CheckpointSet = false;
             }));
 
-            confirmMenu.NoAction(new UnityAction(() =>
+            m_ConfirmMenu.NoAction(new UnityAction(() =>
             {
                 m_ConfirmPanel.SetActive(false);
                 m_GameOverOptions.SetActive(true);

@@ -38,11 +38,7 @@ public static class Utilities
     /// </summary>
     public static bool NextLevelExists()
     {
-        if (InLevel())
-        {
-            return SceneExists("Level_" + (LevelNumber() + 1));
-        }
-        return false;
+        return InLevel() && SceneExists("Level_" + (LevelNumber() + 1));
     }
 
     /// <summary>

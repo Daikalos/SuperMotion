@@ -23,8 +23,7 @@ public class GlassShatter : MonoBehaviour
         GameObject newObject = Instantiate(m_DestroyedVersion, transform.position, transform.rotation) as GameObject;
         newObject.transform.localScale = transform.localScale;
 
-        AudioClip clip = AudioManager.m_Instance.GetSound("BrokenGlass").m_Clip;
-        AudioSource.PlayClipAtPoint(clip, impactPoint, 1.0f);
+        AudioManager.m_Instance.PlaySoundAtPoint(impactPoint, "BrokenGlass");
 
         //Ignore collision between player and glass shards
         Collider playerCollider = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
