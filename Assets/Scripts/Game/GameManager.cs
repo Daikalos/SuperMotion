@@ -27,6 +27,8 @@ public class GameManager : InitializeSingleton<GameManager>
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        AudioManager.m_Instance.Play("Song");
     }
 
     public void SetState(GameState newState)

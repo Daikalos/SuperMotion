@@ -55,10 +55,10 @@ public class WinMenu : MonoBehaviour
 
                 m_HUD.SetActive(false);
                 m_WinTime.text = Utilities.TimeFormat(m_Timer.TimePassed, "0.557");
-
-                float highscore = PlayerPrefs.GetFloat("HighScore-" + Utilities.LevelNumber(), 0.0f);
-                m_HighscoreTime.text = (highscore > Mathf.Epsilon) ? Utilities.TimeFormat(highscore, "0.557") : "-";
             }
+
+            float highscore = PlayerPrefs.GetFloat("Highscore-" + Utilities.LevelNumber(), 0.0f);
+            m_HighscoreTime.text = (highscore > Mathf.Epsilon) ? Utilities.TimeFormat(highscore, "0.557") : "-";
         }
     }
 
