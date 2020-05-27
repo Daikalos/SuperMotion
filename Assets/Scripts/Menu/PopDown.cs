@@ -17,9 +17,15 @@ public class PopDown : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_PopDownCanvasGroup = GetComponent<CanvasGroup>();
 
-        //Show at start
-        m_timer = m_timerMaxTimeOpen; //max time open set to 10 seconds, in case user forgets to close (keep or nah?)
-        m_isOpen = true;
+        //Use LevelHandler as a way to determine whether to show popdown menu or not when scene is loaded
+        if (LevelHandler.Instance.ShowControlsPanel)
+        {
+            //Show at start
+            m_timer = m_timerMaxTimeOpen; //max time open set to 10 seconds, in case user forgets to close (keep or nah?)
+            m_isOpen = true;
+
+            LevelHandler.Instance.ShowControlsPanel = false;
+        }
     }
 
     private void Update()

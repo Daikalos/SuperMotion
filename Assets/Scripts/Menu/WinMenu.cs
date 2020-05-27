@@ -77,7 +77,9 @@ public class WinMenu : MonoBehaviour
     private void Replay()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        CheckpointManager.Instance.CheckpointSet = false;
+
+        LevelHandler.Instance.CheckpointSet = false;
+        LevelHandler.Instance.Countdown = Utilities.InLevel();
     }
 
     private void NextLevel()
