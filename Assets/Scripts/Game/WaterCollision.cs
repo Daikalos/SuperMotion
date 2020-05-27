@@ -10,6 +10,7 @@ public class WaterCollision : MonoBehaviour
         {
             GameManager.Instance.SetState(GameState.GameOver);
             AudioManager.m_Instance.PlayOnce("Splash");
+            AudioManager.m_Instance.PlayOnce("GameOver");
         }
     }
 }
