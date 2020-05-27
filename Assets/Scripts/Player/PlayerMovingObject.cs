@@ -22,6 +22,7 @@ public class PlayerMovingObject : MonoBehaviour
     {
         if (CollisionMovingObject(out RaycastHit objectHit))
         { 
+            //If the current object the player is standing on is a moving object, move player in the direction and speed of object
             MoveTruck moveTruck = objectHit.collider.GetComponent<MoveTruck>();
             m_PlayerMovement.ExternalForce = objectHit.transform.forward * moveTruck.Speed;
         }

@@ -79,7 +79,7 @@ public class SettingsManager : InitializeSingleton<SettingsManager>
         m_GameSettings.MouseSensitivity = PlayerPrefs.GetFloat(m_MouseSensitivity, 1.0f);
 
         Screen.fullScreen = m_GameSettings.IsFullscreen;
-        Screen.SetResolution(m_Resolutions[m_GameSettings.ResolutionIndex].width, m_Resolutions[m_GameSettings.ResolutionIndex].height, Screen.fullScreen);
+        Screen.SetResolution(m_Resolutions[m_GameSettings.ResolutionIndex].width, m_Resolutions[m_GameSettings.ResolutionIndex].height, m_GameSettings.IsFullscreen);
         QualitySettings.masterTextureLimit = m_GameSettings.TextureQuality;
         QualitySettings.shadowResolution = (ShadowResolution)m_GameSettings.ShadowQuality;
         QualitySettings.antiAliasing = (int)Mathf.Pow(2.0f, m_GameSettings.AntiAliasing);

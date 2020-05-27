@@ -40,10 +40,10 @@ public class StartScreen : MonoBehaviour
         if (LevelHandler.Instance.Countdown)
         {
             int currentTime = Mathf.CeilToInt(GameStart.Instance.CountdownTimer);
-            int totalWaitTime = (int)GameStart.Instance.CountdownTime;
+            int totalTime = (int)GameStart.Instance.CountdownTime;
 
             //Formatting option for displaying ceiled rounded time, first is skipped due to being rounded
-            m_CountdownText.text = (currentTime == 0) ? (totalWaitTime - 1).ToString() : (totalWaitTime - currentTime).ToString();
+            m_CountdownText.text = (currentTime == 0) ? (totalTime - 1).ToString() : (totalTime - currentTime).ToString();
 
             if (GameStart.Instance.CountdownTimer > GameStart.Instance.CountdownTime)
             {

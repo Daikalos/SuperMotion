@@ -22,6 +22,8 @@ public class PlayerCheckpoint : MonoBehaviour
 
     private void LoadCheckpoint()
     {
+        LevelHandler.Instance.NewLevel();
+
         //No checkpoint is set yet
         if (!LevelHandler.Instance.CheckpointSet)
         {

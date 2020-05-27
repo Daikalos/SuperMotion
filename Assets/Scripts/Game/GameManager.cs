@@ -23,6 +23,8 @@ public class GameManager : InitializeSingleton<GameManager>
 
         GameState = GameState.Starting;
         Time.timeScale = 0.0f;
+
+        GameStart.Instance.StartCountdown();
     }
 
     public void SetState(GameState newState)
