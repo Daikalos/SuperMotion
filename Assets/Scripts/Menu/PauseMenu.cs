@@ -39,10 +39,6 @@ public class PauseMenu : MonoBehaviour
 
         m_ConfirmMenu = m_ConfirmPanel.GetComponent<ConfirmMenu>();
         m_IsPaused = false;
-
-        m_HUD.SetActive(!m_IsPaused);
-        m_PauseOptions.SetActive(m_IsPaused);
-        m_ControlsMenu.SetActive(false);
     }
 
     private void Update()
@@ -72,7 +68,7 @@ public class PauseMenu : MonoBehaviour
             m_ControlsMenu.SetActive(false);
 
             //Can only press load checkpoint if one has been set
-            m_CheckpointButton.interactable = (CheckpointManager.Instance.CheckpointSet);
+            m_CheckpointButton.interactable = (LevelHandler.Instance.CheckpointSet);
         }
     }
 
@@ -86,7 +82,7 @@ public class PauseMenu : MonoBehaviour
             m_ConfirmMenu.YesAction(new UnityAction(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
+                LevelHandler.Instance.CheckpointTime = m_Timer.TimePassed;
             }));
 
             m_ConfirmMenu.NoAction(new UnityAction(() =>
@@ -107,7 +103,9 @@ public class PauseMenu : MonoBehaviour
             m_ConfirmMenu.YesAction(new UnityAction(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                CheckpointManager.Instance.CheckpointSet = false;
+
+                LevelHandler.Instance.CheckpointSet = false;
+                LevelHandler.Instance.Countdown = Utilities.InLevel();
             }));
 
             m_ConfirmMenu.NoAction(new UnityAction(() =>

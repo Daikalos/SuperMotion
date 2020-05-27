@@ -18,7 +18,7 @@ public class Timer : MonoBehaviour
     void Start()
     {
         m_StartTime = Time.time;
-        m_CheckpointTime = CheckpointManager.Instance.CheckpointTime;
+        m_CheckpointTime = LevelHandler.Instance.CheckpointTime;
     }
 
     void Update()

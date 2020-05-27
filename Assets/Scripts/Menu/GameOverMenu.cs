@@ -52,8 +52,8 @@ public class GameOverMenu : MonoBehaviour
                 m_HUD.SetActive(false);
 
                 //Can only press load checkpoint if one has been set
-                m_CheckpointButton.interactable = (CheckpointManager.Instance.CheckpointSet);
-                CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
+                m_CheckpointButton.interactable = (LevelHandler.Instance.CheckpointSet);
+                LevelHandler.Instance.CheckpointTime = m_Timer.TimePassed;
             }
         }
     }
@@ -85,7 +85,9 @@ public class GameOverMenu : MonoBehaviour
             m_ConfirmMenu.YesAction(new UnityAction(() =>
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                CheckpointManager.Instance.CheckpointSet = false;
+
+                LevelHandler.Instance.CheckpointSet = false;
+                LevelHandler.Instance.Countdown = Utilities.InLevel();
             }));
 
             m_ConfirmMenu.NoAction(new UnityAction(() =>

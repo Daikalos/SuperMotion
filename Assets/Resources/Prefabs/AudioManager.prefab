@@ -124,7 +124,7 @@ MonoBehaviour:
     m_Pitch: 1
     m_Loop: 0
     source: {fileID: 0}
-  - m_Name: Song
+  - m_Name: Music
     m_Clip: {fileID: 8300000, guid: 33b98d1db8b88fb47b9987cf92b7edf6, type: 3}
     m_Output: {fileID: 243344223906838914, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}

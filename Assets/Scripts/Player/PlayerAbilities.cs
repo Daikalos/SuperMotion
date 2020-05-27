@@ -18,7 +18,7 @@ public class PlayerAbilities : MonoBehaviour
         m_StrengthText = null;
     private GameObject m_PreviousText;
 
-    public void Start()
+    private void Start()
     {
         m_PlayerAbilites = new Dictionary<string, PlayerAbility>();
 
@@ -34,7 +34,7 @@ public class PlayerAbilities : MonoBehaviour
         m_PreviousText = m_StrengthText;
     }
 
-    void Update()
+    private void Update()
     {
         if (GameManager.Instance.GameState == GameState.Playing)
         {
