@@ -9,10 +9,10 @@ public class CheckpointCollision : MonoBehaviour
 
     [SerializeField, Tooltip("Spawn Position relative to transform")]
     private Vector3 m_SpawnPosition = Vector3.up;
-    
+
     public bool IsFlagged { get; set; }
 
-    void Start()
+    private void Start()
     {
         IsFlagged = false;
     }

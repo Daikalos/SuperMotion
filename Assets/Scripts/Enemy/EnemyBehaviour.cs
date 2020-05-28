@@ -83,6 +83,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             m_IsTargetSighted = false;
 
+            //Rotate back to start-rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(m_StartRotation), m_Damping * Time.deltaTime);
             m_Weapon.transform.localRotation = Quaternion.Slerp(m_Weapon.transform.localRotation, Quaternion.identity, m_Damping * Time.deltaTime);
         }
