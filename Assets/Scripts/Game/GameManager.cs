@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public enum GameState
 {
+    Starting,
     Playing,
     Paused,
     GameOver,
@@ -17,25 +18,20 @@ public class GameManager : InitializeSingleton<GameManager>
 
     private void Awake()
     {
-        InitializeGame();
-    }
-
-    public void InitializeGame()
-    {
-        GameState = GameState.Playing;
-        Time.timeScale = 1.0f;
-
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        AudioManager.m_Instance.Play("Song");
+        GameState = GameState.Starting;
+        Time.timeScale = 0.0f;
+
+        GameStart.Instance.StartCountdown();
     }
 
     public void SetState(GameState newState)
     {
         if (GameState == GameState.LevelComplete || GameState == GameState.GameOver)
         {
-            //Don't allow gamestate to be changed when end state is set
+            //Do not allow gamestate to be changed when end state is set
             return;
         }
 

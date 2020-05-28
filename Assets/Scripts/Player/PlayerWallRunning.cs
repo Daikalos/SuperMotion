@@ -134,7 +134,7 @@ public class PlayerWallRunning : MonoBehaviour
     {
         m_WallFound = false;
 
-        //Player has to be looking at wall to be able to wall run
+        //Player has to be looking at a wall to be able to wall run
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit objectHit, m_CharacterController.radius + m_WallCheckDistance))
         {
             if (Vector3.Dot(objectHit.normal, Vector3.up) == 0)

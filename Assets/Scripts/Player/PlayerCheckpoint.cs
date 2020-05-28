@@ -22,29 +22,34 @@ public class PlayerCheckpoint : MonoBehaviour
 
     private void LoadCheckpoint()
     {
+        LevelHandler.Instance.NewLevel();
+
         //No checkpoint is set yet
-        if (!CheckpointManager.Instance.CheckpointSet)
+        if (!LevelHandler.Instance.CheckpointSet)
         {
-            CheckpointManager.Instance.CheckpointPosition = transform.position;
-            CheckpointManager.Instance.CheckpointRotation = transform.rotation.eulerAngles;
-            CheckpointManager.Instance.CheckpointTime = 0.0f;
+            LevelHandler.Instance.CheckpointPosition = transform.position;
+            LevelHandler.Instance.CheckpointRotation = transform.rotation.eulerAngles;
+            LevelHandler.Instance.CheckpointTime = 0.0f;
         }
 
         //Deactivate character controller temporarily to be able to change position of player
         m_CharacterController.enabled = false;
-        transform.position = CheckpointManager.Instance.CheckpointPosition;
+        transform.position = LevelHandler.Instance.CheckpointPosition;
         m_CharacterController.enabled = true;
 
-        transform.rotation = Quaternion.Euler(CheckpointManager.Instance.CheckpointRotation);
+        transform.rotation = Quaternion.Euler(LevelHandler.Instance.CheckpointRotation);
     }
 
     public void SetCheckpoint(GameObject checkpoint, Vector3 spawnPos)
     {
+        //If there is a checkpoint set, no need to use countdown whenever player loads via checkpoint button later
+        LevelHandler.Instance.Countdown = false;
+
         //Update checkpoint
-        CheckpointManager.Instance.CheckpointPosition = checkpoint.transform.position + spawnPos;
-        CheckpointManager.Instance.CheckpointRotation = new Vector3(0.0f, checkpoint.transform.rotation.eulerAngles.y, 0.0f);
-        CheckpointManager.Instance.CheckpointTime = m_Timer.TimePassed;
-        CheckpointManager.Instance.CheckpointSet = true;
+        LevelHandler.Instance.CheckpointPosition = checkpoint.transform.position + spawnPos;
+        LevelHandler.Instance.CheckpointRotation = new Vector3(0.0f, checkpoint.transform.rotation.eulerAngles.y, 0.0f);
+        LevelHandler.Instance.CheckpointTime = m_Timer.TimePassed;
+        LevelHandler.Instance.CheckpointSet = true;
 
         //Update each checkpoint according to current one
         foreach (GameObject c in m_Checkpoints)
