@@ -176,7 +176,7 @@ MonoBehaviour:
     m_Clip: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
     m_Output: {fileID: 243448761005511180, guid: 6a81fad2771693d4298e3e6e3f073e44,
       type: 2}
-    m_Volume: 0.73
-    m_Pitch: 0.76
+    m_Volume: 1
+    m_Pitch: 0.99
     m_Loop: 0
     source: {fileID: 0}
