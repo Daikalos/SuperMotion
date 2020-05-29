@@ -38009,6 +38009,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
+--- !u!114 &1645585553 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 277472191, guid: 9888fedbffbd21d4e87b31bfd9b4845f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1645585552}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ddc575c204606409a6f29ac3c95626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1645990307
 GameObject:
   m_ObjectHideFlags: 0
@@ -38347,6 +38359,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 584321311, guid: ec5f61250bd483e46b73c9c8cba16ffb, type: 3}
+      propertyPath: m_Timer
+      value: 
+      objectReference: {fileID: 1645585553}
     - target: {fileID: 1440318633, guid: ec5f61250bd483e46b73c9c8cba16ffb, type: 3}
       propertyPath: m_SpeedText
       value: 

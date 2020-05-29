@@ -6,21 +6,21 @@ using TMPro;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public Toggle m_FullscreenToggle;
-    public TMP_Dropdown m_ResolutionDropdown;
-    public TMP_Dropdown m_TextureQualityDropdown;
-    public TMP_Dropdown m_ShadowQualityDropdown;
-    public TMP_Dropdown m_AntiAliasingDropdown;
-    public TMP_Dropdown m_VSyncDropdown;
-    public Slider m_MouseSensSlider;
-    public Slider m_MasterVolumeSlider;
-    public Slider m_MusicVolumeSlider;
-    public Slider m_EffectsVolumeSlider;
-    public TMP_Text m_MasterVolumeText;
-    public TMP_Text m_MusicVolumeText;
-    public TMP_Text m_EffectsVolumeText;
-    public TMP_Text m_MouseSensText;
-    public Button m_ApplyButton;
+    [SerializeField] private Toggle m_FullscreenToggle = null;
+    [SerializeField] private TMP_Dropdown m_ResolutionDropdown = null;
+    [SerializeField] private TMP_Dropdown m_TextureQualityDropdown = null;
+    [SerializeField] private TMP_Dropdown m_ShadowQualityDropdown = null;
+    [SerializeField] private TMP_Dropdown m_AntiAliasingDropdown = null;
+    [SerializeField] private TMP_Dropdown m_VSyncDropdown = null;
+    [SerializeField] private Slider m_MouseSensSlider = null;
+    [SerializeField] private Slider m_MasterVolumeSlider = null;
+    [SerializeField] private Slider m_MusicVolumeSlider = null;
+    [SerializeField] private Slider m_EffectsVolumeSlider = null;
+    [SerializeField] private TMP_Text m_MasterVolumeText = null;
+    [SerializeField] private TMP_Text m_MusicVolumeText = null;
+    [SerializeField] private TMP_Text m_EffectsVolumeText = null;
+    [SerializeField] private TMP_Text m_MouseSensText = null;
+    [SerializeField] private Button m_ApplyButton = null;
 
     void Start()
     {

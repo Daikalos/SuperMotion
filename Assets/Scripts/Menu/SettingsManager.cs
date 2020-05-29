@@ -20,10 +20,8 @@ public struct GameSettings
 
 public class SettingsManager : InitializeSingleton<SettingsManager>
 {
-    [SerializeField]
-    private AudioMixer m_MainMixer = null;
-    [SerializeField]
-    private SettingsMenu m_SettingsMenu = null;
+    [SerializeField] private AudioMixer m_MainMixer = null;
+    [SerializeField] private SettingsMenu m_SettingsMenu = null;
 
     private GameSettings m_GameSettings;
     private Resolution[] m_Resolutions;

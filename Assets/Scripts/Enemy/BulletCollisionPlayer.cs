@@ -17,7 +17,6 @@ public class BulletCollisionPlayer : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-                //AudioManager.m_Instance.Play("Death");
                 AudioManager.m_Instance.PlayOnce("GameOver");
                 GameManager.Instance.SetState(GameState.GameOver);
 
