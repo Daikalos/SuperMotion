@@ -2381,7 +2381,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Break glass by left clicking with strength active.
+  m_text: 'Break glass or kill enemies
+
+    by left clicking with strength active.
 
     Activate strength by pressing 4.
 
@@ -9165,7 +9167,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Dash through the air by \njumping and clicking Right Mouse Button.\nActivate
+  m_text: "Dash through the air by \njumping and clicking the Right Mouse Button.\nActivate
     Dash by pressing 2."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a0cea044eb34e47bc5b734f7854df3, type: 2}

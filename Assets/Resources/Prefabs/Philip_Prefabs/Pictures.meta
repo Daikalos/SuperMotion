@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Resources/Prefabs/Philip_Prefabs/Pictures.meta
 guid: 0abc30eb7be5e6b489b630a4a2fe4c14
+=======
+guid: 8c30778aea0f4294aae90b51b2478747
+>>>>>>> master:Assets/Scenes/Levels/Level_2.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
