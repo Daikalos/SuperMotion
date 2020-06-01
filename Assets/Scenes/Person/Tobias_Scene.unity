@@ -1048,7 +1048,9 @@ PrefabInstance:
       propertyPath: m_Timer
       value: 
       objectReference: {fileID: 277472191}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1620546374612657663, guid: ec5f61250bd483e46b73c9c8cba16ffb, type: 3}
+    - {fileID: 1620546374612657662, guid: ec5f61250bd483e46b73c9c8cba16ffb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ec5f61250bd483e46b73c9c8cba16ffb, type: 3}
 --- !u!1001 &906593599
 PrefabInstance:
@@ -2570,11 +2572,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 6342950293740128000, guid: 9888fedbffbd21d4e87b31bfd9b4845f,
-        type: 3}
-      propertyPath: m_Interactable
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9888fedbffbd21d4e87b31bfd9b4845f, type: 3}
