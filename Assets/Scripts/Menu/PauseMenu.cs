@@ -59,16 +59,15 @@ public class PauseMenu : MonoBehaviour
             GameState currentState = (m_IsPaused) ? GameState.Paused : GameState.Playing;
             GameManager.Instance.SetState(currentState);
 
-            Cursor.lockState = m_IsPaused ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.lockState = (m_IsPaused) ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = m_IsPaused;
+
+            m_CheckpointButton.interactable = (LevelHandler.Instance.CheckpointSet);
 
             m_HUD.SetActive(!m_IsPaused);
             m_ConfirmPanel.SetActive(false);
             m_PauseOptions.SetActive(m_IsPaused);
             m_ControlsMenu.SetActive(false);
-
-            //Can only press load checkpoint if one has been set
-            m_CheckpointButton.interactable = (LevelHandler.Instance.CheckpointSet);
         }
     }
 

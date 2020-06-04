@@ -17,7 +17,6 @@ public class PlayerWallRunning : MonoBehaviour
 
     private CharacterController m_CharacterController;
     private PlayerMovement m_PlayerMovement;
-    private PlayerLook m_PlayerLook;
 
     private RaycastHit m_WallHit;
     private Vector3 m_Velocity;
@@ -34,7 +33,6 @@ public class PlayerWallRunning : MonoBehaviour
     {
         m_CharacterController = GetComponent<CharacterController>();
         m_PlayerMovement = GetComponent<PlayerMovement>();
-        m_PlayerLook = GetComponentInChildren<PlayerLook>();
 
         m_Velocity = Vector3.zero;
         m_MoveSpeed = Vector3.zero;

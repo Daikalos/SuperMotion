@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class DeadlyCollision : MonoBehaviour
 {
-    [Tooltip("The Collider that kills the player (RIP)")]
-    public Collider m_ColliderBox;
-
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.CompareTag("Player"))
         {
+            AudioManager.m_Instance.PlayOnce("GameOver");
             GameManager.Instance.SetState(GameState.GameOver);
         }
-    }
-
-    private void Update()
-    {
-        OnTriggerEnter(m_ColliderBox);
     }
 }
