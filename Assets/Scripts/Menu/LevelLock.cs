@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ public class LevelLock : MonoBehaviour
     [SerializeField, Tooltip("If levels are to be locked or not, used for debugging")]
     private bool m_LockLevels = true;
 
-    private void Start()
+    private void Awake()
     {
         if (m_LockLevels)
         {
@@ -27,6 +28,10 @@ public class LevelLock : MonoBehaviour
                 m_Levels[currentLevel + 1].interactable = levelCompleted;
                 currentLevel++;
             }
+        }
+        else
+        {
+            Array.ForEach(m_Levels, l => l.interactable = true);
         }
     }
 }
