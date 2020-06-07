@@ -14996,7 +14996,7 @@ MonoBehaviour:
   - {fileID: 1615382993}
   - {fileID: 796192555}
   - {fileID: 1063804775}
-  m_LockLevels: 1
+  m_LockLevels: 0
 --- !u!114 &1141268711
 MonoBehaviour:
   m_ObjectHideFlags: 0
